@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  root 'games#index'
+  root 'games#ingdex'
 end
