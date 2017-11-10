@@ -1,4 +1,5 @@
 # README
+[CircleCI](https://circleci.com/gh/sudo-chess/chess-app/tree/master.svg?style=shield)](https://circleci.com/gh/sudo-chess/chess-app/tree/master)
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
