@@ -1,0 +1,3 @@
+class bishop < Piece
+
+end
