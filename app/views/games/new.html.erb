@@ -1,0 +1,54 @@
+<h1>Start a New Game</h1>
+<p>You can start a new game by selecting another player who's registered on the Chesster server.</p>
+
+<%= simple_form_for @game, :url => games_path do |f| %>
+  <%= f.input :black_player_id, :collection => User.all %>
+  <br/>
+  <%= f.submit "Start Game", :class => 'btn btn-primary' %>
+<% end %>
+
+<div id="chessboard">
+  <div></div>
+</div>
+
+<script>
+  var createBoard = function()
+{
+  rank = ["A","B","C","D","E","F","G","H"];
+  stack = [1,2,3,4,5,6,7,8];
+
+  var currentTile = {};
+
+    var count = 0;
+
+
+    for(var i = 0; i < rank.length; i++)
+    {
+      for (var j = 0; j < stack.length; j++)
+        {
+          if(count%8 == 0)
+          {
+            $("#chessboard").append('<div class="tile smoothfade" style="clear:left"></div>');
+
+          }else{
+            $("#chessboard").append('<div class="tile smoothfade"></div>');
+            }
+          $(".tile").eq(count).attr("data-gridpos",((rank[rank.length - (i +1)]+stack[j])));
+          
+          if(((i%2 == 0) && (j%2 != 0)) || ((i%2 != 0) && (j%2 == 0)))
+          {
+            $(".tile").eq(count).addClass("black");
+          }
+          else
+          {
+            $(".tile").eq(count).addClass("white");
+          }
+          count++;
+
+      }
+    }
+  
+  
+}
+$(createBoard);
+</script>

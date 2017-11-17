@@ -15,3 +15,32 @@
   padding: 20px;
 }
 
+#chessboard
+{
+float: left;
+padding:10px;
+background-color: #FFE598;
+border:5px solid black;
+
+}
+
+.tile
+{
+  width: 64px;
+  height: 64px;
+  float: left;
+}
+
+.black
+{
+
+  background-color: #1D263B;
+  color:white;
+}
+
+.white
+{
+  background-color: #F8FCF8;
+  color:black;
+
+}
