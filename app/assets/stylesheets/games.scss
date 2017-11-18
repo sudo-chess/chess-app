@@ -44,3 +44,9 @@ border:5px solid black;
   color:black;
 
 }
+
+.hover
+{
+  -webkit-box-shadow: inset 0px 0px 5px 5px rgba(50, 150, 25, .5);
+  box-shadow: inset 0px 0px 5px 5px rgba(50, 150, 25, .5);
+}
