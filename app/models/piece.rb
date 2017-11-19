@@ -1,18 +1,16 @@
 class Piece < ApplicationRecord
   belongs_to :game
 
-  def is_obstructed?(game, pos2)
-    
-    @occupied_positions =[]
+  def occupied_positions
+    occupied_positions = []
     game.pieces.each do |piece|
-      @occupied_positions << [piece.position_x, piece.position_y]
+      occupied_positions << [piece.position_x, piece.position_y]
     end
-      
-    
+    occupied_positions
+  end
 
-    @occupied_positions 
-    # defining the variables for the methods
-    
+  def is_obstructed?(game, pos2) 
+
     pos1=[self.position_x,self.position_y]
 
     @x1=pos1[0]
@@ -35,13 +33,13 @@ class Piece < ApplicationRecord
   end
 
   def check_squares
-    (@squares_to_check & @occupied_positions).length > 0? true : false  
+    (@squares_to_check & occupied_positions).length > 0? true : false  
   end
 
   def is_vertically_obstructed?(pos1,pos2)
     if @x1 == @x2
       @y1 , @y2 = @y2 , @y1 if @y1 > @y2
-      for y in (@y1+1...@y2)
+      (@y1+1...@y2).each do |y|
         @squares_to_check << [@x1, y]
       end
     check_squares
@@ -52,7 +50,7 @@ class Piece < ApplicationRecord
   def is_horizontally_obstructed?(pos1,pos2)
     if @y1 == @y2
       @x1 , @x2 = @x2 , @x1 if @x1 > @x2
-      for x in (@x1+1...@x2)
+      (@x1+1...@x2).each do |x|
         @squares_to_check << [x, @y1]
       end
     check_squares
