@@ -12,12 +12,12 @@ RSpec.describe GamesController, type: :controller do
     it "should return true because it is obstructed" do
       
 
-      # game = FactoryBot.create(:game)
+      game = FactoryBot.create(:game)
       # game = FactoryBot.build(:game, white_player_id: 1, black_player_id: 2)
       
-      user1= User.create( email: 'fake@fake.fake', password: 'password')
-      user2= User.create( email: 'fake3@fake.fake', password: 'password')
-      game=Game.create(white_player_id: user1.id, black_player_id: user2.id)
+      # user1= User.create( email: 'fake@fake.fake', password: 'password')
+      # user2= User.create( email: 'fake3@fake.fake', password: 'password')
+      # game=Game.create(white_player_id: user1.id, black_player_id: user2.id)
       piece1 = game.pieces.create(position_x: 7, position_y: 7, game_id: game.id)
       piece2 = game.pieces.create(position_x: 7, position_y: 5, game_id: game.id)
       game.pieces << piece1 << piece2 

@@ -1,11 +1,29 @@
 FactoryBot.define do
   factory :user do
     sequence :email do |n|
-      "dummyEmail#{n}@gmail.com"
-    
+      "sampleEmails#{n}@gmail.com"
+    end
+    # sequence(:white_player_id) { |n| n}
+    # sequence(:black_player_id) { |n| n}
     password "secretPassword"
     password_confirmation "secretPassword"
-    end
+  end
+
+
+  factory :game do 
+    # first_name 'John' 
+    # sequence(:name) { |n| "user#{n}" }
+    # sequence(:email) { |n| "fake#{n}@gamail.com"}
+
+    user1 = FactoryBot.create(:user)
+    user2= FactoryBot.create(:user)
+    white_player_id user1.id
+    black_player_id user2.id
+
+
+    # sequence(:white_player_id) { |n| n}
+    # sequence(:black_player_id) { |n| n}
+    # association :user
   end
 
   # factory :game do
