@@ -1,22 +1,73 @@
-<div class="table-responsive">
-<table class="board table chess">
+<div class="col-12 offset-4">
+  <div id="chessboard">
+    <div></div>
+  </div>
 
-<% first_tile_white = true %>
-<% 7.downto(0) do |row| %>
-  <tr class="row row<%= row %>">
-  <% 0.upto(7) do |column| %>   
-    <td class="col-xs-1 space <%= column %><%= row %> <%= tile_color(first_tile_white, column) %>" id="<%= column %><%= row %>">
-      <% @pieces.each do |piece| %>
-          <% if piece.x_coord == column && piece.y_coord == row && piece.color == @current_user_color %> 
-            <%= link_to image_tag(piece.image, :class=>"img-responsive moveable", :id=>piece.id), select_path( :piece_id => piece, :x_coord => piece.x_coord, :y_coord => piece.y_coord ) %>
-          <% elsif piece.x_coord == column && piece.y_coord == row %>
-            <%= image_tag(piece.image, :class=>"img-responsive") %>
-          <% end%>
-      <% end %>
-    </td>
-  <% end %>
-  </tr>
-  <% first_tile_white = first_tile_white.! %>
-<% end %>
-</table>
+  <script>
+  var createBoard = function()
+  {
+    rank = ["A","B","C","D","E","F","G","H"];
+    stack = [1,2,3,4,5,6,7,8];
+    tiles = $(".tile");
+    var currentTile = {};
+
+      var count = 0;
+
+
+      for(var i = 0; i < rank.length; i++)
+      {
+        for (var j = 0; j < stack.length; j++)
+          {
+            if(count%8 == 0)
+            {
+              $("#chessboard").append('<div class="tile smoothfade" style="clear:left"></div>');
+
+            }else{
+              $("#chessboard").append('<div class="tile smoothfade"></div>');
+              }
+            $(".tile").eq(count).attr("data-gridpos",((rank[rank.length - (i +1)]+stack[j])));
+
+            if(((i%2 == 0) && (j%2 != 0)) || ((i%2 != 0) && (j%2 == 0)))
+            {
+              $(".tile").eq(count).addClass("black");
+            }
+            else
+            {
+              $(".tile").eq(count).addClass("white");
+            }
+            count++;
+
+        }
+      }
+
+      $(".tile").on('click',function(){
+          currentTile = $(this);
+          var midY = $(this).position().top += ( $(this).width() / 2 );
+          var midX = $(this).position().left += ( $(this).width() / 2 );
+          var player = $("#player");
+
+
+
+          tiles.removeClass('legal');
+          console.log("X : "+midX + " || Y : "+midY);
+          player.css({"top":midY - (0.5 * player.width()), "left":midX-(0.5*player.width())});
+          console.log("Last Clicked Tile : "+currentTile.data("gridpos"));
+
+        })
+
+        .on('mouseenter',function(){
+          $(this).addClass('hover');
+        })
+
+        .on('mouseleave',function(){
+          $(this).removeClass('hover');
+        });
+  }
+
+
+
+
+  $(createBoard);
+  </script>
+  
 </div>
