@@ -15,3 +15,58 @@
   padding: 20px;
 }
 
+#chessboard
+{
+float: left;
+padding:10px;
+background-color: #FFE598;
+border:5px solid black;
+
+}
+
+.tile
+{
+  width: 64px;
+  height: 64px;
+  float: left;
+}
+
+.black
+{
+
+  background-color: #1D263B;
+  color:white;
+}
+
+.white
+{
+  background-color: #F8FCF8;
+  color:black;
+
+}
+
+.hover
+{
+  -webkit-box-shadow: inset 0px 0px 5px 5px rgba(50, 150, 25, .5);
+  box-shadow: inset 0px 0px 5px 5px rgba(50, 150, 25, .5);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+body {  
+  font-family: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.navbar {
+  box-shadow: 0px 1px 3px #2a2a2a;
+}
+
+.help-block {
+  color: #ff3333;
+  background-color: #FFEEEE;
+  border-radius: 3px;
+  padding: 2px 8px 2px 8px;
+}
