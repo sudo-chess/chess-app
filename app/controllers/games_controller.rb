@@ -1,21 +1,22 @@
 class GamesController < ApplicationController
 
-def index
-     @pending_partner = Game.pending
-    end
-    
-   def pending
-     @games = Game.pending
-     # render action: :index
-   end
- 
-   def playing
-     @games = Game.playing
-     # render action: :index
-   end
- 
-   def complete
-     @games = Game.complete
-     # render action: :index
-   end
+  def index
+    @games = Game.all
+  end
+
+  def new
+    @game = Game.new
+  end
+  
+  def create
+    opponent_id = game_params[:black_player_id]
+    @game = Game.create(:black_player_id => opponent_id, :white_player_id => current_user.id)
+    redirect_to game_path(@game)
+  end
+
+  private 
+
+  def game_params
+    params.require(:game).permit(:black_player_id)  
+  end
 end
