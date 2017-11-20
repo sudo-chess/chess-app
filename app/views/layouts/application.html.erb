@@ -21,27 +21,6 @@
           <li class="nav-item">
             <%= link_to 'New game', new_game_path, class: 'btn btn-primary' %>
           </li>
-
-
-          <li class="nav-item">
-            <div class="dropdown show">
-              <a class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Available Matches
-              </a>
-
-
-
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <% @pending_partner.each do |g| %>
-                  <a class="dropdown-item" href="#">
-                    Game <%= g.id %> || added <%= time_ago_in_words(g.created_at)%> ago
-<!--                     <%= g.inspect %> -->
-                  </a>
-                <% end %>
-              </div>
-            </div>
-          </li>
-
         </ul>
         <ul class="navbar-nav">
           <% if user_signed_in? %>
