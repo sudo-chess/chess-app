@@ -1,5 +1,25 @@
-<h1> ~ Chess App ~ </h1>
 
-<p> Go Team!!!!!!</p> 
+<% @games.each do |game| %>
+  <div class="game-box col-10 offset-1">
+    <h1><%= link_to game.id, game_path(game) %></h1><br />
+  </div>
+<% end %>
 
-<p> Test</p>
+<div class="game-box col-10 offset-1">
+  <div class="dropdown show">
+    <a class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Available Matches
+    </a>
+    
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      <% @games.pending.each do |g| %>
+        <a class="dropdown-item" href="#">
+          Game <%= g.id %> || added <%= time_ago_in_words(g.created_at)%> ago
+        </a>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
