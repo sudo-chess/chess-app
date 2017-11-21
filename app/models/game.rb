@@ -8,10 +8,10 @@ class Game < ApplicationRecord
   scope :playing,  ->{ where.not(black_player_id: nil).where(result: nil)}
   scope :complete, ->{ where(winner_id: true)}
 
-  after_create :initialize_board!
+  after_create :populate_game!
 
 
-  def initialize_board!
+  def populate_game!
     color = ""
    
     [2,7].each do |y|
