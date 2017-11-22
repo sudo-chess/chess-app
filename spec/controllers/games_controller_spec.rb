@@ -54,4 +54,22 @@ RSpec.describe GamesController, type: :controller do
     end
   end
 
+  describe "game create" do
+    it "should create a game with 32 pieces" do
+      game = FactoryBot.create(:game)
+      count = game.pieces.collect{|piece| piece}.length
+      expect(count).to eq(32)
+    end
+  end
+
+  describe "game create" do
+    it "should have the 16 pawns" do
+      game = FactoryBot.create(:game)
+      pawns = game.pieces.select{|piece| piece.type == 'Pawn'}
+      count = pawns.count
+      expect(count).to eq(16)
+    end
+  end
+
+
 end
