@@ -4,6 +4,11 @@ class GamesController < ApplicationController
     @games = Game.all
   end
 
+  def show
+      @g = Game.find_by_id(params[:id])
+      @p = Piece.all
+  end
+
   def pending
     @game = Game.pending
   end

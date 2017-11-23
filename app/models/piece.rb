@@ -1,6 +1,10 @@
 class Piece < ApplicationRecord
   belongs_to :game
 
+  def name
+    return name
+  end
+
   def occupied_positions
     occupied_positions = []
     game.pieces.each do |piece|
