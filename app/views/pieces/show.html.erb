@@ -5,37 +5,58 @@
 
 
   <table id="chessboard">
+  
+
+
 
     <% (1..8).to_a.reverse.each do |row_number| %>
       <tr>
         <% ["A","B","C","D","E","F","G","H"].each_with_index do |rank , index| %>
- 
+        
+
 
           <% if row_number.odd? %>
             <% if index.even? %>
               <td class="black tile">
+               <% if row_number == @current_coordinates[1] && index+1 == @current_coordinates[0] %>
+                  <p style="background-color: red"><%= check_piece(index + 1, row_number) %></p>
+               <% else %>
+                  <%= check_piece(index + 1, row_number) %>
+               <% end %>
+                              
+                
 
-                <%= check_piece(index + 1, row_number) %>
 
               </td> 
             <% else %>
               <td class="white tile">
+               <% if row_number == @current_coordinates[1] && index+1 == @current_coordinates[0] %>
+                  <p style="background-color: red"><%= check_piece(index + 1, row_number) %></p>
+               <% else %>
+                  <%= check_piece(index + 1, row_number) %>
+               <% end %>
+ 
 
-                <%= check_piece(index + 1, row_number) %>
 
               </td>
             <% end %>
           <% else %>
             <% if index.even? %>
               <td class="white tile">
-
-                <%= check_piece(index + 1, row_number) %>
+               <% if row_number == @current_coordinates[1] && index+1 == @current_coordinates[0] %>
+                  <p style="background-color: red"><%= check_piece(index + 1, row_number) %></p>
+               <% else %>
+                  <%= check_piece(index + 1, row_number) %>
+               <% end %>
 
               </td>
             <% else %>
               <td class="black tile">
-
-                <%= check_piece(index + 1, row_number) %>
+               <% if row_number == @current_coordinates[1] && index+1 == @current_coordinates[0] %>
+                  <p style="background-color: red"><%= check_piece(index + 1, row_number) %></p>
+               <% else %>
+                  <%= check_piece(index + 1, row_number) %>
+               <% end %>
 
               </td>
             <% end %>
