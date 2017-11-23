@@ -5,8 +5,8 @@ class GamesController < ApplicationController
   end
 
   def show
-      @g = Game.find_by_id(params[:id])
-      @p = @g.pieces
+      @local_game = Game.find_by_id(params[:id])
+      @local_pieces = @local_game.pieces
   end
 
   def pending
