@@ -15,22 +15,13 @@
             <% if index.even? %>
               <td class="black tile">
 
-
-                <% y = row_number %>
-                <% x = index + 1%>
-                <%= check_piece(x, y) %>
-
+                <%= check_piece(index + 1, row_number) %>
 
               </td> 
             <% else %>
               <td class="white tile">
 
-
-                <% y = row_number %>
-                <% x = index + 1%>
-                <%= check_piece(x, y) %>
-
-
+                <%= check_piece(index + 1, row_number) %>
 
               </td>
             <% end %>
@@ -38,20 +29,13 @@
             <% if index.even? %>
               <td class="white tile">
 
-
-                <% y = row_number %>
-                <% x = index + 1%>
-                <%= check_piece(x, y) %>
-
+                <%= check_piece(index + 1, row_number) %>
 
               </td>
             <% else %>
               <td class="black tile">
 
-                <% y = row_number %>
-                <% x = index + 1%>
-                <%= check_piece(x, y) %>
-
+                <%= check_piece(index + 1, row_number) %>
 
               </td>
             <% end %>
