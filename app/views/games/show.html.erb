@@ -4,8 +4,6 @@
   <br />
 
 
-<%= link_to check_piece(1, 1) %>
-
   <table id="chessboard">
 
     <% (1..8).to_a.reverse.each do |row_number| %>
@@ -38,7 +36,7 @@
               <td class="black tile">
 
                 <%= check_piece(index + 1, row_number) %>
-                
+
               </td>
             <% end %>
           <% end %>
