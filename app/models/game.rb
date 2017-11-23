@@ -49,7 +49,7 @@ class Game < ApplicationRecord
     
       [1,8].each do |y|
         y == 1? color = "white" : color ="black"
-        King.create(game_id: id, position_x: 4, position_y: y, color: color)
+        King.create(game_id: id, position_x: 5, position_y: y, color: color)
       end
   end
 end
