@@ -1,33 +1,19 @@
 <div class="col-12 offset-4">
   <table id="chessboard">
+
     <% (1..8).to_a.reverse.each do |row_number| %>
       <tr>
         <% ["A","B","C","D","E","F","G","H"].each_with_index do |rank , index| %>
  
-<% if false %>       
-          <% def check_position(x, y) %>
-            <% if @game.piece.position_x(x)[@game.piece.position_y(y)] != nil %>
-              <%= put piece.id %>
-            <% end %>
-          <% end %>
-<% end %>
 
           <% if row_number.odd? %>
             <% if index.even? %>
               <td class="black tile">
 
+
                 <% x = row_number %>
                 <% y = index + 1%>
-
-                <% current_game = @g.id %>
-                <% @p.each do |test| %>
-                  <% if test.game_id == current_game %>
-                    <% if test.position_x == x   && test.position_y == y %>
-                      <%= test.type %>
-                      <%= test.color %>
-                    <% end %>
-                  <% end %>
-                <% end %>
+                <%= check_piece(x, y) %>
 
 
               </td> 
@@ -37,16 +23,8 @@
 
                 <% x = row_number %>
                 <% y = index + 1%>
+                <%= check_piece(x, y) %>
 
-                <% current_game = @g.id %>
-                <% @p.each do |test| %>
-                  <% if test.game_id == current_game %>
-                    <% if test.position_x == x   && test.position_y == y %>
-                      <%= test.type %>
-                      <%= test.color %>
-                    <% end %>
-                  <% end %>
-                <% end %>
 
 
               </td>
@@ -58,35 +36,20 @@
 
                 <% x = row_number %>
                 <% y = index + 1%>
-
-                <% current_game = @g.id %>
-                <% @p.each do |test| %>
-                  <% if test.game_id == current_game %>
-                    <% if test.position_x == x   && test.position_y == y %>
-                      <%= test.type %>
-                      <%= test.color %>
-                    <% end %>
-                  <% end %>
-                <% end %>
+                <%= check_piece(x, y) %>
 
 
               </td>
             <% else %>
               <td class="black tile">
 
-
                 <% x = row_number %>
                 <% y = index + 1%>
 
-                <% current_game = @g.id %>
-                <% @p.each do |test| %>
-                  <% if test.game_id == current_game %>
-                    <% if test.position_x == x   && test.position_y == y %>
-                      <%= test.type %>
-                      <%= test.color %>
-                    <% end %>
-                  <% end %>
-                <% end %>
+
+                <% x = row_number %>
+                <% y = index + 1%>
+                <%= check_piece(x, y) %>
 
 
               </td>
