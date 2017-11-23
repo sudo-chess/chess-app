@@ -1,11 +1,12 @@
 module PiecesHelper
 
 
-def highlight
+def highlight(x,y)
   @local_pieces.each do |item|
     if item != nil
 
-      if item.position_x == @current_coordinates[0] && item.position_y == @current_coordinates[1]
+      # if item.position_x == @current_coordinates[0] && item.position_y == @current_coordinates[1]
+      if item.position_x == 1 && item.position_y == 1
           return "blablabla"
       end
     end
