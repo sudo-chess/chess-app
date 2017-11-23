@@ -8,6 +8,6 @@ module GamesHelper
         end
       end
     end
-    "+ link"
+    return "#{x}, #{y}"
   end
 end
