@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+  # helper_method :add
 
   def index
     @games = Game.all
@@ -7,7 +8,10 @@ class GamesController < ApplicationController
   def show
       @g = Game.find_by_id(params[:id])
       @p = Piece.all
+      # @add = add_func()
   end
+
+
 
   def pending
     @game = Game.pending
@@ -36,4 +40,8 @@ class GamesController < ApplicationController
   def game_params
     params.require(:game).permit(:black_player_id)  
   end
+
+  # def add_func(a=0, b=0)
+  #   return a + b
+  # end
 end
