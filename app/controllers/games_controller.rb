@@ -4,6 +4,26 @@ class GamesController < ApplicationController
     @games = Game.all
   end
 
+  def show
+      @g = Game.find_by_id(params[:id])
+      @p = @g.pieces
+  end
+
+  # def piece_check(x, y)
+  #   @g = Game.find_by_id(params[:id])
+  #   @p = Piece.all
+  #   current_game = @g.id
+  #   @p.each do |test| 
+  #     if test.game_id == current_game
+  #       if test.position_x == x   && test.position_y == y
+  #         return test.color
+  #         return test.type
+  #       end
+  #     end
+  #   end
+  #   helper_method :piece_check
+  # end
+
   def pending
     @game = Game.pending
   end
@@ -31,4 +51,8 @@ class GamesController < ApplicationController
   def game_params
     params.require(:game).permit(:black_player_id)  
   end
+
+  # def add_func(a=0, b=0)
+  #   return a + b
+  # end
 end
