@@ -38,7 +38,5 @@ class GamesController < ApplicationController
     params.require(:game).permit(:black_player_id)  
   end
 
-  # def add_func(a=0, b=0)
-  #   return a + b
-  # end
+  
 end
