@@ -9,6 +9,19 @@ class Piece < ApplicationRecord
     occupied_positions
   end
 
+
+  def move_to!(new_x, new_y)
+    target_coordinate = [new_x,new_y]
+    target_piece = Pieces.where(position_x: new_x, position_y: new_y)
+    if (occupied_positions & target_coordinate) > 0
+      if target_piece.color = self.color
+      else
+        target_piece.destroy
+      end
+    end
+  end
+
+
   def is_obstructed?(game, pos2) 
 
     pos1=[self.position_x,self.position_y]
@@ -23,7 +36,7 @@ class Piece < ApplicationRecord
     # check if correct move
     if !((@x1 == @x2) || (@y1 == @y2) || ((@x1-@x2).abs == (@y1-@y2).abs))
       return "Invalid input.  Not diagnal, horizontal, or vertical."
-    # check if occupied
+    # check if obstructed
     elsif
      is_vertically_obstructed?(pos1, pos2) ||   is_horizontally_obstructed?(pos1, pos2) ||   is_diagonally_obstructed?(pos1, pos2)
       return true

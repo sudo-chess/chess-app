@@ -14,4 +14,11 @@ Rails.application.routes.draw do
 
   resources :pieces
 
+  resources :pieces do
+    get :move_to, to: 'pieces#move_to', as: :move_to
+  end
+
+
+
+
 end
