@@ -76,3 +76,10 @@ display: inline-block;
 width: 100%;
 height: 100%;
 }
+
+.img-responsive {
+  height: 64px; 
+  width: 64px; 
+  max-width: 64px; 
+  max-height: 64px;
+}

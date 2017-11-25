@@ -71,4 +71,9 @@ class Piece < ApplicationRecord
     end
     
   end
+
+  def self.get_image(color)
+    # return the image file for the piece    
+  end
+
 end
