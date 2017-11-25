@@ -1,25 +1,2 @@
 # README
-[CircleCI](https://circleci.com/gh/sudo-chess/chess-app/tree/master.svg?style=shield)](https://circleci.com/gh/sudo-chess/chess-app/tree/master)
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+![CircleCI](https://circleci.com/gh/sudo-chess/chess-app/tree/master.svg?style=shield&circle-token=969af7bb8adb325c7e5a74e8c3559daaeb20e0d0)
