@@ -26,11 +26,11 @@ class PiecesController < ApplicationController
     url = request.original_url
     uri = URI::parse(url)
     id = uri.path.split('/')[-2]
-
     @local_game_id = Piece.find_by_id(id).game_id
     @target_piece = Piece.find_by_id(id)
-    $current.update_attributes(position_x: @target_piece.position_x, position_y: @target_piece.position_y)
-    @target_piece.update_attributes(position_x: nil, position_y: nil)
+
+    $current.move_to!(@target_piece.position_x, @target_piece.position_y)
+
     redirect_to game_path(@local_game_id)
   end
 

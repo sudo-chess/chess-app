@@ -11,16 +11,15 @@ class Piece < ApplicationRecord
 
 
   def move_to!(new_x, new_y)
-    target_coordinate = [new_x,new_y]
-    target_piece = Pieces.where(position_x: new_x, position_y: new_y)
-    if (occupied_positions & target_coordinate) > 0
-      if target_piece.color = self.color
-      else
-        target_piece.destroy
-      end
+    @current_game = self.game
+    @target = @current_game.pieces.where(position_x: new_x, position_y: new_y)[0]
+
+    if @target.color != self.color
+      @target.update_attributes(position_x: nil, position_y: nil)
+      self.update_attributes(position_x: new_x, position_y: new_y)
     end
   end
-
+   
 
   def is_obstructed?(game, pos2) 
 
