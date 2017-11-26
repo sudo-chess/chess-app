@@ -93,5 +93,13 @@ class Piece < ApplicationRecord
     #calling the method valid_move that is individually defined for each type of piece, same way that was done with get_image
   end
 
+  def is_on_board?(x,y)
+    board = []
+    (1..8).each do |i|
+      (1..8).each do |j|
+        board << [x,y]
+      end
+    end
 
+    board.include?([x,y])? true : false
 end
