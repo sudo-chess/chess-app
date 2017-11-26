@@ -100,6 +100,11 @@ class Piece < ApplicationRecord
         board << [x,y]
       end
     end
+    if board.include?([x,y]) 
+      return true 
+    else 
+      return false
+    end
+  end
 
-    board.include?([x,y])? true : false
 end
