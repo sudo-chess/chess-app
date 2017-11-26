@@ -88,4 +88,10 @@ class Piece < ApplicationRecord
     # return the image file for the piece    
   end
 
+
+  def self.valid_move?(x,y)
+    #calling the method valid_move that is individually defined for each type of piece, same way that was done with get_image
+  end
+
+
 end
