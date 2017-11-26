@@ -1,6 +1,6 @@
 class Knight < Piece
 
-  name = "Knight"  
+  
 
   def self.get_image(color)
     if color == "white"
@@ -9,4 +9,20 @@ class Knight < Piece
       return "chess_piece_knight_black.png"
     end
   end  
+
+
+  def valid_move?(x,y)
+    @current_x = self.position_x
+    @current_y = self.position_y
+
+    valid_moves = [[@current_x+1,@current_y+2], [@current_x+2,@current_y+1], [@current_x+2,@current_y-1], [@current_x+1,@current_y-2], [@current_x-1,@current_y-2], [@current_x-2,@current_y-1], [@current_x-2,@current_y+1], [@current_x-1,@current_y+2]]
+
+    if valid_moves.include?([x,y])
+      return true
+    else
+      return false
+    end
+
+  end
+
 end
