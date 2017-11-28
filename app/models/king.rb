@@ -31,15 +31,3 @@ class King < Piece
     end
   end  
 end
-
-
-[@current_x+1,@current_y+1], 
-[@current_x+1,@current_y], 
-[@current_x+1,@current_y-1], 
-
-[@current_x,@current_y+1], 
-[@current_x,@current_y-1], 
-
-[@current_x-1,@current_y+1], 
-[@current_x-1,@current_y], 
-[@current_x-1,@current_y-1]
