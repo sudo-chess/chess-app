@@ -1,5 +1,4 @@
 class Rook < Piece
-  name = "Rook"
 
   def self.get_image(color)
     if color == "white"
