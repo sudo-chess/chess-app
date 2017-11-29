@@ -16,7 +16,7 @@ class Piece < ApplicationRecord
 
     if @target.color != self.color
       @target.update_attributes(position_x: nil, position_y: nil)
-      self.update_attributes(position_x: new_x, position_y: new_y)
+      self.update_attributes(position_x: new_x, position_y: new_y, moved: true)
     end
   end
 
@@ -37,7 +37,7 @@ class Piece < ApplicationRecord
       return "Invalid input.  Not diagnal, horizontal, or vertical."
     # check if obstructed
     elsif
-     is_vertically_obstructed?(pos1, pos2) ||   is_horizontally_obstructed?(pos1, pos2) ||   is_diagonally_obstructed?(pos1, pos2)
+     is_vertically_obstructed?(pos1, pos2) || is_horizontally_obstructed?(pos1, pos2) || is_diagonally_obstructed?(pos1, pos2)
       return true
     else
       return false
