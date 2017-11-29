@@ -124,25 +124,40 @@ RSpec.describe Piece, type: :model do
 
 
   
-  #add test for queen
+  #queen
   describe "valid_move?" do
-    it "should return true if the move is valid for a queen" do
+    it "should return true if the vertical move is valid for a queen" do
       game = FactoryBot.create(:game)
       piece1 = Queen.create(position_x: 4, position_y: 1, color: "white", game_id: game.id)
 
-      #add code here
+      var = piece1.valid_move?(4,8)
+      expect(var).to eq(true)
     end
   end
 
   describe "valid_move?" do
+    it "should return false if the diagonal move is valid for a queen" do
+      game = FactoryBot.create(:game)
+      piece1 = Queen.create(position_x: 4, position_y: 1, color: "white", game_id: game.id)
+      
+      var = piece1.valid_move?(8,5)
+      expect(var).to eq(true)
+    end
+  end
+
+    describe "valid_move?" do
     it "should return false if the move is not valid for a queen" do
       game = FactoryBot.create(:game)
       piece1 = Queen.create(position_x: 4, position_y: 1, color: "white", game_id: game.id)
       
-      # add code here
+      var = piece1.valid_move?(5,7)
+      expect(var).to eq(false)
     end
   end
 
+
+
+  #king
   describe "valid_move?" do
     it "should return true if the move is valid for a king" do
       game = FactoryBot.create(:game)
