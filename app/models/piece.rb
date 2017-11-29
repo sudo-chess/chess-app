@@ -94,17 +94,7 @@ class Piece < ApplicationRecord
   end
 
   def is_on_board?(x,y)
-    board = []
-    (1..8).each do |i|
-      (1..8).each do |j|
-        board << [x,y]
-      end
-    end
-    if board.include?([x,y])
-      return true
-    else
-      return false
-    end
+    ((1..8).include?(x) && (1..8).include?(y))
   end
 
 end
