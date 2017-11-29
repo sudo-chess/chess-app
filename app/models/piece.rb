@@ -19,9 +19,9 @@ class Piece < ApplicationRecord
       self.update_attributes(position_x: new_x, position_y: new_y)
     end
   end
-   
 
-  def is_obstructed?(game, pos2) 
+
+  def is_obstructed?(game, pos2)
 
     pos1=[self.position_x,self.position_y]
 
@@ -31,7 +31,7 @@ class Piece < ApplicationRecord
     @y2=pos2[1]
 
     @squares_to_check = []
-    
+
     # check if correct move
     if !((@x1 == @x2) || (@y1 == @y2) || ((@x1-@x2).abs == (@y1-@y2).abs))
       return "Invalid input.  Not diagnal, horizontal, or vertical."
@@ -45,7 +45,7 @@ class Piece < ApplicationRecord
   end
 
   def check_squares
-    (@squares_to_check & occupied_positions).length > 0? true : false  
+    (@squares_to_check & occupied_positions).length > 0 
   end
 
   def is_vertically_obstructed?(pos1,pos2)
@@ -56,7 +56,7 @@ class Piece < ApplicationRecord
       end
     check_squares
     end
-    
+
   end
 
   def is_horizontally_obstructed?(pos1,pos2)
@@ -81,11 +81,11 @@ class Piece < ApplicationRecord
 
     check_squares
     end
-    
+
   end
 
   def self.get_image(color)
-    # return the image file for the piece    
+    # return the image file for the piece
   end
 
 
@@ -94,7 +94,7 @@ class Piece < ApplicationRecord
   end
 
   def is_on_board?(x,y)
-    ((1..8).include?(x) && (1..8).include?(y))? true : false
+    ((1..8).include?(x) && (1..8).include?(y))
   end
 
 end
