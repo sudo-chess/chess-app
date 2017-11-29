@@ -91,13 +91,14 @@ RSpec.describe Piece, type: :model do
     end
   end
 
-  #add test for bishop
+  #bishop
   describe "valid_move?" do
     it "should return true if the move is valid for a bishop" do
       game = FactoryBot.create(:game)
       piece1 = Bishop.create(position_x: 3, position_y: 1, color: "white", game_id: game.id)
 
-      #add code here
+      var = piece1.valid_move?(8,6)
+      expect(var).to eq(true)
     end
   end
   
@@ -105,10 +106,23 @@ RSpec.describe Piece, type: :model do
     it "should return false if the move is not valid for a bishop" do
       game = FactoryBot.create(:game)
       piece1 = Bishop.create(position_x: 3, position_y: 1, color: "white", game_id: game.id)
-      
-      # add code here
+     
+      var = piece1.valid_move?(1,8)
+      expect(var).to eq(false)
     end
   end
+
+    describe "valid_move?" do
+    it "should return false if the move is valid for a bishop but out of the board" do
+      game = FactoryBot.create(:game)
+      piece1 = Bishop.create(position_x: 3, position_y: 1, color: "white", game_id: game.id)
+     
+      var = piece1.valid_move?(9,7)
+      expect(var).to eq(false)
+    end
+  end
+
+
   
   #add test for queen
   describe "valid_move?" do

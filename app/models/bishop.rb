@@ -7,4 +7,22 @@ class Bishop < Piece
       return "chess_piece_bishop_black.png"
     end
   end  
+
+
+ def valid_move?(x,y)
+    if diagonal_move?(x,y) && is_on_board?(x,y)
+      return true
+    else
+      return false
+    end
+  end
+
+ def diagonal_move?(x,y)
+    @current_x = self.position_x
+    @current_y = self.position_y
+
+    (@current_x-x).abs == (@current_y-y).abs
+  
+  end
+
 end
