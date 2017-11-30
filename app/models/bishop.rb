@@ -15,11 +15,7 @@ class Bishop < Piece
  
 
  def diagonal_move?(x,y)
-    @current_x = self.position_x
-    @current_y = self.position_y
-
-    (@current_x-x).abs == (@current_y-y).abs
-  
-  end
+    (self.position_x-x).abs == (self.position_y-y).abs
+ end
 
 end

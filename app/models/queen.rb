@@ -18,20 +18,10 @@ class Queen < Piece
   end
 
  def diagonal_move?(x,y)
-    @current_x = self.position_x
-    @current_y = self.position_y
+    (self.position_x-x).abs == (self.position_y-y).abs
+ end
 
-    (@current_x-x).abs == (@current_y-y).abs
-  
-  end
-
-def vertical_move?(x,y)
-  @current_x = self.position_x
-  @current_y = self.position_y
-
-  ((@current_x == x) || (@current_y) == x)
-end
-
-
-
+ def vertical_move?(x,y)
+    self.position_x == x || self.position_y == x
+ end
 end
