@@ -10,7 +10,7 @@ class Queen < Piece
   end  
 
  def valid_move?(x,y)
-    (diagonal_move?(x,y) || vertical_move?(x,y)) && is_on_board?(x,y) 
+    (diagonal_move?(x,y) || vertical_move?(x,y)) && is_on_board?(x,y) && !is_obstructed?(self.game,[x,y])
   end
 
  def diagonal_move?(x,y)
@@ -18,6 +18,6 @@ class Queen < Piece
  end
 
  def vertical_move?(x,y)
-    self.position_x == x || self.position_y == x
+    self.position_x == x || self.position_y == y
  end
 end
