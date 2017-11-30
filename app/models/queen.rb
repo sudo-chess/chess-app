@@ -10,7 +10,7 @@ class Queen < Piece
   end  
 
  def valid_move?(x,y)
-    if (diagonal_move?(x,y) || vertical_move?(x,y)) && is_on_board?(x,y)
+    if (diagonal_move?(x,y) || vertical_move?(x,y)) && is_on_board?(x,y) 
       return true
     else
       return false

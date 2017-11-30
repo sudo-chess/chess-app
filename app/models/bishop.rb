@@ -10,12 +10,9 @@ class Bishop < Piece
 
 
  def valid_move?(x,y)
-    if diagonal_move?(x,y) && is_on_board?(x,y)
-      return true
-    else
-      return false
-    end
-  end
+     diagonal_move?(x,y) && is_on_board?(x,y) 
+ end
+ 
 
  def diagonal_move?(x,y)
     @current_x = self.position_x

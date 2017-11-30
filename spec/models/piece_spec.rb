@@ -50,6 +50,8 @@ RSpec.describe Piece, type: :model do
       end
     end
   
+
+
   # add test for rook
   describe "valid_move?" do
     it "should return true if the move is valid for a rook" do
@@ -60,6 +62,8 @@ RSpec.describe Piece, type: :model do
     end
   end
 
+
+
   describe "valid_move?" do
     it "should return false if the move is not valid for a rook" do
       game = FactoryBot.create(:game)
@@ -69,6 +73,7 @@ RSpec.describe Piece, type: :model do
     end
   end
 
+ # knight
   describe "valid_move?" do
     it "should return true if the move is valid for a knight" do
       game = FactoryBot.create(:game)
@@ -102,6 +107,19 @@ RSpec.describe Piece, type: :model do
     end
   end
   
+
+  #   describe "valid_move?" do
+  #   it "should return false if the move is valid for a bishop but is obstructed" do
+  #     game = FactoryBot.create(:game)
+  #     piece1 = Bishop.create(position_x: 3, position_y: 1, color: "white", game_id: game.id)
+  #     piece2 = Pawn.create(position_x: 5, position_y: 3, color: "white", game_id: game.id)
+
+  #     var = piece1.valid_move?(8,6)
+  #     expect(var).to eq(false)
+  #   end
+  # end
+  
+
   describe "valid_move?" do
     it "should return false if the move is not valid for a bishop" do
       game = FactoryBot.create(:game)
@@ -111,6 +129,8 @@ RSpec.describe Piece, type: :model do
       expect(var).to eq(false)
     end
   end
+
+
 
     describe "valid_move?" do
     it "should return false if the move is valid for a bishop but out of the board" do
@@ -135,8 +155,10 @@ RSpec.describe Piece, type: :model do
     end
   end
 
+
+
   describe "valid_move?" do
-    it "should return false if the diagonal move is valid for a queen" do
+    it "should return true if the diagonal move is valid for a queen" do
       game = FactoryBot.create(:game)
       piece1 = Queen.create(position_x: 4, position_y: 1, color: "white", game_id: game.id)
       
@@ -144,6 +166,17 @@ RSpec.describe Piece, type: :model do
       expect(var).to eq(true)
     end
   end
+
+  #   describe "valid_move?" do
+  #   it "should return false if valid move but obstructed" do
+  #     game = FactoryBot.create(:game)
+  #     piece1 = Queen.create(position_x: 4, position_y: 1, color: "white", game_id: game.id)
+  #     piece2 = Pawn.create(position_x: 6, position_y: 3, color: "white", game_id: game.id)
+
+  #     var = piece1.valid_move?(8,5)
+  #     expect(var).to eq(false)
+  #   end
+  # end
 
     describe "valid_move?" do
     it "should return false if the move is not valid for a queen" do
