@@ -6,5 +6,16 @@ class Rook < Piece
     elsif color == "black"
       return "chess_piece_rook_black.png"
     end
-  end  
+  end
+
+  def valid_move?(x,y)
+    @current_x = self.position_x
+    @current_y = self.position_y
+
+    if x == @current_x || y == @current_y
+      return true
+    else
+      return false
+    end
+  end 
 end
