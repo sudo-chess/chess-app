@@ -7,4 +7,15 @@ class Bishop < Piece
       return "chess_piece_bishop_black.png"
     end
   end  
+
+
+ def valid_move?(x,y)
+     diagonal_move?(x,y) && is_on_board?(x,y) && !is_obstructed?(self.game,[x,y])
+ end
+ 
+
+ def diagonal_move?(x,y)
+    (self.position_x-x).abs == (self.position_y-y).abs
+ end
+
 end
