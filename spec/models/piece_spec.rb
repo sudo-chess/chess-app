@@ -72,11 +72,11 @@ RSpec.describe Piece, type: :model do
       piece1 = Rook.create(position_x: 1, position_y: 1, color: "white", game_id: game.id)
 
       # add code here
-      var = piece1.valid_move?(2,1)
-      expect(var).to eq(true)
+      true_move = piece1.valid_move?(2,1)
+      expect(true_move).to eq(true)
 
-      var2 = piece1.valid_move?(2,2)
-      expect(var2).to eq(false)
+      false_move = piece1.valid_move?(2,2)
+      expect(false_move).to eq(false)
     end
   end
 
