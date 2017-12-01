@@ -8,6 +8,8 @@ class Rook < Piece
     end
   end
 
+  def on_axis?(x,y)
+
   def valid_move?(x,y)
     @current_x = self.position_x
     @current_y = self.position_y
