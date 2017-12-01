@@ -242,16 +242,30 @@ RSpec.describe Piece, type: :model do
       game = FactoryBot.create(:game)
       piece1 = Pawn.create(position_x: 1, position_y: 2, color: "white", game_id: game.id)
       
-      # add code here
+      var = piece1.valid_move?(1,3)
+      expect(var).to eq(true)
     end
   end
   
   describe "valid_move?" do
+    it "should return true if the move is valid for a pawn - capture" do
+      game = FactoryBot.create(:game)
+      piece1 = Pawn.create(position_x: 1, position_y: 2, color: "white", game_id: game.id)
+      piece2 = Pawn.create(position_x: 2, position_y: 3, color: "black", game_id: game.id)
+      
+      var = piece1.valid_move?(2,3)
+      expect(var).to eq(true)
+    end
+  end
+
+  describe "valid_move?" do
     it "should return false if the move is not valid for a pawn" do
       game = FactoryBot.create(:game)
       piece1 = Pawn.create(position_x: 1, position_y: 2, color: "white", game_id: game.id)
-      
-      # add code here
+      piece2 = Pawn.create(position_x: 1, position_y: 3, color: "black", game_id: game.id)
+
+      var = piece1.valid_move?(1,3)
+      expect(var).to eq(false)
     end
   end
 end

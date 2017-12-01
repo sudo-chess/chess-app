@@ -8,16 +8,12 @@ class Rook < Piece
     end
   end
 
-  def on_axis?(x,y)
-
   def valid_move?(x,y)
-    @current_x = self.position_x
-    @current_y = self.position_y
+    directional_move?(x,y) && is_on_board?(x,y) && !is_obstructed?(self.game,[x,y])
+  end
 
-    if x == @current_x || y == @current_y
-      return true
-    else
-      return false
-    end
-  end 
+  def directional_move?(x,y)
+    self.position_x == x || self.position_y == y
+  end
+
 end
