@@ -7,32 +7,38 @@ class Pawn < Piece
     end
   end
 
+  def can_capture?(x,y)
+    @piece_on_target = self.game.pieces.where(position_x: x, position_y: y)[0]
+    self.color != @piece_on_target.color
+  end
+
   def valid_move?(x,y)
-    @object = self.game.pieces.where(position_x: x, position_y: y)[0]
-    # could we replace this with !occupied_positions ?
+    @piece_on_target = self.game.pieces.where(position_x: x, position_y: y)[0]
     valid_moves = []
 
-    if self.color == "black"
-      if self.position_x == x && self.position_y == y+1 && !@object 
-        valid_moves << [self.position_x,self.position_y-1]
-      elsif self.moved == false && !@object && !is_obstructed?(self.game,[x,y])
-        valid_moves << [self.position_x,self.position_y-2]
-      elsif self.position_x == x-1 && self.position_y == y+1 && @object.color == "white"
-        valid_moves << [self.position_x+1,self.position_y-1]
-      elsif self.position_x == x+1 && self.position_y == y+1 && @object.color == "white"
-        valid_moves << [self.position_x-1,self.position_y-1]
-      end
-    else
-      if self.position_x == x && self.position_y == y-1 && !@object 
-        valid_moves << [self.position_x,self.position_y+1]
-      elsif self.moved == false && !@object && !is_obstructed?(self.game,[x,y])
-        valid_moves << [self.position_x,self.position_y+2]
-      elsif self.position_x == x-1 && self.position_y == y-1 && @object.color == "black"
-        valid_moves << [self.position_x+1,self.position_y+1]
-      elsif self.position_x == x+1 && self.position_y == y-1 && @object.color == "black"
-        valid_moves << [self.position_x-1,self.position_y+1]
+    if is_on_board?(x,y)
+      if self.color == "black"
+        if self.position_x == x && self.position_y == y+1 && !@piece_on_target 
+          valid_moves << [self.position_x,self.position_y-1]
+        elsif self.moved == false && !@piece_on_target && !is_obstructed?(self.game,[x,y])
+          valid_moves << [self.position_x,self.position_y-2]
+        elsif self.position_x == x-1 && self.position_y == y+1 && can_capture?(x,y)
+          valid_moves << [self.position_x+1,self.position_y-1]
+        elsif self.position_x == x+1 && self.position_y == y+1 && can_capture?(x,y)
+          valid_moves << [self.position_x-1,self.position_y-1]
+        end
+      else
+        if self.position_x == x && self.position_y == y-1 && !@piece_on_target 
+          valid_moves << [self.position_x,self.position_y+1]
+        elsif self.moved == false && !@piece_on_target && !is_obstructed?(self.game,[x,y])
+          valid_moves << [self.position_x,self.position_y+2]
+        elsif self.position_x == x-1 && self.position_y == y-1 && can_capture?(x,y)
+          valid_moves << [self.position_x+1,self.position_y+1]
+        elsif self.position_x == x+1 && self.position_y == y-1 && can_capture?(x,y)
+          valid_moves << [self.position_x-1,self.position_y+1]
+        end
       end
     end
-    valid_moves.include?([x,y]) && is_on_board?(x,y)
+    valid_moves.include?([x,y])
   end
 end
