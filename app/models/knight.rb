@@ -19,7 +19,7 @@ class Knight < Piece
       [self.position_x-2,self.position_y+1], 
       [self.position_x-1,self.position_y+2]]
    
-    return valid_moves.include?([x,y]) && is_on_board?(x,y)
+    return valid_moves.include?([x,y])
   end
 
 end
