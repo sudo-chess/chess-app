@@ -7,14 +7,10 @@
   <table id="chessboard">
   
 
-
-
     <% (1..8).to_a.reverse.each do |row_number| %>
       <tr>
         <% ["A","B","C","D","E","F","G","H"].each_with_index do |rank , index| %>
         
-
-
           <% if row_number.odd? %>
             <% if index.even? %>
               <td class="black tile">
