@@ -21,7 +21,7 @@ class King < Piece
       [self.position_x-1,self.position_y-1]
     ]
 
-    return valid_moves.include?([x,y])
+    return valid_moves.include?([x,y]) && is_on_board?(x,y)
   end  
 
   def castling(x,y)
