@@ -8,10 +8,10 @@ class Rook < Piece
   end
 
   def valid_move?(x, y)
-    (vertical_move?(x, y) && is_on_board?(x,y) && !is_obstructed?(game, [x, y]))
+    (axis_move?(x, y) && is_on_board?(x,y) && !is_obstructed?(game, [x, y]))
   end
 
-  def vertical_move?(x, y)
+  def axis_move?(x, y)
     self.position_x.to_i == x.to_i || self.position_y.to_i == y.to_i  
   end
 end
