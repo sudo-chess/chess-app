@@ -4,7 +4,7 @@ module PiecesHelper
     @local_pieces.each do |item|
       if item != nil
         if item.position_x == x && item.position_y == y
-          return link_to image_tag(item.image, :class=>"img-responsive"), piece_path(item, position_x: x, position_y: y, :method => :put)
+          return link_to image_tag(item.image, :class=>"img-responsive"), piece_move_to_path(item, position_x: x, position_y: y)
         end
       end
     end
