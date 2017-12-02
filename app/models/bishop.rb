@@ -10,7 +10,7 @@ class Bishop < Piece
 
 
  def valid_move?(x,y)
-     diagonal_move?(x,y) && !is_obstructed?(self.game,[x,y])
+     diagonal_move?(x,y) && is_on_board?(x,y) && !is_obstructed?(self.game,[x,y])
  end
  
 
