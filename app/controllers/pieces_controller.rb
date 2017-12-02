@@ -9,12 +9,6 @@ class PiecesController < ApplicationController
       @current_coordinates = [@current_piece.position_x, @current_piece.position_y]
       $current = @current_piece
 
-      if $current.valid_move?(params[:position_x], params[:position_y])
-        @current_piece.update_attributes(piece_params)
-      else
-        flash[:notice] = "That was not a valid move"  
-      end      
-
   end
 
 
@@ -23,10 +17,7 @@ class PiecesController < ApplicationController
       @current_piece = Piece.find_by_id(params[:id])
       @current_coordinates = [@current_piece.position_x, @current_piece.position_y]
 
-
-
-
-      
+      @current_piece.update_attributes(piece_params)
       redirect_to game_path(@local_game_id)
   end
 

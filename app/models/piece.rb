@@ -33,7 +33,7 @@ class Piece < ApplicationRecord
     @squares_to_check = []
 
     # check if correct move
-    if !((@x1 == @x2) || (@y1 == @y2) || ((@x1-@x2).abs == (@y1-@y2).abs))
+    if !((@x1.to_i == @x2.to_i) || (@y1.to_i == @y2.to_i) || ((@x1.to_i-@x2.to_i).abs == (@y1.to_i-@y2.to_i).abs))
       return "Invalid input.  Not diagnal, horizontal, or vertical."
     # check if obstructed
     elsif
@@ -49,9 +49,9 @@ class Piece < ApplicationRecord
   end
 
   def is_vertically_obstructed?(pos1,pos2)
-    if @x1 == @x2
-      @y1 , @y2 = @y2 , @y1 if @y1 > @y2
-      (@y1+1...@y2).each do |y|
+    if @x1.to_i == @x2.to_i
+      @y1 , @y2 = @y2 , @y1 if @y1.to_i > @y2.to_i
+      (@y1.to_i+1...@y2.to_i).each do |y|
         @squares_to_check << [@x1, y]
       end
     check_squares
@@ -60,9 +60,9 @@ class Piece < ApplicationRecord
   end
 
   def is_horizontally_obstructed?(pos1,pos2)
-    if @y1 == @y2
-      @x1 , @x2 = @x2 , @x1 if @x1 > @x2
-      (@x1+1...@x2).each do |x|
+    if @y1.to_i == @y2.to_i
+      @x1 , @x2 = @x2 , @x1 if @x1.to_i > @x2.to_i
+      (@x1.to_i+1...@x2.to_i).each do |x|
         @squares_to_check << [x, @y1]
       end
     check_squares
@@ -71,12 +71,12 @@ class Piece < ApplicationRecord
 
 
   def is_diagonally_obstructed?(pos1,pos2)
-    if (@x1-@x2).abs == (@y1-@y2).abs
-      @x1 , @x2 = @x2 , @x1 if @x1 > @x2
-      @y1 , @y2 = @y2 , @y1 if @y1 > @y2
+    if (@x1.to_i-@x2.to_i).abs == (@y1.to_i-@y2.to_i).abs
+      @x1 , @x2 = @x2 , @x1 if @x1.to_i > @x2.to_i
+      @y1 , @y2 = @y2 , @y1 if @y1.to_i > @y2.to_i
 
-      x_ary = (@x1+1...@x2).to_a
-      y_ary = (@y1+1...@y2).to_a
+      x_ary = (@x1.to_i+1...@x2.to_i).to_a
+      y_ary = (@y1.to_i+1...@y2.to_i).to_a
       @squares_to_check = x_ary.zip(y_ary)
 
     check_squares
