@@ -25,10 +25,10 @@ class Piece < ApplicationRecord
 
     pos1=[self.position_x,self.position_y]
 
-    @x1=pos1[0]
-    @y1=pos1[1]
-    @x2=pos2[0]
-    @y2=pos2[1]
+    @x1=pos1[0].to_i
+    @y1=pos1[1].to_i
+    @x2=pos2[0].to_i
+    @y2=pos2[1].to_i
 
     @squares_to_check = []
 
@@ -94,7 +94,7 @@ class Piece < ApplicationRecord
   end
 
   def is_on_board?(x,y)
-    ((1..8).include?(x) && (1..8).include?(y))
+    ((1..8).include?(x.to_i) && (1..8).include?(y.to_i))
   end
 
 end
