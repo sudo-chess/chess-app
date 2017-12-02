@@ -94,7 +94,7 @@ class Piece < ApplicationRecord
   end
 
   def is_on_board?(x,y)
-    ((1..8).include?(x) && (1..8).include?(y))
+    ((1..8).include?(x.to_i) && (1..8).include?(y.to_i))
   end
 
 end
