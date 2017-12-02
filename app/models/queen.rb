@@ -1,6 +1,4 @@
 class Queen < Piece
-  name = "Queen"
-
   def self.get_image(color)
     if color == "white"
       return "chess_piece_queen_white.png"
