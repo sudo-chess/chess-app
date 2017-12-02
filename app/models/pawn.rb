@@ -6,7 +6,11 @@ class Pawn < Piece
       return "chess_piece_pawn_black.png"
     end
   end
-
+  
+  # def self.initialize(x,y)
+  #   @piece_on_target = self.game.pieces.where(position_x: x, position_y: y)[0]
+  # end
+  
   def can_capture?(x,y)
     @piece_on_target = self.game.pieces.where(position_x: x, position_y: y)[0]
     self.color != @piece_on_target.color
