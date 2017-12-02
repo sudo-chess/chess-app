@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Piece, type: :model do
-  
+
   describe "move_to!" do
       it "should successfully set the udate the coordinates to the new ones" do
         game = FactoryBot.create(:game)
@@ -24,7 +24,7 @@ RSpec.describe Piece, type: :model do
         new_x_p2= piece2.position_x
         new_y_p2= piece2.position_y
         expect([new_x_p2, new_y_p2]).to eq([nil,nil])
-      
+
       end
 
 
@@ -49,7 +49,7 @@ RSpec.describe Piece, type: :model do
 
       end
     end
-  
+
 
 
   # add test for rook
@@ -70,8 +70,13 @@ RSpec.describe Piece, type: :model do
       Game.skip_callback(:create, :after, :populate_game!, raise: false)
       game = FactoryBot.create(:game)
       piece1 = Rook.create(position_x: 1, position_y: 1, color: "white", game_id: game.id)
-      
+
       # add code here
+      true_move = piece1.valid_move?(2,1)
+      expect(true_move).to eq(true)
+
+      false_move = piece1.valid_move?(2,2)
+      expect(false_move).to eq(false)
     end
   end
 
@@ -109,7 +114,7 @@ RSpec.describe Piece, type: :model do
       expect(var).to eq(true)
     end
   end
-  
+
 
     describe "valid_move?" do
     it "should return false if the move is valid for a bishop but is obstructed" do
@@ -137,14 +142,14 @@ RSpec.describe Piece, type: :model do
   #     expect(var).to eq(false)
   #   end
   # end
-  
+
 
   describe "valid_move?" do
     it "should return false if the move is not valid for a bishop" do
       Game.skip_callback(:create, :after, :populate_game!, raise: false)
       game = FactoryBot.create(:game)
       piece1 = Bishop.create(position_x: 3, position_y: 1, color: "white", game_id: game.id)
-     
+
       var = piece1.valid_move?(1,8)
       expect(var).to eq(false)
     end
@@ -157,14 +162,14 @@ RSpec.describe Piece, type: :model do
       Game.skip_callback(:create, :after, :populate_game!, raise: false)
       game = FactoryBot.create(:game)
       piece1 = Bishop.create(position_x: 3, position_y: 1, color: "white", game_id: game.id)
-     
+
       var = piece1.valid_move?(9,7)
       expect(var).to eq(false)
     end
   end
 
 
-  
+
   #queen
   describe "valid_move?" do
     it "should return true if the vertical move is valid for a queen" do
@@ -184,7 +189,7 @@ RSpec.describe Piece, type: :model do
       Game.skip_callback(:create, :after, :populate_game!, raise: false)
       game = FactoryBot.create(:game)
       piece1 = Queen.create(position_x: 4, position_y: 1, color: "white", game_id: game.id)
-      
+
       var = piece1.valid_move?(8,5)
       expect(var).to eq(true)
     end
@@ -207,7 +212,7 @@ RSpec.describe Piece, type: :model do
       Game.skip_callback(:create, :after, :populate_game!, raise: false)
       game = FactoryBot.create(:game)
       piece1 = Queen.create(position_x: 4, position_y: 1, color: "white", game_id: game.id)
-      
+
       var = piece1.valid_move?(5,7)
       expect(var).to eq(false)
     end
@@ -225,12 +230,12 @@ RSpec.describe Piece, type: :model do
       expect(var).to eq(true)
     end
   end
-  
+
   describe "valid_move?" do
     it "should return false if the move is not valid for a king" do
       game = FactoryBot.create(:game)
       piece1 = King.create(position_x: 5, position_y: 1, color: "white", game_id: game.id)
-      
+
       var = piece1.valid_move?(1,2)
       expect(var).to eq(false)
     end
@@ -241,16 +246,16 @@ RSpec.describe Piece, type: :model do
     it "should return true if the move is valid for a pawn" do
       game = FactoryBot.create(:game)
       piece1 = Pawn.create(position_x: 1, position_y: 2, color: "white", game_id: game.id)
-      
+
       # add code here
     end
   end
-  
+
   describe "valid_move?" do
     it "should return false if the move is not valid for a pawn" do
       game = FactoryBot.create(:game)
       piece1 = Pawn.create(position_x: 1, position_y: 2, color: "white", game_id: game.id)
-      
+
       # add code here
     end
   end
