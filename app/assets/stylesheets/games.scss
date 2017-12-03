@@ -31,6 +31,13 @@ border:5px solid black;
   float: left;
 }
 
+
+#draggable { width: 64px; height: 64px; float: left; }
+
+#droppable { width: 64px; height: 64px; float: left; }
+
+
+
 .black
 {
 
@@ -82,4 +89,8 @@ height: 100%;
   width: 64px; 
   max-width: 64px; 
   max-height: 64px;
+}
+
+.highlight {
+  background_color: green;
 }
