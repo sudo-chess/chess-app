@@ -361,4 +361,15 @@ RSpec.describe Piece, type: :model do
       expect(var).to eq(false)
     end
   end
+
+  describe "is_in_check?" do
+    it "should return false if move will take king out of check but move is impossible" do
+      game = FactoryBot.create(:game)
+      piece1 = King.create(position_x: 2, position_y: 1, color: "white", game_id: game.id)
+      piece3 = Rook.create(position_x: 2, position_y: 5, color: "black", game_id: game.id)
+      
+      var = piece1.is_in_check?(1,3)
+      expect(var).to eq(false)
+    end
+  end
 end
