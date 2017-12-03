@@ -10,7 +10,7 @@
   <script>
 
   $( function() {
-  
+
     $( "#chessboard #draggable" ).draggable({
       // axis : 'y'
       containment : 'table',
@@ -31,7 +31,7 @@
         $( this )
           // .addClass( "ui-state-highlight" )
           // alert('hey');
-        
+
       }
     });
 
@@ -56,11 +56,10 @@
             <% if index.even? %>
               <td class="black tile">
                 <%= check_piece(index + 1, row_number) %>
-              </td> 
+              </td>
             <% else %>
               <td class="white tile">
                 <%= check_piece(index + 1, row_number) %>
-
               </td>
             <% end %>
           <% else %>
@@ -72,7 +71,6 @@
               <td class="black tile">
                 <%= check_piece(index + 1, row_number) %>
               </td>
-
             <% end %>
           <% end %>
         <% end %>
@@ -80,5 +78,4 @@
     <% end %>
   </table>
 </div>
-
-
+<%= link_to 'Forfeit', '#', method: :delete, data: {confirm: 'Are you sure you want to forfeit?'},class: 'btn btn-primary btn-danger' %>
