@@ -1,11 +1,38 @@
 
+  <!-- from jquery ui droppable-->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <style>
+  #draggable { width: 64px; height: 64px; float: left;}
+  #droppable { width: 64px; height: 64px; float: left; }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#draggable" ).draggable();
+    $( "#chessboard #draggable" ).draggable();
+
+    $( "#chessboard #droppable" ).droppable({
+      drop: function( event, ui ) {
+        $( this )
+          .addClass( "ui-state-highlight" )
+          // .find( "p" )
+          //   .html( "Dropped!" );
+      }
+    });
+  } );
+  </script>
+
 
 <div class="col-12 offset-4">
   <br />
   <br />
   <br />
-  
+
+
   <table id="chessboard">
+
 
     <% (1..8).to_a.reverse.each do |row_number| %>
       <tr>
@@ -14,13 +41,10 @@
           <% if row_number.odd? %>
             <% if index.even? %>
               <td class="black tile">
-
                 <%= check_piece(index + 1, row_number) %>
-
               </td> 
             <% else %>
               <td class="white tile">
-
                 <%= check_piece(index + 1, row_number) %>
 
               </td>
@@ -28,16 +52,13 @@
           <% else %>
             <% if index.even? %>
               <td class="white tile">
-
                 <%= check_piece(index + 1, row_number) %>
-
               </td>
             <% else %>
               <td class="black tile">
-
                 <%= check_piece(index + 1, row_number) %>
-
               </td>
+
             <% end %>
           <% end %>
         <% end %>
