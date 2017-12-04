@@ -26,10 +26,16 @@ class GamesController < ApplicationController
     @game = Game.new
   end
 
-  def destroy
+  def update
     @game = Game.find_by_id(params[:id])
-    @game.destroy
-    redirect_to games_path
+
+    @game.update_attributes(game_params)
+
+    if @game.valid?
+      redirect_to root_path
+    else
+      return render :edit, status: :unprocessable_entity
+    end
   end
 
   def create
@@ -41,7 +47,7 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:black_player_id)
+    params.require(:game).permit(:black_player_id,:in_progress)
   end
 
 
