@@ -1,4 +1,6 @@
 class Game < ApplicationRecord
+  enum result: [ :active, :archived ]
+
   has_many	:pieces
 
   belongs_to :white_player, :class_name => 'User', :foreign_key => 'white_player_id'
@@ -13,7 +15,7 @@ class Game < ApplicationRecord
 
   def populate_game!
     color = ""
-   
+
     [2,7].each do |y|
       (1..8).each do |x|
         y == 2? color = "white" : color ="black"
@@ -46,7 +48,7 @@ class Game < ApplicationRecord
         y == 1? color = "white" : color ="black"
         Queen.create(game_id: id, position_x: 4, position_y: y, color: color, :image => Queen.get_image(color))
       end
-    
+
       [1,8].each do |y|
         y == 1? color = "white" : color ="black"
         King.create(game_id: id, position_x: 5, position_y: y, color: color, :image => King.get_image(color))
