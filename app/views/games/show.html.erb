@@ -2,8 +2,8 @@
   <!-- from jquery ui droppable-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <style>
-  #draggable { width: 64px; height: 64px; float: left;}
-  #droppable { width: 64px; height: 64px; float: left; }
+  .draggable { width: 64px; height: 64px; float: left;}
+  .droppable { width: 64px; height: 64px; float: left; }
   </style>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -11,27 +11,35 @@
 
   $( function() {
   
-    $( "#chessboard #draggable" ).draggable({
-      // axis : 'y'
+    var drag = $( ".draggable" ).children()
+    
+    // drag control
+    drag.draggable({
       containment : 'table',
       snap :'.tile',
       snapTolerance: 32,
       snapMode: "inner",
 
-      drag: function( event, ui ) {}
+      drag: function( event, ui ) {
 
-      // revert : true
-      // grid : [64 , 64]
+      }
     })
 
-
-
-    $( "#chessboard #droppable" ).droppable({
+    // drop function
+    $( ".droppable").children().droppable({
       drop: function( event, ui ) {
-        $( this )
-          // .addClass( "ui-state-highlight" )
-          // alert('hey');
-        
+        var dest = $(this).parent().data();
+        var origX = ui.draggable.parent().data('position_x');
+        var origY = ui.draggable.parent().data('position_y');
+        var piece = {position_x: origX, position_y: origY};
+        console.log(piece);
+        console.log(dest);
+         $.ajax({
+          type: 'PUT',
+          url: '/pieces/update',
+          dataType: 'json',
+          data: piece
+        }).done(function(data){})
       }
     });
 
@@ -45,7 +53,7 @@
   <br />
 
 
-  <table id="chessboard">
+  <table class="chessboard">
 
 
     <% (1..8).to_a.reverse.each do |row_number| %>
@@ -54,22 +62,22 @@
 
           <% if row_number.odd? %>
             <% if index.even? %>
-              <td class="black tile">
+              <td class="black tile droppable draggable" data-position_x=<%= index+1 %> data-position_y=<%= row_number %>>
                 <%= check_piece(index + 1, row_number) %>
               </td> 
             <% else %>
-              <td class="white tile">
+              <td class="white tile droppable draggable "  data-position_x=<%= index+1 %> data-position_y=<%= row_number %>>
                 <%= check_piece(index + 1, row_number) %>
 
               </td>
             <% end %>
           <% else %>
             <% if index.even? %>
-              <td class="white tile">
+              <td class="white tile droppable draggable" data-position_x=<%= index+1 %> data-position_y=<%= row_number %>>
                 <%= check_piece(index + 1, row_number) %>
               </td>
             <% else %>
-              <td class="black tile">
+              <td class="black tile droppable draggable" data-position_x=<%= index+1 %> data-position_y=<%= row_number %>>
                 <%= check_piece(index + 1, row_number) %>
               </td>
 
