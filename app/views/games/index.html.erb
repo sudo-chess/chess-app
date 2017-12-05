@@ -2,7 +2,7 @@
 <% @games.each do |game| %>
   <div class="game-box col-10 offset-1">
     <h1><%= link_to game.id, game_path(game) %></h1><br />
-    <h2>-- <%= game.result %> -- </h2>
+    <h2>Game status:  <%= game.result %></h2>
   </div>
 <% end %>
 

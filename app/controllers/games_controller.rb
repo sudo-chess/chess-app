@@ -30,12 +30,16 @@ class GamesController < ApplicationController
     redirect_to game_path(@game)
   end
 
-  def update
-    @game = Game.find_by_id(params[:id])
-    @game.update_attribute(:result, :finished)
+  # def update
+  #   @game = Game.find_by_id(params[:id])
+  #   @game.update_attribute(:result, :finished)
+  #   redirect_to root_path
+  # end
+  def forfeit
+    @game = Game.find(params[:id])
+    @game.forfeit!(current_user)
     redirect_to root_path
   end
-
   private
 
   def game_params

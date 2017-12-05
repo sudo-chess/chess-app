@@ -79,5 +79,5 @@
       </tr>
     <% end %>
   </table>
-  <%= link_to 'Forfeit', '#', method: :update, class: 'btn btn-primary btn-danger',data: {confirm: 'Are you sure?'} %>
+  <%= link_to 'Forfeit', forfeit_game_path(@local_game), method: :post, class: 'btn btn-primary btn-danger',data: {confirm: 'Are you sure?'} %>
 </div>

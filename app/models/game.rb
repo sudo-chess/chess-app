@@ -1,5 +1,6 @@
 class Game < ApplicationRecord
-  enum result: [ :active, :finished ]
+  ## Results of the game after the game is over enumerated within the result column
+  enum result: {:black_wins => 0, :white_wins => 1, :stalemate => 2}
 
   has_many	:pieces
 
@@ -8,10 +9,17 @@ class Game < ApplicationRecord
 
   scope :pending,  ->{ where(black_player_id: nil)}
   scope :playing,  ->{ where.not(black_player_id: nil).where(result: nil)}
-  scope :complete, ->{ where(winner_id: true)}
+  scope :complete, ->{ where(winner_id: true).where.not(result: nil)}
 
   after_create :populate_game!
 
+  def forfeit!(player)
+    if player == white_player
+      update!(:result => 0, :winner_id => black_player_id)
+    elsif player == black_player
+      update!(:result => 1, :winner_id => white_player_id)
+    end
+  end
 
   def populate_game!
     color = ""
@@ -33,9 +41,9 @@ class Game < ApplicationRecord
      [1,8].each do |y|
       [2,7].each do |x|
         y == 1? color = "white" : color ="black"
-        Knight.create(game_id: id, position_x: x, position_y: y, color: color, :image => Knight.get_image(color))
+          Knight.create(game_id: id, position_x: x, position_y: y, color: color, :image => Knight.get_image(color))
+        end
       end
-    end
 
       [1,8].each do |y|
       [3,6].each do |x|
