@@ -1,6 +1,4 @@
 class GamesController < ApplicationController
-
-
   def index
     @games = Game.all
   end
@@ -33,8 +31,9 @@ class GamesController < ApplicationController
   end
 
   def update
-    @game = Game.find_by_id(params:id)
-    @game.update_attribute(game_params)
+    @game = Game.find_by_id(params[:id])
+    @game.update_attribute(:result, :finished)
+    redirect_to root_path
   end
 
   private

@@ -1,5 +1,5 @@
 class Game < ApplicationRecord
-  enum result: [ :active, :archived ]
+  enum result: [ :active, :finished ]
 
   has_many	:pieces
 
