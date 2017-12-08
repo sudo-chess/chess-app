@@ -75,11 +75,10 @@
             <% if index.even? %>
               <td class="black tile droppable draggable" data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %>>
                 <%= check_piece(index + 1, row_number) %>
-              </td> 
+              </td>
             <% else %>
               <td class="white tile droppable draggable "  data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %>>
                 <%= check_piece(index + 1, row_number) %>
-
               </td>
             <% end %>
           <% else %>
@@ -91,7 +90,6 @@
               <td class="black tile droppable draggable" data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %>>
                 <%= check_piece(index + 1, row_number) %>
               </td>
-
             <% end %>
           <% end %>
         <% end %>
@@ -99,5 +97,4 @@
     <% end %>
   </table>
 </div>
-
-
+<%= link_to 'Forfeit', '#', method: :update, data: {confirm: 'Are you sure you want to forfeit?'},class: 'btn btn-primary btn-danger' %>
