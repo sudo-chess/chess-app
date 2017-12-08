@@ -13,6 +13,9 @@ class Pawn < Piece
   end
 
   def valid_move?(x,y)
+    x = x
+    y = y
+
     piece_on_target = self.game.pieces.where(position_x: x, position_y: y)[0]
     valid_moves = []
 
