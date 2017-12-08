@@ -13,7 +13,7 @@ class Piece < ApplicationRecord
   def move_to!(new_x, new_y)
     @current_game = self.game
     @target = @current_game.pieces.where(position_x: new_x, position_y: new_y)[0]
-
+  
     if @target.color != self.color
       @target.update_attributes(position_x: nil, position_y: nil)
       self.update_attributes(position_x: new_x, position_y: new_y, moved: true)
