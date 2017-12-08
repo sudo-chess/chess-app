@@ -428,4 +428,68 @@ RSpec.describe Piece, type: :model do
       expect(test).to eq([["kingside_castle", "black"],["queenside_castle", "black"]])
     end
   end
+
+  describe "castle!" do
+    it "should return true if white kingside castle was successful" do
+      game = FactoryBot.create(:game)
+      king = King.create(position_y: 1, position_x: 4, color: "white", game_id: game.id)
+      rook1 = Rook.create(position_y: 1, position_x: 1, color: "white", game_id: game.id) 
+      var = king.castle!("kingside_castle","white")
+      new_king = game.pieces.where(position_x: 2, position_y: 1)[0]
+      new_rook = game.pieces.where(position_x: 3, position_y: 1)[0]
+      old_king = game.pieces.where(position_x: 4, position_y: 1)[0]
+      old_rook = game.pieces.where(position_x: 1, position_y: 1)[0]
+      castle_test = [new_king.type, new_rook.type, old_king, old_rook]
+
+      expect(castle_test).to eq(["King","Rook",nil,nil])
+    end
+  end
+
+  describe "castle!" do
+    it "should return true if white queenside castle was successful" do
+      game = FactoryBot.create(:game)
+      king = King.create(position_y: 1, position_x: 4, color: "white", game_id: game.id)
+      rook1 = Rook.create(position_y: 1, position_x: 8, color: "white", game_id: game.id) 
+      var = king.castle!("queenside_castle","white")
+      new_king = game.pieces.where(position_x: 6, position_y: 1)[0]
+      new_rook = game.pieces.where(position_x: 5, position_y: 1)[0]
+      old_king = game.pieces.where(position_x: 4, position_y: 1)[0]
+      old_rook = game.pieces.where(position_x: 8, position_y: 1)[0]
+      castle_test = [new_king.type, new_rook.type, old_king, old_rook]
+
+      expect(castle_test).to eq(["King","Rook",nil,nil])
+    end
+  end
+  
+  describe "castle!" do
+    it "should return true if black kingside castle was successful" do
+      game = FactoryBot.create(:game)
+      king = King.create(position_y: 8, position_x: 4, color: "white", game_id: game.id)
+      rook1 = Rook.create(position_y: 8, position_x: 1, color: "white", game_id: game.id) 
+      var = king.castle!("kingside_castle","black")
+      new_king = game.pieces.where(position_x: 2, position_y: 8)[0]
+      new_rook = game.pieces.where(position_x: 3, position_y: 8)[0]
+      old_king = game.pieces.where(position_x: 4, position_y: 8)[0]
+      old_rook = game.pieces.where(position_x: 1, position_y: 8)[0]
+      castle_test = [new_king.type, new_rook.type, old_king, old_rook]
+
+      expect(castle_test).to eq(["King","Rook",nil,nil])
+    end
+  end
+
+  describe "castle!" do
+    it "should return true if black queenside castle was successful" do
+      game = FactoryBot.create(:game)
+      king = King.create(position_y: 8, position_x: 4, color: "white", game_id: game.id)
+      rook1 = Rook.create(position_y: 8, position_x: 8, color: "white", game_id: game.id) 
+      var = king.castle!("queenside_castle","black")
+      new_king = game.pieces.where(position_x: 6, position_y: 8)[0]
+      new_rook = game.pieces.where(position_x: 5, position_y: 8)[0]
+      old_king = game.pieces.where(position_x: 4, position_y: 8)[0]
+      old_rook = game.pieces.where(position_x: 8, position_y: 8)[0]
+      castle_test = [new_king.type, new_rook.type, old_king, old_rook]
+
+      expect(castle_test).to eq(["King","Rook",nil,nil])
+    end
+  end
 end
