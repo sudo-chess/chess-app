@@ -18,13 +18,13 @@ class PiecesController < ApplicationController
       @local_game_id = @current_piece.game_id
       @local_game = Game.find(@local_game_id)
 
-      @target_x = piece_params[:position_x]
-      @target_y = piece_params[:position_y]
+      @target_x = piece_params[:position_x].to_i
+      @target_y = piece_params[:position_y].to_i
       @target = @local_game.pieces.where(position_x: @target_x, position_y: @target_y)
 
       #checks if there is a piece at destination. if object.lenght==0, it means the square is empty
       if @target.length == 0
-        if @current_piece.valid_move?(piece_params[:position_x], piece_params[(:position_y)])
+        if @current_piece.valid_move?(@target_x, @target_y)
           @current_piece.update_attributes(piece_params)
         else
         flash[:notice] = "That was not a valid move"
