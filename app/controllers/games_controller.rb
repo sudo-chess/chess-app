@@ -1,6 +1,5 @@
 class GamesController < ApplicationController
 
-
   def index
     @games = Game.all
   end
@@ -28,17 +27,18 @@ class GamesController < ApplicationController
     @game = Game.new
   end
 
-  def update
-    @game = Game.find_by_id(params[:id])
 
-    @game.update_attributes(game_params)
+  # def update
+  #   @game = Game.find_by_id(params[:id])
 
-    if @game.valid?
-      redirect_to root_path
-    else
-      return render :edit, status: :unprocessable_entity
-    end
-  end
+  #   @game.update_attributes(game_params)
+
+  #   if @game.valid?
+  #     redirect_to root_path
+  #   else
+  #     return render :edit, status: :unprocessable_entity
+  #   end
+  # end
 
   def create
     opponent_id = game_params[:black_player_id]
@@ -46,10 +46,23 @@ class GamesController < ApplicationController
     redirect_to game_path(@game)
   end
 
+
+  # def update
+  #   @game = Game.find_by_id(params[:id])
+  #   @game.update_attribute(:result, :finished)
+  #   redirect_to root_path
+  # end
+
+  def forfeit
+    @game = Game.find(params[:id])
+    @game.forfeit!(current_user)
+    redirect_to root_path
+  end
+
   private
 
   def game_params
-    params.require(:game).permit(:black_player_id,:in_progress)
+    params.require(:game).permit(:black_player_id, :result)
   end
 
 
