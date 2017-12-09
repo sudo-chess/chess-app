@@ -10,9 +10,9 @@
   <script>
 
   $( function() {
-  
+
     var drag = $( ".draggable" ).children()
-    
+
     // drag control
     drag.draggable({
       containment : 'table',
@@ -40,7 +40,7 @@
 
         // var piece = {piece: {position_x: origX, position_y: origY, id: pieceId}};
         var target = {piece: {position_x : destX, position_y: destY, id: pieceId}};
-        
+
 
          $.ajax({
           type: 'PUT',
@@ -58,7 +58,7 @@
   </script>
 
 
-<div class="col-12 offset-4">
+<div id="game_board" class="col-10 offset-4">
   <br />
   <br />
   <br />
@@ -96,5 +96,12 @@
       </tr>
     <% end %>
   </table>
+  <div id="action_box" class="col-8 row">
+    <h1>Look at all these actions:  </h1>
+    <br />
+    <br />
+    <br />
+
+    <%= link_to 'Forfeit', '#', method: :update, data: {confirm: 'Are you sure you want to forfeit?'},class: 'btn btn-primary btn-danger' %>
+  </div>
 </div>
-<%= link_to 'Forfeit', '#', method: :update, data: {confirm: 'Are you sure you want to forfeit?'},class: 'btn btn-primary btn-danger' %>
