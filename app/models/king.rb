@@ -9,40 +9,70 @@ class King < Piece
 
   def valid_move?(x,y)
     valid_moves = [
-      [self.position_x+1,self.position_y+1], 
-      [self.position_x+1,self.position_y], 
-      [self.position_x+1,self.position_y-1], 
-      [self.position_x,self.position_y+1], 
-      [self.position_x,self.position_y-1], 
-      [self.position_x-1,self.position_y+1], 
-      [self.position_x-1,self.position_y], 
+      [self.position_x+1,self.position_y+1],
+      [self.position_x+1,self.position_y],
+      [self.position_x+1,self.position_y-1],
+      [self.position_x,self.position_y+1],
+      [self.position_x,self.position_y-1],
+      [self.position_x-1,self.position_y+1],
+      [self.position_x-1,self.position_y],
       [self.position_x-1,self.position_y-1]
     ]
-
     return valid_moves.include?([x,y]) && is_on_board?(x,y)
-  end  
-
-  def castling(x,y)
-    a_castling = [[@current_x+2,@current_y]] # black or queenside white
-    b_castling = [[@current_x-2,@current_y]] # white or queenside black
-
-    #should allow castling
-    #cannot castle if your king has ever moved
-    #cannot castle with a rook that has ever moved
-    #cannot castle when your king is in check
-    #cannot castle into check
-    #cannot castle though check (?)
-    #http://www.kidchess.com/wp_support_content/instruction/castling.htm
-    
-    # 1 check if king has been moved, check if rook has been moved, 
-    # 2 check if king is in check, will pass though a check, or will be put in check
-    # 3 depending if black or white king push correct castling array to vaild_moves 
-    # maybe check if king is white or black at step 2 and run the three positions though check method, then allow castling
   end
 
-  def check(x,y)
-    #should restrict movement if in check
-    #trigger checkmate or winner/loser
+  def castle!(side, color)
+    if color == "white"
+      white_king            = self.game.pieces.where(position_x: 4, position_y: 1)[0]
+      white_kingside_rook   = self.game.pieces.where(position_x: 1, position_y: 1)[0]
+      white_queenside_rook  = self.game.pieces.where(position_x: 8, position_y: 1)[0]
+      if side == "kingside_castle"
+        white_king.update_attributes(position_x: 2, position_y: 1, moved: true)
+        white_kingside_rook.update_attributes(position_x: 3, position_y: 1, moved: true)
+      elsif side == "queenside_castle"
+        white_king.update_attributes(position_x: 6, position_y: 1, moved: true)
+        white_queenside_rook.update_attributes(position_x: 5, position_y: 1, moved: true)
+      end
+    elsif color == "black"
+      black_king            = self.game.pieces.where(position_x: 4, position_y: 8)[0]
+      black_kingside_rook   = self.game.pieces.where(position_x: 1, position_y: 8)[0]
+      black_queenside_rook  = self.game.pieces.where(position_x: 8, position_y: 8)[0]
+      if side == "kingside_castle"
+        black_king.update_attributes(position_x: 2, position_y: 8, moved: true)
+        black_kingside_rook.update_attributes(position_x: 3, position_y: 8, moved: true)
+      elsif side == "queenside_castle"
+        black_king.update_attributes(position_x: 6, position_y: 8, moved: true)
+        black_queenside_rook.update_attributes(position_x: 5, position_y: 8, moved: true)
+      end
+    end
+  end
+
+  def can_castle
+    available_moves = []
+    game.pieces.each do |piece|
+      if piece.type == "Rook" && piece.moved == false
+        kingside_rook     = self.game.pieces.where(position_x: 1, position_y: piece.position_y)[0]
+        kingside_knight   = self.game.pieces.where(position_x: 2, position_y: piece.position_y)[0]
+        kingside_bishop   = self.game.pieces.where(position_x: 3, position_y: piece.position_y)[0]
+        king              = self.game.pieces.where(position_x: 4, position_y: piece.position_y)[0] 
+        queen             = self.game.pieces.where(position_x: 5, position_y: piece.position_y)[0]
+        queenside_bishop  = self.game.pieces.where(position_x: 6, position_y: piece.position_y)[0]
+        queenside_knight  = self.game.pieces.where(position_x: 7, position_y: piece.position_y)[0]
+        queenside_rook    = self.game.pieces.where(position_x: 8, position_y: piece.position_y)[0]
+        if king.moved == false && king.is_in_check? == false
+          if piece == kingside_rook && kingside_knight == nil && kingside_bishop == nil
+            if king.is_in_check?(3, piece.position_y) == false && king.is_in_check?(2, piece.position_y) == false
+              available_moves << ["kingside_castle", piece.color]
+            end
+          elsif piece == queenside_rook && queen == nil && queenside_bishop == nil && queenside_knight == nil
+            if king.is_in_check?(6, piece.position_y) == false && king.is_in_check?(7, piece.position_y) == false
+              available_moves << ["queenside_castle", piece.color]
+            end
+          end
+        end
+      end
+    end
+    available_moves
   end
 
 end
