@@ -99,12 +99,8 @@ class Piece < ApplicationRecord
 
   def is_in_check?(x = self.position_x, y = self.position_y)
     in_check = false
-    game.pieces.each do |enemy|
-      if enemy.color != self.color
-        if enemy.valid_move?(x,y)
-          in_check = true
-        end
-      end
+    game.pieces.each do |piece|
+      (piece.color != self.color && piece.valid_move?(x,y)) ? in_check = true : in_check = false
     end
     return in_check
   end
