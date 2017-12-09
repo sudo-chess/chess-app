@@ -21,6 +21,7 @@ float: left;
 padding:10px;
 background-color: #FFE598;
 border:5px solid black;
+margin-left: 44px;
 
 }
 
@@ -30,12 +31,6 @@ border:5px solid black;
   height: 64px;
   float: left;
 }
-
-
-#draggable { width: 64px; height: 64px; float: left; }
-
-#droppable { width: 64px; height: 64px; float: left; }
-
 
 
 .black
@@ -100,4 +95,8 @@ height: 100%;
 }
 .droppable {
  width: 64px; height: 64px; float: left; 
+}
+
+.clear {
+  clear: both;
 }

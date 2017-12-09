@@ -1,57 +1,4 @@
 
-
-  <!-- from jquery ui droppable-->
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <style>
-  #draggable { width: 64px; height: 64px; float: left;}
-  #droppable { width: 64px; height: 64px; float: left; }
-  </style>
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-  <script>
-
-  $( function() {
-
-
-    var drag = $( ".draggable" ).children()
-
-    // drag control
-    drag.draggable({
-      containment : 'table',
-      snap :'.tile',
-      snapTolerance: 32,
-      snapMode: "inner",
-
-      drag: function( event, ui ) {}
-
-      // revert : true
-      // grid : [64 , 64]
-    })
-
-
-
-
-    $( "#chessboard #droppable" ).droppable({
-      drop: function( event, ui ) {
-        $( this )
-          // .addClass( "ui-state-highlight" )
-          // alert('hey');
-
-        var pieceId = ui.draggable.parent().data('piece-id')
-
-        // var piece = {piece: {position_x: origX, position_y: origY, id: pieceId}};
-        var target = {piece: {position_x : destX, position_y: destY, id: pieceId}};
-
-
-
-      }
-    });
-
-  });
-  </script>
-
-
 <div id="game_board" class="col-10 offset-4">
   <br />
   <br />
@@ -91,19 +38,13 @@
     <% end %>
   </table>
 
-<!--   <%= link_to 'Forfeit', forfeit_game_path(@local_game), method: :post, class: 'btn btn-primary btn-danger',data: {confirm: 'Are you sure?'} %> -->
 </div>
+<br class="clear"/>
+<hr/>
+<div id="action_box" class="col-10 offset-4 row">
+    <h4>Available actions: &nbsp; &nbsp; </h4>
 
-
-
-
-  <div id="action_box" class="col-8 row">
-    <h1>Look at all these actions:  </h1>
-    <br />
-    <br />
-    <br />
-
-    <%= link_to 'Forfeit', '#', method: :update, data: {confirm: 'Are you sure you want to forfeit?'},class: 'btn btn-primary btn-danger' %>
+    <%= link_to 'Forfeit', forfeit_game_path(@local_game), method: :post, class: 'btn btn-primary btn-danger',data: {confirm: 'Are you sure?'} %>
   </div>
 </div>
 
