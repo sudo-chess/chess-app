@@ -128,21 +128,6 @@ RSpec.describe Piece, type: :model do
     end
   end
 
-  #     describe "valid_move?" do
-  #   it "should return false if the move is valid for a bishop but is obstructed ----attempt without factorybot-----" do
-  #     Game.skip_callback(:create, :after, :populate_game!, raise: false)
-
-  #     whiteplayer = User.create(white_player_id: 1)
-  #     game = Game.create(white_player_id: whiteplayer.id)
-
-  #     piece1 = Bishop.create(position_x: 3, position_y: 1, color: "white", game_id: game.id)
-  #     piece2 = Pawn.create(position_x: 5, position_y: 3, color: "white", game_id: game.id)
-
-  #     var = piece1.valid_move?(8,6)
-  #     expect(var).to eq(false)
-  #   end
-  # end
-
 
   describe "valid_move?" do
     it "should return false if the move is not valid for a bishop" do
