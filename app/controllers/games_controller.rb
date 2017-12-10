@@ -13,14 +13,17 @@ class GamesController < ApplicationController
 
   def pending
     @game = Game.pending
+    render action: :index
   end
 
   def playing
     @game = Game.playing
+    render action: :index
   end
 
   def complete
     @game = Game.complete
+    render action: :index
   end
 
   def new

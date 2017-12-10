@@ -1,6 +1,6 @@
 class Game < ApplicationRecord
   ## Results of the game after the game is over enumerated within the result column
-  enum result: {:black_wins => 0, :white_wins => 1, :stalemate => 2}
+  enum result: {black_wins: 0, white_wins: 1, stalemate: 2}
 
   has_many	:pieces
 
@@ -19,6 +19,10 @@ class Game < ApplicationRecord
     elsif player == black_player
       update!(:result => 1, :winner_id => white_player_id)
     end
+  end
+
+  def name
+    User.find(self.black_player_id).email
   end
 
   def populate_game!
