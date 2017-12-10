@@ -99,8 +99,12 @@ class Piece < ApplicationRecord
 
   def is_in_check?(x = self.position_x, y = self.position_y)
     in_check = false
-    game.pieces.each do |piece|
-      (piece.color != self.color && piece.valid_move?(x,y)) ? in_check = true : in_check = false
+    game.pieces.each do |enemy|
+      if enemy.color != self.color
+        if enemy.valid_move?(x,y)
+         in_check = true
+        end
+      end
     end
     return in_check
   end
@@ -115,44 +119,47 @@ class Piece < ApplicationRecord
       end
     end
     game.pieces.each do |king|
-      if king.name == "King" && king.is_in_check?
+      if king.name == "King" && king.is_in_check? == true
+        checked_king = king
         game.pieces.each do |piece|
-          if piece.color == king.color
+          if piece.color == checked_king.color
             squares.each do |position|
-              if piece.valid_move?(position[0],position[1]) == true && king.is_in_check? == false
+              if piece.valid_move?(position[0],position[1]) == true && checked_king.is_in_check? == false
                 in_checkmate = false
               end
             end
           end
         end
+      else
+        in_checkmate = false
       end
     end
     return in_checkmate
   end
 
-  def is_in_stalemate?
-    in_stalemate = true
-    squares = []
-    numbers = [1,2,3,4,5,6,7,8]
-    numbers.each do |x|
-      numbers.each do |y|
-        squares << [x,y]
-      end
-    end
-    game.pieces.each do |king|
-      if king.name == "King" && king.is_in_check? == false
-        game.pieces.each do |piece|
-          if piece.color == king.color
-            squares.each do |position|
-              if piece.valid_move?(position[0],position[1]) == true && king.is_in_check? == false
-                in_stalemate = false
-              end
-            end
-          end
-        end
-      end
-    end
-    return in_stalemate
-  end
+  # def is_in_stalemate?
+  #   in_stalemate = true
+  #   squares = []
+  #   numbers = [1,2,3,4,5,6,7,8]
+  #   numbers.each do |x|
+  #     numbers.each do |y|
+  #       squares << [x,y]
+  #     end
+  #   end
+  #   game.pieces.each do |king|
+  #     if king.name == "King" && king.is_in_check? == false
+  #       game.pieces.each do |piece|
+  #         if piece.color == king.color
+  #           squares.each do |position|
+  #             if piece.valid_move?(position[0],position[1]) == true && king.is_in_check? == false
+  #               in_stalemate = false
+  #             end
+  #           end
+  #         end
+  #       end
+  #     end
+  #   end
+  #   return in_stalemate
+  # end
 
 end
