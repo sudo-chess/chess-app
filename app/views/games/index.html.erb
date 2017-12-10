@@ -1,7 +1,7 @@
 
 <% @games.each do |game| %>
   <div class="game-box col-10 offset-1">
-    <h1>Game:  <%= link_to game.id, game_path(game) %></h1><br />
+    <h1>Your player:  <%= link_to game.name, game_path(game) %></h1><br />
     <h2>Game status:  <%= game.result %></h2>
   </div>
 <% end %>

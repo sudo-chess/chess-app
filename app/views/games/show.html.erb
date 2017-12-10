@@ -41,10 +41,12 @@
 </div>
 <br class="clear"/>
 <hr/>
-<div id="action_box" class="col-10 offset-4 row">
-    <h4>Available actions: &nbsp; &nbsp; </h4>
+<% if @local_game.result == nil %>
+  <div id="action_box" class="col-10 offset-4 row">
+      <h4>Available actions: &nbsp; &nbsp; </h4>
 
-    <%= link_to 'Forfeit', forfeit_game_path(@local_game), method: :post, class: 'btn btn-primary btn-danger',data: {confirm: 'Are you sure?'} %>
+      <%= link_to 'Forfeit', forfeit_game_path(@local_game), method: :post, class: 'btn btn-primary btn-danger',data: {confirm: 'Are you sure?'} %>
+    </div>
   </div>
-</div>
+<% end %>
 
