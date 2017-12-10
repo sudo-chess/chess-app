@@ -104,5 +104,55 @@ class Piece < ApplicationRecord
     end
     return in_check
   end
+          
+  def is_in_checkmate?
+    in_checkmate = true
+    squares = []
+    numbers = [1,2,3,4,5,6,7,8]
+    numbers.each do |x|
+      numbers.each do |y|
+        squares << [x,y]
+      end
+    end
+    game.pieces.each do |king|
+      if king.name == "King" && king.is_in_check?
+        game.pieces.each do |piece|
+          if piece.color == king.color
+            squares.each do |position|
+              if piece.valid_move?(position[0],position[1]) == true && king.is_in_check? == false
+                in_checkmate = false
+              end
+            end
+          end
+        end
+      end
+    end
+    return in_checkmate
+  end
+
+  def is_in_stalemate?
+    in_stalemate = true
+    squares = []
+    numbers = [1,2,3,4,5,6,7,8]
+    numbers.each do |x|
+      numbers.each do |y|
+        squares << [x,y]
+      end
+    end
+    game.pieces.each do |king|
+      if king.name == "King" && king.is_in_check? == false
+        game.pieces.each do |piece|
+          if piece.color == king.color
+            squares.each do |position|
+              if piece.valid_move?(position[0],position[1]) == true && king.is_in_check? == false
+                in_stalemate = false
+              end
+            end
+          end
+        end
+      end
+    end
+    return in_stalemate
+  end
 
 end
