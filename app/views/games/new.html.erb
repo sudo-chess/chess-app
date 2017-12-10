@@ -1,8 +1,10 @@
-<h1>Start a New Game</h1>
-<p>You can start a new game by selecting another player who's registered on the Chesster server.</p>
+<div class="game-box col-10 offset-1">
+  <h1>Start a New Game</h1>
+  <p>You can start a new game by selecting another player who's registered on the Chesster server.</p>
 
-<%= simple_form_for @game, :url => games_path do |f| %>
-  <%= f.input :black_player_id, :collection => User.all %>
-  <br/>
-  <%= f.submit "Start Game", :class => 'btn btn-primary' %>
-<% end %>
+  <%= simple_form_for @game, :url => games_path do |f| %>
+    <%= f.input :black_player_id, :collection => User.all %>
+    <br/>
+    <%= f.submit "Start Game", :class => 'btn btn-primary' %>
+  <% end %>  
+</div>
