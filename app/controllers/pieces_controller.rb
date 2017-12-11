@@ -17,6 +17,7 @@ class PiecesController < ApplicationController
 
       @local_game_id = @current_piece.game_id
       @local_game = Game.find(@local_game_id)
+      @local_pieces = @local_game.pieces
 
       @target_x = piece_params[:position_x].to_i
       @target_y = piece_params[:position_y].to_i

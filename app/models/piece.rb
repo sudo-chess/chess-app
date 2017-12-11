@@ -56,7 +56,6 @@ class Piece < ApplicationRecord
       end
     check_squares
     end
-
   end
 
   def is_horizontally_obstructed?(pos1,pos2)
@@ -81,7 +80,6 @@ class Piece < ApplicationRecord
 
     check_squares
     end
-
   end
 
   def self.get_image(color)
@@ -98,6 +96,7 @@ class Piece < ApplicationRecord
   end
 
   def is_in_check?(x = self.position_x, y = self.position_y)
+
     in_check = false
     game.pieces.each do |enemy|
       if enemy.color != self.color
@@ -108,34 +107,110 @@ class Piece < ApplicationRecord
     end
     return in_check
   end
-          
+
   def is_in_checkmate?
+    game = self.game
     in_checkmate = true
-    squares = []
+    @squares = []
     numbers = [1,2,3,4,5,6,7,8]
     numbers.each do |x|
       numbers.each do |y|
-        squares << [x,y]
+        @squares << [x,y]
       end
     end
-    game.pieces.each do |king|
-      if king.name == "King" && king.is_in_check? == true
-        checked_king = king
-        game.pieces.each do |piece|
-          if piece.color == checked_king.color
-            squares.each do |position|
-              if piece.valid_move?(position[0],position[1]) == true && checked_king.is_in_check? == false
-                in_checkmate = false
+ 
+    color = self.color
+    king = self
+    in_checkmate = true
+    
+    #if no king is in check there cannot be any checkmate situation
+    if !king.is_in_check?
+      in_checkmate = false
+    else
+      #setting variables, check and store which piece(s) create the check situation
+      x = king.position_x
+      y = king.position_y
+      if color == "black"  
+        attacking_color = "white" 
+      else
+        attacking_color = "black"
+      end
+
+      threatening_pieces = []
+      game.pieces.where(color: attacking_color).each do |piece|
+        if piece.valid_move?(x,y)
+          threatening_pieces << piece
+        end  
+      end
+
+      #check if the king can move to a square where it is not in check.
+      if king.escapable? 
+        in_checkmate = false 
+      end
+
+      #check if there the threatening piece can be captured or obstructed. if more than one threatening  piece and the king can't escape, it means checkmate.
+      if threatening_pieces.length > 1 
+        if !king.escapable?
+          in_checkmate = true
+        end
+    
+      elsif threatening_pieces.length == 1
+        th_x = threatening_pieces[0].position_x
+        th_y = threatening_pieces[0].position_y
+
+      #capture check
+        game.pieces.where(color: color).each do |piece|
+          if piece.valid_move?(th_x,th_y)
+            in_checkmate = false
+          end
+        end
+
+      #obstruct check
+        game.pieces.where(color: color).each do |piece|
+          if piece.type != "King"
+            @squares.each do |square|
+              if piece.valid_move?(square[0],square[1])
+                orig_x = piece.position_x
+                orig_y = piece.position_y
+                piece.update_attributes(position_x: square[0], position_y: square[1])
+                if threatening_pieces[0].is_obstructed?(king.position_x, king.position_y)
+                  in_checkmate = false
+                end
+                piece.update_attributes(position_x: orig_x, position_y: orig_y)
               end
             end
           end
         end
-      else
-        in_checkmate = false
-      end
+      end     
     end
     return in_checkmate
   end
+
+
+
+  def escapable?
+    result = false
+    k = self
+    or_x = k.position_x
+    or_y = k.position_y
+    @squares.each do |position|
+      if k.valid_move?(position[0], position[1])
+        
+        k.update_attributes(position_x: position[0], position_y: position[1])
+        if k.is_in_check?
+        result = false 
+        else
+        result = true
+        end
+        
+        k.update_attributes(position_x: or_x, position_y: or_y)
+      end
+    end
+
+    return result
+  end
+
+
 
   # def is_in_stalemate?
   #   in_stalemate = true
