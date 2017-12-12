@@ -13,10 +13,13 @@ class Piece < ApplicationRecord
   def move_to!(new_x, new_y)
     @current_game = self.game
     @target = @current_game.pieces.where(position_x: new_x, position_y: new_y)[0]
-  
-    if @target.color != self.color
+    if @target == nil
+      self.update_attributes(position_x: new_x, position_y: new_y, moved: true)
+    elsif @target.color != self.color
       @target.update_attributes(position_x: nil, position_y: nil)
       self.update_attributes(position_x: new_x, position_y: new_y, moved: true)
+    else
+      return false
     end
   end
 
@@ -145,7 +148,7 @@ class Piece < ApplicationRecord
 
       #check if the king can move to a square where it is not in check.
       if king.escapable? 
-        in_checkmate = false 
+        # in_checkmate = false 
       end
 
       #check if there the threatening piece can be captured or obstructed. if more than one threatening  piece and the king can't escape, it means checkmate.
@@ -174,7 +177,7 @@ class Piece < ApplicationRecord
                 orig_y = piece.position_y
                 piece.update_attributes(position_x: square[0], position_y: square[1])
                 if threatening_pieces[0].is_obstructed?(king.position_x, king.position_y)
-                  in_checkmate = false
+                  # in_checkmate = false
                 end
                 piece.update_attributes(position_x: orig_x, position_y: orig_y)
               end
@@ -189,25 +192,21 @@ class Piece < ApplicationRecord
 
 
   def escapable?
-    result = false
     k = self
     or_x = k.position_x
     or_y = k.position_y
     @squares.each do |position|
       if k.valid_move?(position[0], position[1])
-        
-        k.update_attributes(position_x: position[0], position_y: position[1])
-        if k.is_in_check?
-        result = false 
-        else
-        result = true
+        if k.move_to!(position[0], position[1])
+          k.move_to!(position[0], position[1])
+          if !k.is_in_check?
+          return true
+          end
         end
-        
-        k.update_attributes(position_x: or_x, position_y: or_y)
+          k.move_to!(or_x, or_y)
       end
     end
-
-    return result
+    return false
   end
 
 

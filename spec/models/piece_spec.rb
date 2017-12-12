@@ -572,19 +572,36 @@ RSpec.describe Piece, type: :model do
      piece2 = Pawn.create(position_x: 1, position_y: 7, color: "white", game_id: game.id)
 
      piece3 = Queen.create(position_x: 3, position_y: 8, color: "black", game_id: game.id)
+   
     
      var = piece1.is_in_checkmate?
      expect(var).to eq(true)
    end
   end
 
-      describe "is_in_checkmate?" do
+
+  describe "is_in_checkmate?" do
    it "should return true if king is in checkmate" do
      game = FactoryBot.create(:game)
-     piece1 = King.create(position_x: 2, position_y: 8, color: "white", game_id: game.id)
+     piece1 = King.create(position_x: 1, position_y: 8, color: "white", game_id: game.id)
      
      piece2 = King.create(position_x: 2, position_y: 6, color: "black", game_id: game.id)
-     piece3 = Rook.create(position_x: 6, position_y: 8, color: "black", game_id: game.id)
+     piece3 = Knight.create(position_x: 1, position_y: 6, color: "black", game_id: game.id)
+     piece3 = Bishop.create(position_x: 7, position_y: 2, color: "black", game_id: game.id)
+    
+     var = piece1.is_in_checkmate?
+     expect(var).to eq(true)
+   end
+  end
+
+  describe "is_in_checkmate?" do
+   it "should return true if king is in checkmate" do
+     game = FactoryBot.create(:game)
+     piece1 = King.create(position_x: 8, position_y: 8, color: "black", game_id: game.id)
+
+     piece2 = King.create(position_x: 8, position_y: 6, color: "white", game_id: game.id)
+     piece2 = Bishop.create(position_x: 5, position_y: 6, color: "white", game_id: game.id)
+     piece3 = Bishop.create(position_x: 6, position_y: 6, color: "white", game_id: game.id)
     
      var = piece1.is_in_checkmate?
      expect(var).to eq(true)
@@ -592,6 +609,19 @@ RSpec.describe Piece, type: :model do
   end
 
 
+  describe "is_in_checkmate?" do
+   it "should return true if king is in checkmate" do
+     game = FactoryBot.create(:game)
+     piece1 = King.create(position_x: 5, position_y: 8, color: "black", game_id: game.id)
+
+     piece2 = King.create(position_x: 7, position_y: 8, color: "white", game_id: game.id)
+     piece2 = Knight.create(position_x: 3, position_y: 6, color: "white", game_id: game.id)
+     piece3 = Knight.create(position_x: 6, position_y: 6, color: "white", game_id: game.id)
+    
+     var = piece1.is_in_checkmate?
+     expect(var).to eq(true)
+   end
+  end
 
 
 
