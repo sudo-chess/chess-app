@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171204205124) do
+ActiveRecord::Schema.define(version: 20171210093839) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,13 +22,13 @@ ActiveRecord::Schema.define(version: 20171204205124) do
 
   create_table "games", force: :cascade do |t|
     t.integer  "game_id"
-    t.integer  "white_player_id"
-    t.integer  "black_player_id"
     t.integer  "result"
     t.integer  "winner_id"
     t.integer  "loser_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "black_player_id"
+    t.integer  "white_player_id"
     t.boolean  "in_progress"
   end
 
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 20171204205124) do
     t.string   "name"
     t.integer  "white_player_id"
     t.integer  "black_player_id"
+    t.datetime "last_seen_at"
     t.index ["black_player_id"], name: "index_users_on_black_player_id", using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
