@@ -14,10 +14,10 @@ class Piece < ApplicationRecord
     @current_game = self.game
     @target = @current_game.pieces.where(position_x: new_x, position_y: new_y)[0]
     if @target == nil
-      self.update_attributes(position_x: new_x, position_y: new_y, moved: true)
+      self.update_attributes!(position_x: new_x, position_y: new_y, moved: true)
     elsif @target.color != self.color
-      @target.update_attributes(position_x: nil, position_y: nil)
-      self.update_attributes(position_x: new_x, position_y: new_y, moved: true)
+      @target.update_attributes!(position_x: nil, position_y: nil)
+      self.update_attributes!(position_x: new_x, position_y: new_y, moved: true)
     else
       return false
     end
@@ -99,11 +99,13 @@ class Piece < ApplicationRecord
   end
 
   def is_in_check?(x = self.position_x, y = self.position_y)
-
+    game = self.game
     in_check = false
     game.pieces.each do |enemy|
       if enemy.color != self.color
         if enemy.valid_move?(x,y)
+         #  puts "[#{x},#{y}]"
+         # puts enemy.inspect
          in_check = true
         end
       end
@@ -148,7 +150,7 @@ class Piece < ApplicationRecord
 
       #check if the king can move to a square where it is not in check.
       if king.escapable? 
-        # in_checkmate = false 
+        in_checkmate = false 
       end
 
       #check if there the threatening piece can be captured or obstructed. if more than one threatening  piece and the king can't escape, it means checkmate.
@@ -175,11 +177,11 @@ class Piece < ApplicationRecord
               if piece.valid_move?(square[0],square[1])
                 orig_x = piece.position_x
                 orig_y = piece.position_y
-                piece.update_attributes(position_x: square[0], position_y: square[1])
+                piece.move_to!(square[0], square[1])
                 if threatening_pieces[0].is_obstructed?(king.position_x, king.position_y)
-                  # in_checkmate = false
+                  in_checkmate = false
                 end
-                piece.update_attributes(position_x: orig_x, position_y: orig_y)
+                piece.move_to!(orig_x, orig_y)
               end
             end
           end
@@ -192,18 +194,25 @@ class Piece < ApplicationRecord
 
 
   def escapable?
-    k = self
-    or_x = k.position_x
-    or_y = k.position_y
-    @squares.each do |position|
-      if k.valid_move?(position[0], position[1])
-        if k.move_to!(position[0], position[1])
-          k.move_to!(position[0], position[1])
-          if !k.is_in_check?
-          return true
+    or_x = self.position_x
+    or_y = self.position_y
+    positions = @squares
+    positions.delete([or_x, or_y])
+    positions.each do |position|
+      if self.valid_move?(position[0], position[1])
+        if self.move_to!(position[0], position[1])
+          self.move_to!(position[0], position[1])
+          self.update_attributes!(position_x: position[0], position_y: position[1])
+          game.reload
+          if !self.is_in_check?
+            puts "KKKKKKK"
+            puts self.position_x
+            puts self.position_y
+            return true
           end
         end
-          k.move_to!(or_x, or_y)
+          self.move_to!(or_x, or_y)
+          sleep(0.1)
       end
     end
     return false
