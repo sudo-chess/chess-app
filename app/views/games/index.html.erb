@@ -1,7 +1,7 @@
   <% @games.each do |game| %>
-    <% if current_user && current_user.id == game.white_player_id %>
+    <% if current_user && current_user.id == game.white_player_id || current_user && current_user.id == game.black_player_id %>
       <div class="game-box col-10 offset-1">
-        <h1>Your player:  <%= link_to game.name, game_path(game) %></h1><br />
+        <h1>Your player:  <%= link_to game.name(current_user.id), game_path(game) %></h1><br />
         <h2>Game status:  <%= game.result %></h2>
       </div>
     <% end %>
