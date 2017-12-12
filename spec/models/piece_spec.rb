@@ -528,7 +528,7 @@ RSpec.describe Piece, type: :model do
    end
   end
 
-    describe "is_in_checkmate?" do
+  describe "is_in_checkmate?" do
    it "should return false if king is in not checkmate" do
      game = FactoryBot.create(:game)
      piece1 = King.create(position_x: 1, position_y: 1, color: "white", game_id: game.id)
@@ -565,7 +565,7 @@ RSpec.describe Piece, type: :model do
    end
   end
 
-    describe "is_in_checkmate?" do
+  describe "is_in_checkmate?" do
    it "should return true if king is in checkmate" do
      game = FactoryBot.create(:game)
      piece1 = King.create(position_x: 1, position_y: 8, color: "white", game_id: game.id)
@@ -578,8 +578,6 @@ RSpec.describe Piece, type: :model do
      expect(var).to eq(true)
    end
   end
-
-
 
   describe "is_in_checkmate?" do
    it "should return true if king is in checkmate" do
@@ -624,7 +622,7 @@ RSpec.describe Piece, type: :model do
    end
   end
 
-        describe "is_in_checkmate?" do
+  describe "is_in_checkmate?" do
    it "should return true if king is in checkmate" do
      game = FactoryBot.create(:game)
      piece1 = King.create(position_x: 8, position_y: 8, color: "black", game_id: game.id)
@@ -638,7 +636,7 @@ RSpec.describe Piece, type: :model do
    end
   end
 
-      describe "is_in_checkmate?" do
+  describe "is_in_checkmate?" do
    it "should return true if king is in checkmate" do
      game = FactoryBot.create(:game)
      piece1 = King.create(position_x: 2, position_y: 8, color: "white", game_id: game.id)
@@ -651,7 +649,7 @@ RSpec.describe Piece, type: :model do
    end
   end
 
-        describe "is_in_checkmate?" do
+  describe "is_in_checkmate?" do
    it "should return true if king is in checkmate" do
      game = FactoryBot.create(:game)
      piece1 = King.create(position_x: 8, position_y: 1, color: "white", game_id: game.id)
@@ -665,7 +663,7 @@ RSpec.describe Piece, type: :model do
    end
   end
 
-          describe "is_in_checkmate?" do
+  describe "is_in_checkmate?" do
    it "should return fasle if king is in not checkmate" do
      game = FactoryBot.create(:game)
      piece1 = King.create(position_x: 8, position_y: 1, color: "white", game_id: game.id)
@@ -680,6 +678,29 @@ RSpec.describe Piece, type: :model do
   end
 
 
+  #tests for promotion
+  describe "promotion(x,y)" do
+   it "should promote when the pawn reaches the oposite row if it is empty" do
+     game = FactoryBot.create(:game)
+     piece1 = Pawn.create(position_x: 1, position_y: 7, color: "white", game_id: game.id)
+     piece1.move_to!(1,8)
+     piece2 = game.pieces.where(position_x: 1, position_y: 8)[0]
+ 
+     expect(piece2.type).to eq("Queen")
+   end
+  end
+
+  describe "promotion(x,y)" do
+   it "should promote when the pawn reaches the oposite row if it is empty" do
+     game = FactoryBot.create(:game)
+     piece1 = Pawn.create(position_x: 1, position_y: 7, color: "white", game_id: game.id)
+     piece2 = Bishop.create(position_x: 2, position_y: 8, color: "black", game_id: game.id)
+     piece1.move_to!(2,8)
+     piece3 = game.pieces.where(position_x: 2, position_y: 8)[0]
+ 
+     expect(piece3.type).to eq("Queen")
+   end
+  end
 
 
 
