@@ -21,8 +21,13 @@ class Game < ApplicationRecord
     end
   end
 
-  def name
-    User.find(self.black_player_id).email
+  def name(player)
+    if player == self.white_player_id
+        User.find(self.black_player_id).email
+    else
+        User.find(self.white_player_id).email
+    end
+    
   end
 
   def populate_game!
