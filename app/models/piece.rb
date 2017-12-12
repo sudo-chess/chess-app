@@ -126,11 +126,10 @@ class Piece < ApplicationRecord
  
     color = self.color
     king = self
-    in_checkmate = true
     
     #if no king is in check there cannot be any checkmate situation
     if !king.is_in_check?
-      in_checkmate = false
+      return false
     else
       #setting variables, check and store which piece(s) create the check situation
       x = king.position_x
@@ -150,7 +149,7 @@ class Piece < ApplicationRecord
 
       #check if the king can move to a square where it is not in check.
       if king.escapable? 
-        in_checkmate = false 
+        return false 
       end
 
       #check if there the threatening piece can be captured or obstructed. if more than one threatening piece and the king can't escape, it means checkmate.
@@ -190,7 +189,6 @@ class Piece < ApplicationRecord
     end
     return in_checkmate
   end
-
 
 
   def escapable?
