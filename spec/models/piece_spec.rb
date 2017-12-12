@@ -581,10 +581,6 @@ RSpec.describe Piece, type: :model do
 
 
 
-
-
-
-
   describe "is_in_checkmate?" do
    it "should return true if king is in checkmate" do
      game = FactoryBot.create(:game)

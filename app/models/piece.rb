@@ -153,7 +153,7 @@ class Piece < ApplicationRecord
         in_checkmate = false 
       end
 
-      #check if there the threatening piece can be captured or obstructed. if more than one threatening  piece and the king can't escape, it means checkmate.
+      #check if there the threatening piece can be captured or obstructed. if more than one threatening piece and the king can't escape, it means checkmate.
       if threatening_pieces.length > 1 
         if !king.escapable?
           in_checkmate = true
@@ -196,23 +196,17 @@ class Piece < ApplicationRecord
   def escapable?
     or_x = self.position_x
     or_y = self.position_y
-    positions = @squares
-    positions.delete([or_x, or_y])
-    positions.each do |position|
+    @squares.each do |position|
       if self.valid_move?(position[0], position[1])
         if self.move_to!(position[0], position[1])
           self.move_to!(position[0], position[1])
-          self.update_attributes!(position_x: position[0], position_y: position[1])
           game.reload
           if !self.is_in_check?
-            puts "KKKKKKK"
-            puts self.position_x
-            puts self.position_y
             return true
           end
         end
           self.move_to!(or_x, or_y)
-          sleep(0.1)
+          game.reload
       end
     end
     return false
