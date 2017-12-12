@@ -40,6 +40,8 @@ $( function() {
         dataType: 'json',
         data: target
       })
+
+      location.reload();
     }
   });
 
