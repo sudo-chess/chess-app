@@ -3,6 +3,7 @@ class Game < ApplicationRecord
   enum result: {black_wins: 0, white_wins: 1, stalemate: 2}
 
   has_many	:pieces
+  belongs_to :next_player_to_move, :class_name => 'User', :foreign_key => 'next_player_to_move_id'
 
   belongs_to :white_player, :class_name => 'User', :foreign_key => 'white_player_id'
   belongs_to :black_player, :class_name => 'User', :foreign_key => 'black_player_id', optional: true
@@ -27,7 +28,7 @@ class Game < ApplicationRecord
     else
         User.find(self.white_player_id).email
     end
-    
+
   end
 
   def populate_game!

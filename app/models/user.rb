@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :challenging_games, foreign_key: "white_player_id",:class_name => Game
 
   has_many :challenged_games, foreign_key: "black_player_id", :class_name => Game
+  has_many :games_awaiting_their_moves, foreign_key: "next_player_to_move_id", class_name: Game
 
 
   def all_games
