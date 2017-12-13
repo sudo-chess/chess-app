@@ -42,10 +42,12 @@
 <br class="clear"/>
 <hr/>
 <% if @local_game.result == nil %>
+      <h4 >Available actions: &nbsp; &nbsp; </h4>
   <div id="action_box" class="col-10 offset-4 row">
-      <h4>Available actions: &nbsp; &nbsp; </h4>
-
-      <%= link_to 'Forfeit', forfeit_game_path(@local_game), method: :post, class: 'btn btn-primary btn-danger',data: {confirm: 'Are you sure?'} %>
+      
+      <%= link_to 'Castle Queen side', castle_queen_side_game_path(@local_game), method: :post, style: "margin-left: 10px", class: 'btn btn-primary btn-success',data: {confirm: 'Are you sure?'} %>
+      <%= link_to 'Castle King side', castle_king_side_game_path(@local_game), method: :post, style: "margin-left: 10px",class: 'btn btn-primary btn-success',data: {confirm: 'Are you sure?'} %>
+      <%= link_to 'Forfeit', forfeit_game_path(@local_game), method: :post, style: "margin-left: 10px", class: 'btn btn-primary btn-danger',data: {confirm: 'Are you sure?'} %>
     </div>
   </div>
 <% end %>

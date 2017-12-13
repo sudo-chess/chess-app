@@ -10,7 +10,10 @@ Rails.application.routes.draw do
     end
     member do
       post :forfeit
+      post :castle_king_side
+      post :castle_queen_side
     end
+
   end
   resources :pieces
 end
