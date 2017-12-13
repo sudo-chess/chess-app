@@ -54,8 +54,10 @@ class GamesController < ApplicationController
   def castle_queen_side
     @game = Game.find(params[:id])
     king = @game.pieces.where(type: "King", color: "white")[0]
-    king.castle!("queenside_castle", "white")
-    redirect_to game_path(@game)
+    if king.can_castle
+      king.castle!("queenside_castle", "white")
+      redirect_to game_path(@game)
+    end
   end
 
 

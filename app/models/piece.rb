@@ -133,8 +133,6 @@ class Piece < ApplicationRecord
     game.pieces.each do |enemy|
       if enemy.color != self.color
         if enemy.valid_move?(x,y)
-         #  puts "[#{x},#{y}]"
-         # puts enemy.inspect
          in_check = true
         end
       end
@@ -180,6 +178,7 @@ class Piece < ApplicationRecord
     return in_checkmate
   end
 
+
   def threat_capturable?
     th_x, th_y = @threatening_pieces[0].position_x, @threatening_pieces[0].position_y
     game.pieces.where(color: color).each do |piece|
@@ -210,8 +209,16 @@ class Piece < ApplicationRecord
 
 
   def escapable?
+    @squares = []
+    numbers = [1,2,3,4,5,6,7,8]
+    numbers.each do |x|
+      numbers.each do |y|
+        @squares << [x,y]
+      end
+    end
     or_x = self.position_x
     or_y = self.position_y
+    @squares.delete([or_x, or_y])
     @squares.each do |position|
       if self.valid_move?(position[0], position[1])
         if self.move_to!(position[0], position[1])
@@ -227,32 +234,5 @@ class Piece < ApplicationRecord
     end
     return false
   end
-
-
-
-  # def is_in_stalemate?
-  #   in_stalemate = true
-  #   squares = []
-  #   numbers = [1,2,3,4,5,6,7,8]
-  #   numbers.each do |x|
-  #     numbers.each do |y|
-  #       squares << [x,y]
-  #     end
-  #   end
-  #   game.pieces.each do |king|
-  #     if king.name == "King" && king.is_in_check? == false
-  #       game.pieces.each do |piece|
-  #         if piece.color == king.color
-  #           squares.each do |position|
-  #             if piece.valid_move?(position[0],position[1]) == true && king.is_in_check? == false
-  #               in_stalemate = false
-  #             end
-  #           end
-  #         end
-  #       end
-  #     end
-  #   end
-  #   return in_stalemate
-  # end
 
 end
