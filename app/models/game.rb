@@ -22,6 +22,14 @@ class Game < ApplicationRecord
     end
   end
 
+  def complete_player_move!(who_moved)
+    if who_moved == white_player
+      update!(next_player_to_move: black_player)
+    elsif who_moved == black_player
+      update!(next_player_to_move: white_player)
+    end
+  end
+
   def name(player)
     if player == self.white_player_id
         User.find(self.black_player_id).email

@@ -4,7 +4,7 @@ class PiecesController < ApplicationController
       @local_game_id = Piece.find_by_id(params[:id]).game_id
       @local_game = Game.find_by_id(@local_game_id)
       @local_pieces = @local_game.pieces
-     
+
       @current_piece = Piece.find_by_id(params[:id])
       @current_coordinates = [@current_piece.position_x, @current_piece.position_y]
   end
@@ -25,11 +25,12 @@ class PiecesController < ApplicationController
 
       if @current_piece.valid_move?(@target_x, @target_y)
         @current_piece.move_to!(@target_x, @target_y)
+        @current_piece.game.complete_player_move(current_user)
       else
-        flash[:notice] = "That was not a valid move"  
+        flash[:notice] = "That was not a valid move"
       end
       redirect_to game_path(@local_game_id)
-     
+
   end
 
 private
