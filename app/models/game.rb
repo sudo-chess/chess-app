@@ -1,6 +1,7 @@
 class Game < ApplicationRecord
   ## Results of the game after the game is over enumerated within the result column
   enum result: {black_wins: 0, white_wins: 1, stalemate: 2}
+  enum next_player_to_move: {black_player: 0, white_player: 1}
 
   has_many	:pieces
   belongs_to :next_player_to_move, :class_name => 'User', :foreign_key => 'next_player_to_move_id'
