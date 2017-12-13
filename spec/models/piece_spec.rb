@@ -478,9 +478,6 @@ RSpec.describe Piece, type: :model do
   end
 
 
-
-
-
   #checks if king is in check
  
   describe "is_in_check?" do
@@ -706,7 +703,7 @@ RSpec.describe Piece, type: :model do
   end
 
 
-
-
+  #tests for stalemate
+  
 
 end

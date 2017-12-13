@@ -1,4 +1,6 @@
 class Game < ApplicationRecord
+
+
   ## Results of the game after the game is over enumerated within the result column
   enum result: {black_wins: 0, white_wins: 1, stalemate: 2}
 
@@ -29,6 +31,34 @@ class Game < ApplicationRecord
     end
     
   end
+
+  def is_stalemate?(color)
+    game = self
+    @squares = []
+    numbers = [1,2,3,4,5,6,7,8]
+    numbers.each do |x|
+      numbers.each do |y|
+        @squares << [x,y]
+      end
+    end
+
+    king = game.pieces.where(type: "King", color: color)[0]
+    allpieces = game.pieces.where("type != 'King'")
+    pieces = allpieces.where(color: color)
+
+    return false if king.is_in_check?
+    
+    pieces.each do |piece|
+      @squares.each do |position|
+        return false if piece.valid_move?(position[0], position[1])
+      end
+    end
+
+    return false if king.escapable?
+
+    return true
+  end
+
 
   def populate_game!
     color = ""
@@ -71,4 +101,6 @@ class Game < ApplicationRecord
         King.create(game_id: id, position_x: 5, position_y: y, color: color, :image => King.get_image(color))
       end
   end
+
+
 end
