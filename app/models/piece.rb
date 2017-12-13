@@ -155,68 +155,57 @@ class Piece < ApplicationRecord
  
     color = self.color
     king = self
-    
-    #if no king is in check there cannot be any checkmate situation
+    x, y = king.position_x, y = king.position_y
+    color == "black" ? attacking_color = "white" : attacking_color = "black"
+
     if !king.is_in_check?
       return false
     else
-      #setting variables, check and store which piece(s) create the check situation
-      x = king.position_x
-      y = king.position_y
-      if color == "black"  
-        attacking_color = "white" 
-      else
-        attacking_color = "black"
-      end
-
-      threatening_pieces = []
+      @threatening_pieces = []
       game.pieces.where(color: attacking_color).each do |piece|
-        if piece.valid_move?(x,y)
-          threatening_pieces << piece
-        end  
+        @threatening_pieces << piece if piece.valid_move?(x,y)
       end
 
-      #check if the king can move to a square where it is not in check.
-      if king.escapable? 
-        return false 
-      end
-
+      return false if king.escapable?
+     
       #check if there the threatening piece can be captured or obstructed. if more than one threatening piece and the king can't escape, it means checkmate.
-      if threatening_pieces.length > 1 
-        if !king.escapable?
-          in_checkmate = true
-        end
+      if @threatening_pieces.length > 1 
+        in_checkmate = true if !king.escapable?
     
-      elsif threatening_pieces.length == 1
-        th_x = threatening_pieces[0].position_x
-        th_y = threatening_pieces[0].position_y
-
-      #capture check
-        game.pieces.where(color: color).each do |piece|
-          if piece.valid_move?(th_x,th_y)
-            in_checkmate = false
-          end
-        end
-
-      #obstruct check
-        game.pieces.where(color: color).each do |piece|
-          if piece.type != "King"
-            @squares.each do |square|
-              if piece.valid_move?(square[0],square[1])
-                orig_x = piece.position_x
-                orig_y = piece.position_y
-                piece.move_to!(square[0], square[1])
-                if threatening_pieces[0].is_obstructed?(king.position_x, king.position_y)
-                  in_checkmate = false
-                end
-                piece.move_to!(orig_x, orig_y)
-              end
-            end
-          end
-        end
+      elsif @threatening_pieces.length == 1
+        in_checkmate = false if threat_capturable?
+        in_checkmate = false if king.obstructable?
       end     
     end
     return in_checkmate
+  end
+
+  def threat_capturable?
+    th_x, th_y = @threatening_pieces[0].position_x, @threatening_pieces[0].position_y
+    game.pieces.where(color: color).each do |piece|
+      return true if piece.valid_move?(th_x,th_y)
+    end
+    return false
+  end
+
+  def obstructable?
+    game.pieces.where(color: self.color).each do |piece|
+      if piece.type != "King"
+        @squares.each do |square|
+          if piece.valid_move?(square[0],square[1])
+            orig_x = piece.position_x
+            orig_y = piece.position_y
+            piece.move_to!(square[0], square[1])
+            if @threatening_pieces[0].is_obstructed?(self.position_x, self.position_y)
+              piece.move_to!(orig_x, orig_y)
+              return true
+            end
+            piece.move_to!(orig_x, orig_y)
+          end
+        end
+      end
+    end
+    return false
   end
 
 
