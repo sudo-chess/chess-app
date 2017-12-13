@@ -1,5 +1,6 @@
 class SetDefaultForNextPlayerToMoveOnGame < ActiveRecord::Migration[5.0]
   def change
-    change_column_default games: :next_player_to_move_id, default: 0
+    remove_column :games, :next_player_to_move_id
+    add_column :games, :next_player_to_move_id, :integer, index: true, default: 0
   end
 end
