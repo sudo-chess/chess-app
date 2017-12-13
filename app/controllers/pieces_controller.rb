@@ -23,22 +23,11 @@ class PiecesController < ApplicationController
       @target_y = piece_params[:position_y].to_i
       @target = @local_game.pieces.where(position_x: @target_x, position_y: @target_y)
 
-      #checks if there is a piece at destination. if object.lenght==0, it means the square is empty
-      if @target.length == 0
-        if @current_piece.valid_move?(@target_x, @target_y)
-          @current_piece.update_attributes(piece_params)
-        else
-        flash[:notice] = "That was not a valid move"
-        end
+      if @current_piece.valid_move?(@target_x, @target_y)
+        @current_piece.move_to!(@target_x, @target_y)
       else
-       
-        if @current_piece.valid_move?(@target_x, @target_y)
-          @current_piece.move_to!(@target_x, @target_y)
-        else
-          flash[:notice] = "That was not a valid move"  
-        end
+        flash[:notice] = "That was not a valid move"  
       end
-
       redirect_to game_path(@local_game_id)
      
   end

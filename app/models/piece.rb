@@ -10,11 +10,38 @@ class Piece < ApplicationRecord
   end
 
 
+  # def move_to!(new_x, new_y)
+  #   @current_game = self.game
+  #   @target = @current_game.pieces.where(position_x: new_x, position_y: new_y)[0]
+  #   if @target == nil
+  #     self.update_attributes!(position_x: new_x, position_y: new_y, moved: true)
+  #   elsif @target.color != self.color
+  #     @target.update_attributes!(position_x: nil, position_y: nil)
+  #     self.update_attributes!(position_x: new_x, position_y: new_y, moved: true)
+  #   else
+  #     return false
+  #   end
+  # end
+
+
   def move_to!(new_x, new_y)
     @current_game = self.game
     @target = @current_game.pieces.where(position_x: new_x, position_y: new_y)[0]
-    if @target == nil
+    #cases for pawn promotion
+    if @target == nil && self.color == "white" && new_y == 8 && self.type == "Pawn"
+      self.promotion(new_x, new_y)
+    elsif @target == nil && self.color == "black"  && new_y == 1 && self.type == "Pawn"
+      self.promotion(new_x, new_y)
+    elsif self.color == "white"  && new_y == 8 && self.type == "Pawn"
+      @target.update_attributes!(position_x: nil, position_y: nil)
+      self.promotion(new_x, new_y)
+    elsif self.color == "black" && new_y == 1 && self.type == "Pawn"
+      @target.update_attributes!(position_x: nil, position_y: nil)
+      self.promotion(new_x, new_y)
+    #in case on piece on destination
+    elsif @target == nil
       self.update_attributes!(position_x: new_x, position_y: new_y, moved: true)
+    #in case piece on destination
     elsif @target.color != self.color
       @target.update_attributes!(position_x: nil, position_y: nil)
       self.update_attributes!(position_x: new_x, position_y: new_y, moved: true)
@@ -22,6 +49,8 @@ class Piece < ApplicationRecord
       return false
     end
   end
+
+
 
 
   def is_obstructed?(game, pos2)

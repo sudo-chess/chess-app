@@ -12,6 +12,14 @@ class Pawn < Piece
     self.color != piece_on_target.color
   end
 
+
+  def promotion(x,y)  
+    game = self.game
+    self.update_attributes(position_x: nil, position_y: nil)
+    Queen.create(game_id: game.id, position_x: x, position_y: y, color: self.color, :image => Queen.get_image(color))
+  end
+
+
   def valid_move?(x,y)
     x = x
     y = y
