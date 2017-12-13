@@ -17,6 +17,14 @@ class PiecesController < ApplicationController
 
       @local_game_id = @current_piece.game_id
       @local_game = Game.find(@local_game_id)
+
+      if @local_game.next_player_to_move != current_user
+        flash[:notice] = "Not your turn, buddy"
+        redirect_to game_path(@local_game)
+        return
+        ## mentor suggested short circuiting out of the rest of this method.
+      end
+
       @local_pieces = @local_game.pieces
 
       @target_x = piece_params[:position_x].to_i
