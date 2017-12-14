@@ -33,9 +33,7 @@ class GamesController < ApplicationController
 
   def create
     opponent_id = game_params[:black_player_id]
-    @game = Game.create(:black_player_id => opponent_id, :white_player_id => current_user.id)
-    puts "...................."
-    puts @game.inspect
+    @game = Game.create(:black_player_id => opponent_id, :white_player_id => current_user.id, :next_player_to_move_id => current_user.id)
     redirect_to game_path(@game)
   end
 
