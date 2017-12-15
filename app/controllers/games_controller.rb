@@ -43,18 +43,28 @@ class GamesController < ApplicationController
 
   def castle_king_side
     @game = Game.find(params[:id])
-    king = @game.pieces.where(type: "King", color: "white")[0]
+    if @game.next_player_id == @game.white_player_id
+      color = "white"
+    else
+      color = "black"
+    end
+    king = @game.pieces.where(type: "King", color: color)[0]
     if king.can_castle
-      king.castle!("kingside_castle", "white")
+      king.castle!("kingside_castle", color)
       redirect_to game_path(@game)
     end
   end
 
   def castle_queen_side
     @game = Game.find(params[:id])
-    king = @game.pieces.where(type: "King", color: "white")[0]
+    if @game.next_player_id == @game.white_player_id
+      color = "white"
+    else
+      color = "black"
+    end
+    king = @game.pieces.where(type: "King", color: color)[0]
     if king.can_castle
-      king.castle!("queenside_castle", "white")
+      king.castle!("queenside_castle", color)
       redirect_to game_path(@game)
     end
   end
