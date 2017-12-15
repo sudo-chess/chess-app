@@ -24,13 +24,14 @@ class PiecesController < ApplicationController
       @target = @local_game.pieces.where(position_x: @target_x, position_y: @target_y)
 
       if @current_piece.valid_move?(@target_x, @target_y)
-        @local_game.next_player(current_user.id)
+        @local_game.next_player(@local_game.next_player_id)
         @current_piece.move_to!(@target_x, @target_y)
       else
         flash[:notice] = "That was not a valid move"  
       end
-      redirect_to game_path(@local_game_id)
-     
+      @local_game.reload
+      sleep(6)
+      render game_path(@local_game_id) 
   end
 
 private

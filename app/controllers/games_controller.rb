@@ -28,7 +28,6 @@ class GamesController < ApplicationController
     @game = Game.new
   end
 
-
   def create
     opponent_id = game_params[:black_player_id]
     @game = Game.create(:black_player_id => opponent_id, :white_player_id => current_user.id, :next_player_id => current_user.id)

@@ -22,14 +22,15 @@ ActiveRecord::Schema.define(version: 20171214124458) do
 
   create_table "games", force: :cascade do |t|
     t.integer  "game_id"
+    t.integer  "white_player_id"
+    t.integer  "black_player_id"
     t.integer  "result"
     t.integer  "winner_id"
     t.integer  "loser_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.integer  "black_player_id"
-    t.integer  "white_player_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.boolean  "in_progress"
+    t.integer  "next_player_to_move_id"
     t.integer  "next_player_id"
   end
 
