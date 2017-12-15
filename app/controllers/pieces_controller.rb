@@ -24,6 +24,7 @@ class PiecesController < ApplicationController
       @target = @local_game.pieces.where(position_x: @target_x, position_y: @target_y)
 
       if @current_piece.valid_move?(@target_x, @target_y)
+        @local_game.next_player(current_user.id)
         @current_piece.move_to!(@target_x, @target_y)
       else
         flash[:notice] = "That was not a valid move"  

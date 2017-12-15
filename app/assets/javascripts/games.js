@@ -1,18 +1,34 @@
 $( function() {
 
-  var drag = $( ".draggable" ).children()
   
-  // drag control
-  drag.draggable({
-    containment : 'table',
-    snap :'.tile',
-    snapTolerance: 32,
-    snapMode: "inner",
+  var current_player = $( "#game_board").data('current_player')
+  var move_player = $( "#game_board").data('move_player')
+  var white_player = $( "#game_board").data('white_player')
+  // console.log(move_player)
+  if (current_player == move_player) {
+    if (current_player == white_player) {
+      var drag = $( ".draggable" ).children('.white-piece')  
+    }
+    else {
+     var drag = $( ".draggable" ).children('.black-piece')   
+    }
+    
+      drag.draggable({
+      containment : 'table',
+      snap :'.tile',
+      snapTolerance: 32,
+      snapMode: "inner",
 
-    drag: function( event, ui ) {
+      drag: function( event, ui ) {
+      // var color = $(this).parent().data('piece-color')
+      // console.log(color)          
 
     }
   })
+  }
+  
+  // drag control
+
 
   // drop function
   $( ".droppable").children().droppable({
@@ -44,5 +60,5 @@ $( function() {
       location.reload();
     }
   });
-
+  // console.log(move_player)
 });

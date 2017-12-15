@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171213024419) do
+ActiveRecord::Schema.define(version: 20171214124458) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,15 +22,15 @@ ActiveRecord::Schema.define(version: 20171213024419) do
 
   create_table "games", force: :cascade do |t|
     t.integer  "game_id"
-    t.integer  "white_player_id"
-    t.integer  "black_player_id"
     t.integer  "result"
     t.integer  "winner_id"
     t.integer  "loser_id"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "black_player_id"
+    t.integer  "white_player_id"
     t.boolean  "in_progress"
-    t.integer  "next_player_to_move_id", default: 0
+    t.integer  "next_player_id"
   end
 
   create_table "kings", force: :cascade do |t|
