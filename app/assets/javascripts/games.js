@@ -5,8 +5,8 @@ $( function() {
   var move_player = $( "#game_board").data('move_player')
   var white_player = $( "#game_board").data('white_player')
   // console.log(move_player)
-  if (current_player == move_player) {
-    if (current_player == white_player) {
+
+    if (move_player == white_player) {
       var drag = $( ".draggable" ).children('.white-piece')  
     }
     else {
@@ -22,15 +22,9 @@ $( function() {
       drag: function( event, ui ) {
       // var color = $(this).parent().data('piece-color')
       // console.log(color)          
-
-    }
-  })
-  }
+      }
+    })
   
-  // drag control
-
-
-  // drop function
   $( ".droppable").children().droppable({
     drop: function( event, ui ) {
       var dest = $(this).parent().data();
@@ -45,6 +39,8 @@ $( function() {
 
       // var piece = {piece: {position_x: origX, position_y: origY, id: pieceId}};
       var target = {piece: {position_x : destX, position_y: destY, id: pieceId}};
+
+
       
 
        $.ajax({
