@@ -39,6 +39,7 @@ class Piece < ApplicationRecord
 
   def is_obstructed?(game, pos2)
 
+
     pos1=[self.position_x,self.position_y]
 
     @x1=pos1[0].to_i
@@ -155,7 +156,7 @@ class Piece < ApplicationRecord
         in_checkmate = true if !king.escapable?
     
       elsif @threatening_pieces.length == 1
-        # in_checkmate = false if threat_capturable?
+        in_checkmate = false if threat_capturable?
         in_checkmate = false if king.obstructable?
       end     
     end
@@ -179,7 +180,9 @@ class Piece < ApplicationRecord
             orig_x = piece.position_x
             orig_y = piece.position_y
             # piece.move_to!(square[0], square[1])
-            if @threatening_pieces[0].is_obstructed?(self.position_x, self.position_y)
+            if @threatening_pieces[0].type == "Knight"
+              return false
+            elsif @threatening_pieces[0].is_obstructed?(self.position_x, self.position_y)
               # piece.move_to!(orig_x, orig_y)
               return true
             end
