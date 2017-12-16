@@ -315,7 +315,7 @@ RSpec.describe Piece, type: :model do
   describe "can_castle" do
     it "should return true if kings can castle" do
       game = FactoryBot.create(:game)
-      king = King.create(position_y: 1, position_x: 5, color: "white", game_id: game.id)
+      king1 = King.create(position_y: 1, position_x: 5, color: "white", game_id: game.id)
       rook1 = Rook.create(position_y: 1, position_x: 1, color: "white", game_id: game.id)
       rook2 = Rook.create(position_y: 1, position_x: 8, color: "white", game_id: game.id)
       
@@ -324,8 +324,10 @@ RSpec.describe Piece, type: :model do
       rook4 = Rook.create(position_y: 8, position_x: 8, color: "black", game_id: game.id)
 
 
-      test = king.can_castle
-      expect(test).to eq([["kingside_castle", "white"],["queenside_castle", "white"],["kingside_castle", "black"],["queenside_castle", "black"]])
+      test1 = king1.can_castle
+      expect(test).to eq([["kingside_castle", "white"],["queenside_castle", "white"]])
+      test2 = king2.can_castle
+      expect(test).to eq([["kingside_castle", "black"],["queenside_castle", "black"]])
     end
   end
 
