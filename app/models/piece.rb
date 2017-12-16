@@ -205,16 +205,16 @@ class Piece < ApplicationRecord
     @squares.delete([or_x, or_y])
     @squares.each do |position|
       if self.valid_move?(position[0], position[1])
-        # if self.move_to!(position[0], position[1])
-          # self.move_to!(position[0], position[1])
+        if self.move_to!(position[0], position[1])
+          self.move_to!(position[0], position[1])
           # game.reload
           if !self.is_in_check?
-            # self.move_to!(or_x, or_y)
+            self.move_to!(or_x, or_y)
             # game.reload
             return true
           end
-        # end
-          # self.move_to!(or_x, or_y)
+        end
+          self.move_to!(or_x, or_y)
           game.reload
       end
     end

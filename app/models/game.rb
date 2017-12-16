@@ -79,7 +79,7 @@ class Game < ApplicationRecord
       end
     end
 
-    # return false if king.escapable?
+    return false if king.escapable?
 
     return true
   end
