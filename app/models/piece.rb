@@ -148,14 +148,14 @@ class Piece < ApplicationRecord
         @threatening_pieces << piece if piece.valid_move?(x,y)
       end
 
-      return false if king.escapable?
+    return false if king.escapable?
      
       #check if there the threatening piece can be captured or obstructed. if more than one threatening piece and the king can't escape, it means checkmate.
       if @threatening_pieces.length > 1 
         in_checkmate = true if !king.escapable?
     
       elsif @threatening_pieces.length == 1
-        in_checkmate = false if threat_capturable?
+        # in_checkmate = false if threat_capturable?
         in_checkmate = false if king.obstructable?
       end     
     end
@@ -178,12 +178,12 @@ class Piece < ApplicationRecord
           if piece.valid_move?(square[0],square[1])
             orig_x = piece.position_x
             orig_y = piece.position_y
-            piece.move_to!(square[0], square[1])
+            # piece.move_to!(square[0], square[1])
             if @threatening_pieces[0].is_obstructed?(self.position_x, self.position_y)
-              piece.move_to!(orig_x, orig_y)
+              # piece.move_to!(orig_x, orig_y)
               return true
             end
-            piece.move_to!(orig_x, orig_y)
+            # piece.move_to!(orig_x, orig_y)
           end
         end
       end
@@ -207,8 +207,10 @@ class Piece < ApplicationRecord
       if self.valid_move?(position[0], position[1])
         if self.move_to!(position[0], position[1])
           self.move_to!(position[0], position[1])
-          game.reload
+          # game.reload
           if !self.is_in_check?
+            self.move_to!(or_x, or_y)
+            # game.reload
             return true
           end
         end
