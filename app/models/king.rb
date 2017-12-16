@@ -56,12 +56,12 @@ class King < Piece
         kingside_rook     = self.game.pieces.where(position_x: 1, position_y: piece.position_y)[0]
         kingside_knight   = self.game.pieces.where(position_x: 2, position_y: piece.position_y)[0]
         kingside_bishop   = self.game.pieces.where(position_x: 3, position_y: piece.position_y)[0]
-        king              = self.game.pieces.where(position_x: 5, position_y: piece.position_y)[0] 
+        king              = self.game.pieces.where(position_x: 5, position_y: piece.position_y)[0]
         queen             = self.game.pieces.where(position_x: 4, position_y: piece.position_y)[0]
         queenside_bishop  = self.game.pieces.where(position_x: 6, position_y: piece.position_y)[0]
         queenside_knight  = self.game.pieces.where(position_x: 7, position_y: piece.position_y)[0]
         queenside_rook    = self.game.pieces.where(position_x: 8, position_y: piece.position_y)[0]
-        if king.moved == false && king.is_in_check? == false
+        if king.moved? == false && king.is_in_check? == false
           if piece == kingside_rook && kingside_knight == nil && kingside_bishop == nil
             if king.is_in_check?(6, piece.position_y) == false && king.is_in_check?(7, piece.position_y) == false
               available_moves << ["kingside_castle", piece.color]
