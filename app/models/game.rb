@@ -44,6 +44,12 @@ class Game < ApplicationRecord
      
   end
 
+  def player_checkmate?(color)
+     game = self
+     king = game.pieces.where(type: "King", color: color)[0]
+     king.is_in_checkmate?
+     return
+  end
 
   def is_stalemate?(color)
     game = self
