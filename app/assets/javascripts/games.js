@@ -5,7 +5,14 @@ $( function() {
   var move_player = $( "#game_board").data('move_player')
   var white_player = $( "#game_board").data('white_player')
   // console.log(move_player)
-
+    // if (current_player == move_player) {
+    //  if (current_player == white_player) {
+    //   var drag = $( ".draggable" ).children('.white-piece')   
+    //  } 
+    //  else {
+    //   var drag = $( ".draggable" ).children('.black-piece')   
+    //  }
+    // }
     if (move_player == white_player) {
       var drag = $( ".draggable" ).children('.white-piece')  
     }
