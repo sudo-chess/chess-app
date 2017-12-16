@@ -33,7 +33,7 @@ class Game < ApplicationRecord
   end
 
   def next_player(player)
-    
+
     if player == self.white_player_id
       self.update_attributes(next_player_id: self.black_player_id)
       self.reload

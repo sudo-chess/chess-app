@@ -9,10 +9,18 @@ class Piece < ApplicationRecord
     occupied_positions
   end
 
-
-  def move_to!(new_x, new_y)
+   def move_to!(new_x, new_y)
     @current_game = self.game
     @target = @current_game.pieces.where(position_x: new_x, position_y: new_y)[0]
+
+
+    #cases for castling
+    if @target == nil && self.type == "King" && self.moved == false && new_x == 7
+      self.castle!("kingside_castle", self.color)
+    elsif @target == nil && self.type == "King" && self.moved == false && new_x == 3
+      self.castle!("queenside_castle", self.color)
+    end
+
     #cases for pawn promotion
     if @target == nil && self.color == "white" && new_y == 8 && self.type == "Pawn"
       self.promotion(new_x, new_y)
@@ -35,6 +43,7 @@ class Piece < ApplicationRecord
       return false
     end
   end
+
 
 
   def is_obstructed?(game, pos2)
