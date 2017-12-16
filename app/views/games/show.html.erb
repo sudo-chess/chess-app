@@ -9,11 +9,19 @@
   <% end %>
 </div>
 <div id="action_box" class="col-10 offset-4 row">
-  <h4>Checkmate status: &nbsp; &nbsp;</h4>
-  <% if @local_game.player_checkmate?("black") %>
-    <h4>Checkmate</h4>
+  <h4>King status: &nbsp; &nbsp;</h4>
+  <% if @local_game.player_in_check?("black") %>
+    <h4>King is in check</h4>
   <% else %>
-    <h4>Not Checktmate </h4>
+    <h4>King is OK </h4>
+  <% end %>
+</div>
+<div id="action_box" class="col-10 offset-4 row">
+  <h4>King status: &nbsp; &nbsp;</h4>
+  <% if @local_game.player_checkmate?("black") %>
+    <h4>King is in checkmate</h4>
+  <% else %>
+    <h4>King is not in checkmate </h4>
   <% end %>
 </div>
 <hr/>
