@@ -31,7 +31,7 @@ class PiecesController < ApplicationController
       end
       @local_game.reload
       sleep(6)
-      render game_path(@local_game_id) 
+      redirect_to game_path(@local_game_id) 
   end
 
 private

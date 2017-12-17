@@ -8,13 +8,13 @@ class King < Piece
   end
 
  def valid_move?(x,y)
-    # if self.can_castle
+    if !self.moved
       castle_right = [self.position_x+2,self.position_y]
       castle_left = [self.position_x-2,self.position_y]
-    # else
-    #   castle_right = [self.position_x+1,self.position_y+1]
-    #   castle_left = [self.position_x+1,self.position_y+1]
-    # end
+    else
+      castle_right = [self.position_x+1,self.position_y+1]
+      castle_left = [self.position_x+1,self.position_y+1]
+    end
 
     valid_moves = [castle_right, castle_left,
       [self.position_x+1,self.position_y+1],
