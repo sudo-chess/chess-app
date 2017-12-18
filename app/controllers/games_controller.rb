@@ -51,6 +51,7 @@ class GamesController < ApplicationController
     king = @game.pieces.where(type: "King", color: color)[0]
     if king.can_castle
       king.castle!("kingside_castle", color)
+      @game.next_player(@game.next_player_id)
       redirect_to game_path(@game)
     end
   end
@@ -65,6 +66,7 @@ class GamesController < ApplicationController
     king = @game.pieces.where(type: "King", color: color)[0]
     if king.can_castle
       king.castle!("queenside_castle", color)
+      @game.next_player(@game.next_player_id)
       redirect_to game_path(@game)
     end
   end

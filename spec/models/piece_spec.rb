@@ -315,7 +315,7 @@ RSpec.describe Piece, type: :model do
   describe "can_castle" do
     it "should return true if kings can castle" do
       game = FactoryBot.create(:game)
-      king = King.create(position_y: 1, position_x: 5, color: "white", game_id: game.id)
+      king1 = King.create(position_y: 1, position_x: 5, color: "white", game_id: game.id)
       rook1 = Rook.create(position_y: 1, position_x: 1, color: "white", game_id: game.id)
       rook2 = Rook.create(position_y: 1, position_x: 8, color: "white", game_id: game.id)
       
@@ -324,30 +324,34 @@ RSpec.describe Piece, type: :model do
       rook4 = Rook.create(position_y: 8, position_x: 8, color: "black", game_id: game.id)
 
 
-      test = king.can_castle
-      expect(test).to eq([["kingside_castle", "white"],["queenside_castle", "white"],["kingside_castle", "black"],["queenside_castle", "black"]])
+      test1 = king1.can_castle
+      expect(test1).to eq([["kingside_castle", "white"],["queenside_castle", "white"]])
+      test2 = king2.can_castle
+      expect(test2).to eq([["kingside_castle", "black"],["queenside_castle", "black"]])
     end
   end
 
   describe "can_castle" do
     it "should return true if king can't castle with moved rook" do
       game = FactoryBot.create(:game)
-      king = King.create(position_y: 1, position_x: 5, color: "white", game_id: game.id)
+      king1 = King.create(position_y: 1, position_x: 5, color: "white", game_id: game.id)
       rook2 = Rook.create(position_y: 1, position_x: 8, color: "white", game_id: game.id, moved: true)
       
       king2 = King.create(position_y: 8, position_x: 5, color: "black", game_id: game.id)
       rook3 = Rook.create(position_y: 8, position_x: 1, color: "black", game_id: game.id)
       rook4 = Rook.create(position_y: 8, position_x: 8, color: "black", game_id: game.id)
 
-      test = king.can_castle
-      expect(test).to eq([["kingside_castle", "black"],["queenside_castle", "black"]])
+      test1 = king1.can_castle
+      expect(test1).to eq([])
+      test2 = king2.can_castle
+      expect(test2).to eq([["kingside_castle", "black"],["queenside_castle", "black"]])
     end
   end
   
   describe "can_castle" do
     it "should return true if king can't castle after being moved" do
       game = FactoryBot.create(:game)
-      king = King.create(position_y: 1, position_x: 5, color: "white", game_id: game.id, moved: true)
+      king1 = King.create(position_y: 1, position_x: 5, color: "white", game_id: game.id, moved: true)
       rook1 = Rook.create(position_y: 1, position_x: 1, color: "white", game_id: game.id)
       rook2 = Rook.create(position_y: 1, position_x: 8, color: "white", game_id: game.id)
       
@@ -355,16 +359,17 @@ RSpec.describe Piece, type: :model do
       rook3 = Rook.create(position_y: 8, position_x: 1, color: "black", game_id: game.id)
       rook4 = Rook.create(position_y: 8, position_x: 8, color: "black", game_id: game.id)
 
-
-      test = king.can_castle
-      expect(test).to eq([["kingside_castle", "black"],["queenside_castle", "black"]])
+      test1 = king1.can_castle
+      expect(test1).to eq([])
+      test2 = king2.can_castle
+      expect(test2).to eq([["kingside_castle", "black"],["queenside_castle", "black"]])
     end
   end
   
   describe "can_castle" do
     it "should return true if king can't castle while in check" do
       game = FactoryBot.create(:game)
-      king = King.create(position_y: 1, position_x: 5, color: "white", game_id: game.id, moved: true)
+      king1 = King.create(position_y: 1, position_x: 5, color: "white", game_id: game.id)
       rook1 = Rook.create(position_y: 1, position_x: 1, color: "white", game_id: game.id)
       rook2 = Rook.create(position_y: 1, position_x: 8, color: "white", game_id: game.id)
       queen = Queen.create(position_y: 1, position_x: 4, color: "black", game_id: game.id)
@@ -372,16 +377,17 @@ RSpec.describe Piece, type: :model do
       rook3 = Rook.create(position_y: 8, position_x: 1, color: "black", game_id: game.id)
       rook4 = Rook.create(position_y: 8, position_x: 8, color: "black", game_id: game.id)
 
-
-      test = king.can_castle
-      expect(test).to eq([["kingside_castle", "black"],["queenside_castle", "black"]])
+      test1 = king1.can_castle
+      expect(test1).to eq([])
+      test2 = king2.can_castle
+      expect(test2).to eq([["kingside_castle", "black"],["queenside_castle", "black"]])
     end
   end
 
   describe "can_castle" do
     it "should return true if king can't castle into check" do
       game = FactoryBot.create(:game)
-      king = King.create(position_y: 1, position_x: 5, color: "white", game_id: game.id, moved: true)
+      king1 = King.create(position_y: 1, position_x: 5, color: "white", game_id: game.id)
       rook1 = Rook.create(position_y: 1, position_x: 1, color: "white", game_id: game.id)
       rook2 = Rook.create(position_y: 1, position_x: 8, color: "white", game_id: game.id)
       queen = Queen.create(position_y: 2, position_x: 2, color: "black", game_id: game.id)
@@ -390,16 +396,18 @@ RSpec.describe Piece, type: :model do
       rook3 = Rook.create(position_y: 8, position_x: 1, color: "black", game_id: game.id)
       rook4 = Rook.create(position_y: 8, position_x: 8, color: "black", game_id: game.id)
 
+      test1 = king1.can_castle
+      expect(test1).to eq([])
+      test2 = king2.can_castle
+      expect(test2).to eq([["kingside_castle", "black"],["queenside_castle", "black"]])
 
-      test = king.can_castle
-      expect(test).to eq([["kingside_castle", "black"],["queenside_castle", "black"]])
     end
   end
   
   describe "can_castle" do
     it "should return true if king can't castle though a check" do
       game = FactoryBot.create(:game)
-      king = King.create(position_y: 1, position_x: 5, color: "white", game_id: game.id, moved: true)
+      king1 = King.create(position_y: 1, position_x: 5, color: "white", game_id: game.id)
       rook1 = Rook.create(position_y: 1, position_x: 1, color: "white", game_id: game.id)
       rook2 = Rook.create(position_y: 1, position_x: 8, color: "white", game_id: game.id)
       queen = Queen.create(position_y: 2, position_x: 3, color: "black", game_id: game.id)
@@ -408,8 +416,11 @@ RSpec.describe Piece, type: :model do
       rook3 = Rook.create(position_y: 8, position_x: 1, color: "black", game_id: game.id)
       rook4 = Rook.create(position_y: 8, position_x: 8, color: "black", game_id: game.id)
 
-      test = king.can_castle
-      expect(test).to eq([["kingside_castle", "black"],["queenside_castle", "black"]])
+      test1 = king1.can_castle
+      expect(test1).to eq([])
+      test2 = king2.can_castle
+      expect(test2).to eq([["kingside_castle", "black"],["queenside_castle", "black"]])
+
     end
   end
 
@@ -556,7 +567,7 @@ RSpec.describe Piece, type: :model do
   describe "is_in_checkmate?" do
    it "should return true if king is in checkmate" do
      game = FactoryBot.create(:game)
-     piece1 = King.create(position_x: 8, position_y: 8, color: "white", game_id: game.id)
+     piece1 = King.create(position_x: 8, position_y: 8, color: "white", game_id: game.id, moved: true)
      piece2 = Rook.create(position_x: 7, position_y: 1, color: "black", game_id: game.id)
      piece3 = Rook.create(position_x: 8, position_y: 1, color: "black", game_id: game.id)
     
@@ -568,7 +579,7 @@ RSpec.describe Piece, type: :model do
   describe "is_in_checkmate?" do
    it "should return true if king is in checkmate" do
      game = FactoryBot.create(:game)
-     piece1 = King.create(position_x: 1, position_y: 8, color: "white", game_id: game.id)
+     piece1 = King.create(position_x: 1, position_y: 8, color: "white", game_id: game.id, moved: true)
      piece2 = Pawn.create(position_x: 1, position_y: 7, color: "white", game_id: game.id)
 
      piece3 = Queen.create(position_x: 3, position_y: 8, color: "black", game_id: game.id)
@@ -582,7 +593,7 @@ RSpec.describe Piece, type: :model do
   describe "is_in_checkmate?" do
    it "should return true if king is in checkmate" do
      game = FactoryBot.create(:game)
-     piece1 = King.create(position_x: 1, position_y: 8, color: "white", game_id: game.id)
+     piece1 = King.create(position_x: 1, position_y: 8, color: "white", game_id: game.id, moved: true)
      
      piece2 = King.create(position_x: 2, position_y: 6, color: "black", game_id: game.id)
      piece3 = Knight.create(position_x: 1, position_y: 6, color: "black", game_id: game.id)
@@ -596,7 +607,7 @@ RSpec.describe Piece, type: :model do
   describe "is_in_checkmate?" do
    it "should return true if king is in checkmate" do
      game = FactoryBot.create(:game)
-     piece1 = King.create(position_x: 8, position_y: 8, color: "black", game_id: game.id)
+     piece1 = King.create(position_x: 8, position_y: 8, color: "black", game_id: game.id, moved: true)
 
      piece2 = King.create(position_x: 8, position_y: 6, color: "white", game_id: game.id)
      piece2 = Bishop.create(position_x: 5, position_y: 6, color: "white", game_id: game.id)
@@ -611,7 +622,7 @@ RSpec.describe Piece, type: :model do
   describe "is_in_checkmate?" do
    it "should return true if king is in checkmate" do
      game = FactoryBot.create(:game)
-     piece1 = King.create(position_x: 5, position_y: 8, color: "black", game_id: game.id)
+     piece1 = King.create(position_x: 5, position_y: 8, color: "black", game_id: game.id, moved: true)
 
      piece2 = King.create(position_x: 7, position_y: 8, color: "white", game_id: game.id)
      piece2 = Knight.create(position_x: 3, position_y: 6, color: "white", game_id: game.id)
@@ -625,7 +636,7 @@ RSpec.describe Piece, type: :model do
   describe "is_in_checkmate?" do
    it "should return true if king is in checkmate" do
      game = FactoryBot.create(:game)
-     piece1 = King.create(position_x: 8, position_y: 8, color: "black", game_id: game.id)
+     piece1 = King.create(position_x: 8, position_y: 8, color: "black", game_id: game.id, moved: true)
      piece2 = Pawn.create(position_x: 8, position_y: 7, color: "black", game_id: game.id)
 
      piece2 = Bishop.create(position_x: 1, position_y: 2, color: "white", game_id: game.id)
@@ -639,7 +650,7 @@ RSpec.describe Piece, type: :model do
   describe "is_in_checkmate?" do
    it "should return true if king is in checkmate" do
      game = FactoryBot.create(:game)
-     piece1 = King.create(position_x: 2, position_y: 8, color: "white", game_id: game.id)
+     piece1 = King.create(position_x: 2, position_y: 8, color: "white", game_id: game.id, moved: true)
      
      piece2 = King.create(position_x: 2, position_y: 6, color: "black", game_id: game.id)
      piece3 = Rook.create(position_x: 6, position_y: 8, color: "black", game_id: game.id)
@@ -652,7 +663,7 @@ RSpec.describe Piece, type: :model do
   describe "is_in_checkmate?" do
    it "should return true if king is in checkmate" do
      game = FactoryBot.create(:game)
-     piece1 = King.create(position_x: 8, position_y: 1, color: "white", game_id: game.id)
+     piece1 = King.create(position_x: 8, position_y: 1, color: "white", game_id: game.id, moved: true)
      
      piece2 = King.create(position_x: 7, position_y: 3, color: "black", game_id: game.id)
      piece3 = Knight.create(position_x: 8, position_y: 3, color: "black", game_id: game.id)

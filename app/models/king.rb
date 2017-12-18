@@ -7,8 +7,16 @@ class King < Piece
     end
   end
 
-  def valid_move?(x,y)
-    valid_moves = [
+ def valid_move?(x,y)
+    if !self.moved
+      castle_right = [self.position_x+2,self.position_y]
+      castle_left = [self.position_x-2,self.position_y]
+    else
+      castle_right = [self.position_x+1,self.position_y+1]
+      castle_left = [self.position_x+1,self.position_y+1]
+    end
+
+    valid_moves = [castle_right, castle_left,
       [self.position_x+1,self.position_y+1],
       [self.position_x+1,self.position_y],
       [self.position_x+1,self.position_y-1],
@@ -18,7 +26,7 @@ class King < Piece
       [self.position_x-1,self.position_y],
       [self.position_x-1,self.position_y-1]
     ]
-    return valid_moves.include?([x,y]) && is_on_board?(x,y)
+    return valid_moves.include?([x,y]) && is_on_board?(x,y) 
   end
 
 
@@ -34,6 +42,7 @@ class King < Piece
       elsif side == "queenside_castle"
         white_king.update_attributes(position_x: 3, position_y: 1, moved: true)
         white_queenside_rook.update_attributes(position_x: 4, position_y: 1, moved: true)
+        game.reload
       end
     elsif color == "black"
       black_king            = self.game.pieces.where(position_x: 5, position_y: 8)[0]
@@ -42,21 +51,25 @@ class King < Piece
       if side == "kingside_castle"
         black_king.update_attributes(position_x: 7, position_y: 8, moved: true)
         black_kingside_rook.update_attributes(position_x: 6, position_y: 8, moved: true)
+        game.reload
       elsif side == "queenside_castle"
         black_king.update_attributes(position_x: 3, position_y: 8, moved: true)
         black_queenside_rook.update_attributes(position_x: 4, position_y: 8, moved: true)
+        game.reload
       end
     end
   end
 
   def can_castle
+
     available_moves = []
     game.pieces.each do |piece|
       if piece.type == "Rook" && piece.moved == false
         kingside_rook     = self.game.pieces.where(position_x: 1, position_y: piece.position_y)[0]
         kingside_knight   = self.game.pieces.where(position_x: 2, position_y: piece.position_y)[0]
         kingside_bishop   = self.game.pieces.where(position_x: 3, position_y: piece.position_y)[0]
-        king              = self.game.pieces.where(position_x: 5, position_y: piece.position_y)[0] 
+        king              = self.game.pieces.where(type: "King", color: self.color)[0] 
+
         queen             = self.game.pieces.where(position_x: 4, position_y: piece.position_y)[0]
         queenside_bishop  = self.game.pieces.where(position_x: 6, position_y: piece.position_y)[0]
         queenside_knight  = self.game.pieces.where(position_x: 7, position_y: piece.position_y)[0]
