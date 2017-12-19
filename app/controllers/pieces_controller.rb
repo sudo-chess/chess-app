@@ -6,14 +6,10 @@ class PiecesController < ApplicationController
       @local_pieces = @local_game.pieces
      
       @current_piece = Piece.find_by_id(params[:id])
-      @current_coordinates = [@current_piece.position_x, @current_piece.position_y]
   end
 
   def update
-      # @current_piece = Piece.find_by_id(params[:id])
-
       @current_piece = Piece.find_by_id(piece_params[:id])
-      @current_coordinates = [@current_piece.position_x, @current_piece.position_y]
 
       @local_game_id = @current_piece.game_id
       @local_game = Game.find(@local_game_id)
@@ -22,10 +18,26 @@ class PiecesController < ApplicationController
       @target_x = piece_params[:position_x].to_i
       @target_y = piece_params[:position_y].to_i
       @target = @local_game.pieces.where(position_x: @target_x, position_y: @target_y)
-
+      @old_x = @current_piece.position_x
+      @old_y = @current_piece.position_y
+      
       if @current_piece.valid_move?(@target_x, @target_y)
-        @local_game.next_player(@local_game.next_player_id)
         @current_piece.move_to!(@target_x, @target_y)
+        king = @local_game.pieces.where(type: "King", color: @current_piece.color)[0]
+        if king.is_in_check? == true
+          @current_piece.move_to!(@old_x, @old_y)
+          if @target != nil
+            @target.update_attributes(position_x: @target_x, position_y: @target_y)
+          end
+          @local_game.reload
+          flash[:notice] = "King now in check, that was not a valid move"
+        end
+        @local_game.next_player(@local_game.next_player_id)
+
+
+      # if @current_piece.valid_move?(@target_x, @target_y)
+      #   @current_piece.move_to!(@target_x, @target_y)
+      #   @local_game.next_player(@local_game.next_player_id)
       else
         flash[:notice] = "That was not a valid move"  
       end

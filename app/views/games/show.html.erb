@@ -3,9 +3,9 @@
 <div id="action_box" class="col-10 offset-4 row">
 <h4> Next move: &nbsp; &nbsp;</h4>
   <% if @local_game.next_player_id == @local_game.white_player.id %>
-   <h4> <%= "Whites" %> </h4>
+   <h4> <%= "White Player" %> </h4>
   <% else %>
-   <h4><%= "Blacks" %> </h4>
+   <h4><%= "Black Player" %> </h4>
   <% end %>
 </div>
 <hr/>
