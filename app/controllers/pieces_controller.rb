@@ -22,10 +22,13 @@ class PiecesController < ApplicationController
       @old_y = @current_piece.position_y
       
       if @current_piece.valid_move?(@target_x, @target_y)
+        puts "HEEEEEEEEEEEEEEEEEEEERE!!!!!! #{@target.inspect}"
+
         @current_piece.move_to!(@target_x, @target_y)
         king = @local_game.pieces.where(type: "King", color: @current_piece.color)[0]
         if king.is_in_check? == true
           @current_piece.move_to!(@old_x, @old_y)
+          puts "HEEEEEEEEEEEEEEEERE!!!!!!fwsgewgw #{@target.inspect}"
           if @target != []
             @target.update_attributes!(position_x: @target_x, position_y: @target_y)
           end
