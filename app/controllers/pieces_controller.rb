@@ -26,11 +26,10 @@ class PiecesController < ApplicationController
         king = @local_game.pieces.where(type: "King", color: @current_piece.color)[0]
         if king.is_in_check? == true
           @current_piece.move_to!(@old_x, @old_y)
-          if @target != nil
-            @target.update_attributes(position_x: @target_x, position_y: @target_y)
+          if @target != []
+            @target.update_attributes!(position_x: @target_x, position_y: @target_y)
           end
-          @local_game.reload
-          flash[:notice] = "King now in check, that was not a valid move"
+          @local_game.next_player(@local_game.next_player_id)
         end
         @local_game.next_player(@local_game.next_player_id)
 
