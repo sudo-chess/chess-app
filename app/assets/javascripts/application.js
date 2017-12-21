@@ -18,3 +18,5 @@
 //= require bootstrap-sprockets
 //= require_tree .
 //= require jquery-ui
+//= require websocket_rails/main
+
