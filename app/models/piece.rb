@@ -146,7 +146,7 @@ class Piece < ApplicationRecord
  
     color = self.color
     king = self
-    x, y = king.position_x, y = king.position_y
+    x,y = king.position_x, king.position_y
     color == "black" ? attacking_color = "white" : attacking_color = "black"
 
     if !king.is_in_check?

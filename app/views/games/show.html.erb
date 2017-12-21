@@ -8,6 +8,7 @@
    <h4><%= "Black Player" %> </h4>
   <% end %>
 </div>
+
 <hr/>
 <div id="game_board" data-current_player=<%= current_user.id %> data-move_player=<%= @local_game.next_player_id %> data-white_player=<%= @local_game.white_player.id %> class="col-10 offset-4">
 
@@ -54,4 +55,34 @@
     </div>
   </div>
 <% end %>
-
+<br/>
+<p> Currently hard coded for Black. </p>
+<div id="action_box" class="col-10 offset-4 row">
+   <h4>King in Check: &nbsp; &nbsp;</h4>
+   <% if @local_game.player_in_check?("black") %>
+     <h4>Yes</h4>
+   <% else %>
+     <h4>No</h4>
+   <% end %>
+ </div>
+ <br/>
+ <div id="action_box" class="col-10 offset-4 row">
+   <h4>King in Checkmate: &nbsp; &nbsp;</h4>
+   <% if @local_game.player_checkmate?("black") %>
+     <h4>Yes</h4>
+   <% else %>
+     <h4>No</h4>
+   <% end %>
+</div>
+<br/>
+<div id="action_box" class="col-10 offset-4 row">
+   <h4>King in Stalemate: &nbsp; &nbsp;</h4>
+   <% if @local_game.is_stalemate?("black") %>
+     <h4>Yes</h4>
+   <% else %>
+     <h4>No</h4>
+   <% end %>
+</div>
+<br/>
+<br/>
+<br/>
