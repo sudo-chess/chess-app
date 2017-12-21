@@ -583,7 +583,7 @@ RSpec.describe Piece, type: :model do
      piece2 = Pawn.create(position_x: 1, position_y: 7, color: "white", game_id: game.id)
 
      piece3 = Queen.create(position_x: 3, position_y: 8, color: "black", game_id: game.id)
-   
+     piece4 = Queen.create(position_x: 3, position_y: 7, color: "black", game_id: game.id)
     
      var = piece1.is_in_checkmate?
      expect(var).to eq(true)
@@ -596,7 +596,7 @@ RSpec.describe Piece, type: :model do
      piece1 = King.create(position_x: 1, position_y: 8, color: "white", game_id: game.id, moved: true)
      
      piece2 = King.create(position_x: 2, position_y: 6, color: "black", game_id: game.id)
-     piece3 = Knight.create(position_x: 1, position_y: 6, color: "black", game_id: game.id)
+     piece3 = Knight.create(posit.ion_x: 1, position_y: 6, color: "black", game_id: game.id)
      piece3 = Bishop.create(position_x: 7, position_y: 2, color: "black", game_id: game.id)
     
      var = piece1.is_in_checkmate?
@@ -646,6 +646,18 @@ RSpec.describe Piece, type: :model do
      expect(var).to eq(true)
    end
   end
+  
+  #is the bishop broken tests
+
+  # describe "valid_move?" do
+  #   it "should return true if the move is valid for a bishop" do
+  #     Game.skip_callback(:create, :after, :populate_game!, raise: false)
+  #     game = FactoryBot.create(:game)
+  #     piece1 = Bishop.create(position_x: 1, position_y: 2, color: "white", game_id: game.id)
+  #     var = piece1.move_to!(7,8)
+  #     expect(var).to eq(true)
+  #   end
+  # end
 
   describe "is_in_checkmate?" do
    it "should return true if king is in checkmate" do
@@ -714,7 +726,7 @@ RSpec.describe Piece, type: :model do
   end
 
 
-  #tests for stalemate
+
   
 
 end

@@ -202,30 +202,55 @@ class Piece < ApplicationRecord
 
 
   def escapable?
-    @squares = []
-    numbers = [1,2,3,4,5,6,7,8]
-    numbers.each do |x|
-      numbers.each do |y|
-        @squares << [x,y]
-      end
-    end
-    or_x = self.position_x
-    or_y = self.position_y
-    @squares.delete([or_x, or_y])
-    @squares.each do |position|
-      if self.valid_move?(position[0], position[1])
-        if self.move_to!(position[0], position[1])
-          self.move_to!(position[0], position[1])
-          game.reload
-          if !self.is_in_check?
-            return true
-          end
+    valid_moves = [
+      [self.position_x+1,self.position_y+1],
+      [self.position_x+1,self.position_y],
+      [self.position_x+1,self.position_y-1],
+      [self.position_x,self.position_y+1],
+      [self.position_x,self.position_y-1],
+      [self.position_x-1,self.position_y+1],
+      [self.position_x-1,self.position_y],
+      [self.position_x-1,self.position_y-1]
+    ]
+    king = self
+    can_escape = false
+    valid_moves.each do |escape|
+      if king.valid_move?(escape[0],escape[1]) && king.is_on_board?(escape[0],escape[1])
+        if king.is_in_check?(escape[0],escape[1]) == false
+          can_escape = true
         end
-          self.move_to!(or_x, or_y)
-          game.reload
       end
     end
-    return false
+    return can_escape
   end
-
 end
+
+
+  # def escapable?
+  #   @squares = []
+  #   numbers = [1,2,3,4,5,6,7,8]
+  #   numbers.each do |x|
+  #     numbers.each do |y|
+  #       @squares << [x,y]
+  #     end
+  #   end
+  #   or_x = self.position_x
+  #   or_y = self.position_y
+  #   # @squares.delete([or_x, or_y])
+  #   @squares.each do |position|
+  #     if self.valid_move?(position[0], position[1])
+  #       if self.move_to!(position[0], position[1])
+  #         self.move_to!(position[0], position[1])
+  #         game.reload
+  #         if !self.is_in_check?
+  #           return true
+  #         end
+  #       end
+  #         self.move_to!(or_x, or_y)
+  #         game.reload
+  #     end
+  #   end
+  #   return false
+  # end
+
+# end
