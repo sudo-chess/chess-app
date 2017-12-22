@@ -13,10 +13,6 @@ module GamesHelper
         end
       end
     end
-
-    # return link_to '', piece_path(@current_piece.id, position_x: x, position_y: y), :method => :put, :class => "square", :id => "droppable"
-    # return   :class => "square", :id => "droppable"
-    # return  content_tag("rrr") :div, class: "square", id: "droppable"
     return  content_tag(:div, "", class: "square")
 
     

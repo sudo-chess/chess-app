@@ -9,7 +9,7 @@ class Piece < ApplicationRecord
     occupied_positions
   end
 
-   def move_to!(new_x, new_y)
+   def move_to!(new_x, new_y, promo = nil)
     @current_game = self.game
     @target = @current_game.pieces.where(position_x: new_x, position_y: new_y)[0]
 
@@ -23,15 +23,15 @@ class Piece < ApplicationRecord
 
     #cases for pawn promotion
     if @target == nil && self.color == "white" && new_y == 8 && self.type == "Pawn"
-      self.promotion(new_x, new_y)
+      self.promotion(new_x, new_y, promo)
     elsif @target == nil && self.color == "black"  && new_y == 1 && self.type == "Pawn"
-      self.promotion(new_x, new_y)
+      self.promotion(new_x, new_y, promo)
     elsif self.color == "white"  && new_y == 8 && self.type == "Pawn"
       @target.update_attributes!(position_x: nil, position_y: nil)
-      self.promotion(new_x, new_y)
+      self.promotion(new_x, new_y, promo)
     elsif self.color == "black" && new_y == 1 && self.type == "Pawn"
       @target.update_attributes!(position_x: nil, position_y: nil)
-      self.promotion(new_x, new_y)
+      self.promotion(new_x, new_y, promo)
     #in case on piece on destination
     elsif @target == nil
       self.update_attributes!(position_x: new_x, position_y: new_y, moved: true)
@@ -95,13 +95,24 @@ class Piece < ApplicationRecord
 
 
   def is_diagonally_obstructed?(pos1,pos2)
+      x1, y1 = @x1, @y1
+      x2, y2 = @x2, @y2
     if (@x1-@x2).abs == (@y1-@y2).abs
       @x1 , @x2 = @x2 , @x1 if @x1 > @x2
       @y1 , @y2 = @y2 , @y1 if @y1 > @y2
 
       x_ary = (@x1+1...@x2).to_a
       y_ary = (@y1+1...@y2).to_a
-      @squares_to_check = x_ary.zip(y_ary)
+
+      if x1 > x2 && y1 < y2
+        x_ary.reverse!
+        @squares_to_check = x_ary.zip(y_ary)
+      elsif x1 < x2 && y1 > y2
+        y_ary.reverse!
+        @squares_to_check = x_ary.zip(y_ary)
+      else 
+        @squares_to_check = x_ary.zip(y_ary)
+      end
 
     check_squares
     end

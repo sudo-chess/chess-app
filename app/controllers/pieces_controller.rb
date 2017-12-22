@@ -8,24 +8,34 @@ class PiecesController < ApplicationController
       @current_piece = Piece.find_by_id(params[:id])
   end
 
-  def update
-      @current_piece = Piece.find_by_id(piece_params[:id])
+  def promote
 
+  end
+
+  def update
+
+      puts "......................................................................"
+      puts params
+      @current_piece = Piece.find_by_id(piece_params[:id])
       @local_game_id = @current_piece.game_id
       @local_game = Game.find(@local_game_id)
       @local_pieces = @local_game.pieces
 
       @target_x = piece_params[:position_x].to_i
       @target_y = piece_params[:position_y].to_i
+      @promo = piece_params[:promo]
       @target = @local_game.pieces.where(position_x: @target_x, position_y: @target_y).first
       @old_x = @current_piece.position_x
       @old_y = @current_piece.position_y
+
       
       if @current_piece.valid_move?(@target_x, @target_y)
-        @current_piece.move_to!(@target_x, @target_y)
+        
+        @current_piece.move_to!(@target_x, @target_y, @promo)
+
         king = @local_game.pieces.where(type: "King", color: @current_piece.color)[0]
         if king.is_in_check? == true
-          @current_piece.move_to!(@old_x, @old_y)
+          @current_piece.move_to!(@old_x, @old_y, @promo)
           if @target != nil
             @revert = Piece.find_by(id: @target.id)
             @revert.update_attributes!(position_x: @target_x, position_y: @target_y)
@@ -37,12 +47,12 @@ class PiecesController < ApplicationController
         flash[:notice] = "That was not a valid move"  
       end
       @local_game.reload
-      sleep(6)
+      # sleep(6)
       redirect_to game_path(@local_game_id) 
   end
 
 private
   def piece_params
-      params.require(:piece).permit(:id, :position_x, :position_y)
+      params.require(:piece).permit(:id, :position_x, :position_y, :promo)
   end
 end
