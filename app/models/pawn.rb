@@ -13,10 +13,14 @@ class Pawn < Piece
   end
 
 
-  def promotion(x,y)  
+  def promotion(x,y,promo)  
     game = self.game
     self.update_attributes(position_x: nil, position_y: nil)
-    Queen.create(game_id: game.id, position_x: x, position_y: y, color: self.color, :image => Queen.get_image(color))
+    if promo == "Queen"
+      Queen.create(game_id: game.id, position_x: x, position_y: y, color: self.color, :image => Queen.get_image(color))
+    elsif promo == "Rook"
+      Rook.create(game_id: game.id, position_x: x, position_y: y, color: self.color, :image => Rook.get_image(color))
+    end
   end
 
 

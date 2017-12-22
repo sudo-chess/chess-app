@@ -20,21 +20,21 @@
 
           <% if row_number.odd? %>
             <% if index.even? %>
-              <td class="black tile droppable draggable" data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %>>
+              <td class="black tile droppable draggable" data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %> data-type=<%= piece ? piece.type : nil %>>
                 <%= check_piece(index + 1, row_number) %>
               </td>
             <% else %>
-              <td class="white tile droppable draggable "  data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %>>
+              <td class="white tile droppable draggable "  data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %> data-type=<%= piece ? piece.type : nil %>>
                 <%= check_piece(index + 1, row_number) %>
               </td>
             <% end %>
           <% else %>
             <% if index.even? %>
-              <td class="white tile droppable draggable" data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %>>
+              <td class="white tile droppable draggable" data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %> data-type=<%= piece ? piece.type : nil %>>
                 <%= check_piece(index + 1, row_number) %>
               </td>
             <% else %>
-              <td class="black tile droppable draggable" data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %>>
+              <td class="black tile droppable draggable" data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %> data-type=<%= piece ? piece.type : nil %>>
                 <%= check_piece(index + 1, row_number) %>
               </td>
             <% end %>
@@ -55,27 +55,8 @@
   </div>
 <% end %>
 
-<div id="myModal" class="modal" method="post">
-  <div class="modal-content">
 
-    <span class="close">CLOSE</span>
-    <form id="myForm" action="#" > 
-
-      <input type="radio"  name="rtype" value="Rook"> Rook<br>
-      <input type="radio"  name="qtype" value="Queen"> Queen<br>
-      <input type="radio"  name="btype" value="Bishop"> Bishop <br>
-      <input type="radio"  name="ktype" value="Knight"> Knight <br>
-          <input type="submit" value="Submit">
-      Choose<input type="text" name="fname" value="Donald"><br>
-      Rook: <input type="text" name="fname" value="Duck"><br><br>
-     <button onclick="myFunction()">Promote!</button> 
-
-    </form>
-  </div>
-</div>
-
-
-<!--  <div id="myModal" class="modal" method="post">
+ <div id="myModal" class="modal" method="post">
   <div class="modal-content">
     <span class="close">CLOSE</span>
     <form id="myForm">
@@ -104,28 +85,28 @@
       </div>
     </form>
  </div>
-</div> -->
+</div>
 
 
-<pre id="log">
-</pre>
 
 
 <script>
-var form = document.querySelector("form");
-var log = document.querySelector("#log");
+// var form = document.querySelector("form");
+// var log = document.querySelector("#log");
+// var modal = document.getElementById('myModal');
 
-form.addEventListener("submit", function(event) {
-  var data = new FormData(form);
-  var output = "";
-  for (const entry of data) {
-    // output = entry[0] + "=" + entry[1] + "\r";
-    promo = entry[1];
-  };
-  console.log(promo);
-  log.innerText = output;
-  event.preventDefault();
-}, false);
+// form.addEventListener("submit", function(event) {
+//   var data = new FormData(form);
+//   var output = "";
+//   for (const entry of data) {
+//     // output = entry[0] + "=" + entry[1] + "\r";
+//     promo = entry[1];
+//   };
+//   console.log(promo);
+//   // log.innerText = output;
+//   event.preventDefault();
+//   modal.style.display = "none";
+// }, false);
 </script>
 
 
