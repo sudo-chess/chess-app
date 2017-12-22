@@ -46,10 +46,8 @@ $( function() {
       var span = document.getElementsByClassName("close")[0];
       var promo = "";
 
-      if (destY == 4) {
+      if (destY === 8 || destY === 1 && type === 'Pawn') {
          modal.style.display = "block";
-
-
 
          span.onclick = function() {
           modal.style.display = "none";
@@ -60,67 +58,53 @@ $( function() {
           }
          }
 
+        var form = document.querySelector("form");
+        var log = document.querySelector("#log");
 
-
-          var form = document.querySelector("form");
-          var log = document.querySelector("#log");
-
-          form.addEventListener("submit", function(event) {
-            var data = new FormData(form);
-            var output = "";
-            for (const entry of data) {
-              // output = entry[0] + "=" + entry[1] + "\r";
-              promo = entry[1];
-            };
-            console.log(promo);
-
-
+        form.addEventListener("submit", function(event) {
+          var data = new FormData(form);
+          var output = "";
+          for (const entry of data) {
+            // output = entry[0] + "=" + entry[1] + "\r";
+            promo = entry[1];
+          };
 
         var target = {piece: {position_x : destX, position_y: destY, id: pieceId, promo: promo}};
 
-        if (promo === "Queen"){
-          console.log("yahoooo!");
-
-          $.ajax({
-            type: 'PUT',
-            url: '/pieces/update/',
-            headers: {
-            'X-CSRF-Token': $("meta[name='csrf-token']").attr("content")
-              },
-            dataType: 'json',
-            data: target
-          })
-        }
-
-
-
-        if (promo === "Rook"){
-        console.log("yahoooo!");
-
-
-        }
-
-
+     
+        $.ajax({
+          type: 'PUT',
+          url: '/pieces/update/',
+          headers: {
+          'X-CSRF-Token': $("meta[name='csrf-token']").attr("content")
+            },
+          dataType: 'json',
+          data: target
+        })
+        
             // log.innerText = output;
             event.preventDefault();
             modal.style.display = "none";
           }, false);
 
+      }
 
-         
+      else {
+        // promo = ""
+        var target = {piece: {position_x : destX, position_y: destY, id: pieceId, promo: promo}};
+
+        $.ajax({
+          type: 'PUT',
+          url: '/pieces/update/',
+          headers: {
+          'X-CSRF-Token': $("meta[name='csrf-token']").attr("content")
+            },
+          dataType: 'json',
+          data: target
+        })
 
       }
-      
-     
-      //  $.ajax({
-      //   type: 'PUT',
-      //   url: '/pieces/update/',
-      //   headers: {
-      //   'X-CSRF-Token': $("meta[name='csrf-token']").attr("content")
-      //     },
-      //   dataType: 'json',
-      //   data: target
-      // })
+         
 
       // location.reload();
     }

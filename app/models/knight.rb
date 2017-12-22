@@ -8,6 +8,7 @@ class Knight < Piece
   end  
 
   def valid_move?(x,y)
+    if self.position_x != nil
     valid_moves = [
       [self.position_x+1,self.position_y+2], 
       [self.position_x+2,self.position_y+1], 
@@ -19,6 +20,7 @@ class Knight < Piece
       [self.position_x-1,self.position_y+2]]
    
     return valid_moves.include?([x.to_i,y.to_i]) && is_on_board?(x,y)
+    end
   end
 
 end

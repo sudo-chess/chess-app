@@ -22,7 +22,7 @@ class Piece < ApplicationRecord
     end
 
     #cases for pawn promotion
-    if @target == nil && self.color == "white" && new_y == 4 && self.type == "Pawn"
+    if @target == nil && self.color == "white" && new_y == 8 && self.type == "Pawn"
       self.promotion(new_x, new_y, promo)
     elsif @target == nil && self.color == "black"  && new_y == 1 && self.type == "Pawn"
       self.promotion(new_x, new_y, promo)

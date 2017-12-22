@@ -13,10 +13,6 @@ class PiecesController < ApplicationController
   end
 
   def update
-      puts "............."
-      puts params
-
-
       @current_piece = Piece.find_by_id(piece_params[:id])
 
       @local_game_id = @current_piece.game_id
@@ -32,10 +28,12 @@ class PiecesController < ApplicationController
 
       
       if @current_piece.valid_move?(@target_x, @target_y)
+
         @current_piece.move_to!(@target_x, @target_y, @promo)
+
         king = @local_game.pieces.where(type: "King", color: @current_piece.color)[0]
         if king.is_in_check? == true
-          @current_piece.move_to!(@old_x, @old_y)
+          @current_piece.move_to!(@old_x, @old_y, @promo)
           if @target != nil
             @revert = Piece.find_by(id: @target.id)
             @revert.update_attributes!(position_x: @target_x, position_y: @target_y)
