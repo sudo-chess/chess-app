@@ -55,3 +55,80 @@
   </div>
 <% end %>
 
+<div id="myModal" class="modal" method="post">
+  <div class="modal-content">
+
+    <span class="close">CLOSE</span>
+    <form id="myForm" action="#" > 
+
+      <input type="radio"  name="rtype" value="Rook"> Rook<br>
+      <input type="radio"  name="qtype" value="Queen"> Queen<br>
+      <input type="radio"  name="btype" value="Bishop"> Bishop <br>
+      <input type="radio"  name="ktype" value="Knight"> Knight <br>
+          <input type="submit" value="Submit">
+      Choose<input type="text" name="fname" value="Donald"><br>
+      Rook: <input type="text" name="fname" value="Duck"><br><br>
+     <button onclick="myFunction()">Promote!</button> 
+
+    </form>
+  </div>
+</div>
+
+
+<!--  <div id="myModal" class="modal" method="post">
+  <div class="modal-content">
+    <span class="close">CLOSE</span>
+    <form id="myForm">
+      <p>Veuillez choisir la meilleure méthode pour vous contacter :</p>
+      <div>
+        <input type="radio" id="promoChoice1"
+         name="contact" value="Queen">
+        <label for="promoChoice1">Queen</label>
+
+        <input type="radio" id="promoChoice2"
+         name="contact" value="Rook">
+        <label for="promoChoice2">Rook</label>
+
+        <input type="radio" id="promoChoice3"
+         name="contact" value="Bishop">
+        <label for="promoChoice3">Bishop</label>
+
+        <input type="radio" id="promoChoice4"
+         name="contact" value="Knight">
+        <label for="promoChoice4">Knight</label>
+
+
+      </div>
+      <div>
+        <button type="submit">Envoyer</button>
+      </div>
+    </form>
+ </div>
+</div> -->
+
+
+<pre id="log">
+</pre>
+
+
+<script>
+var form = document.querySelector("form");
+var log = document.querySelector("#log");
+
+form.addEventListener("submit", function(event) {
+  var data = new FormData(form);
+  var output = "";
+  for (const entry of data) {
+    // output = entry[0] + "=" + entry[1] + "\r";
+    promo = entry[1];
+  };
+  console.log(promo);
+  log.innerText = output;
+  event.preventDefault();
+}, false);
+</script>
+
+
+
+
+

@@ -40,8 +40,25 @@ $( function() {
       // var piece = {piece: {position_x: origX, position_y: origY, id: pieceId}};
       var target = {piece: {position_x : destX, position_y: destY, id: pieceId}};
 
+      var modal = document.getElementById('myModal');
+      var span = document.getElementsByClassName("close")[0];
 
-      
+      if (destY == 4) {
+         modal.style.display = "block";
+
+
+
+         span.onclick = function() {
+          modal.style.display = "none";
+         }
+         window.onclick = function(event) {
+          if (event.target == modal) {
+          modal.style.display = "none";
+          }
+         }
+
+      }
+
 
        $.ajax({
         type: 'PUT',
