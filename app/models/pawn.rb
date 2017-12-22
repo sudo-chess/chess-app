@@ -13,7 +13,7 @@ class Pawn < Piece
   end
 
 
-  def promotion(x,y,promo)  
+  def promotion(x,y,promo) 
     game = self.game
     self.update_attributes(position_x: nil, position_y: nil)
     if promo == "Queen"
@@ -24,7 +24,7 @@ class Pawn < Piece
       Bishop.create(game_id: game.id, position_x: x, position_y: y, color: self.color, :image => Bishop.get_image(color))
     elsif promo == "Knight"
       Knight.create(game_id: game.id, position_x: x, position_y: y, color: self.color, :image => Knight.get_image(color))
-    elsif promo == nil
+    elsif promo == ""
       Pawn.create(game_id: game.id, position_x: x, position_y: y, color: self.color, :image => Pawn.get_image(color))
     end
 

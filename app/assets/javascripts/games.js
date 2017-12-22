@@ -46,12 +46,12 @@ $( function() {
       var span = document.getElementsByClassName("close")[0];
       var promo = "";
 
-      if (destY === 8 || destY === 1 && type === 'Pawn') {
+      if (destY === 8 && type === 'Pawn' || destY === 1 && type === 'Pawn') {
          modal.style.display = "block";
 
-         span.onclick = function() {
-          modal.style.display = "none";
-         }
+         // span.onclick = function() {
+         //  modal.style.display = "none";
+         // }
          window.onclick = function(event) {
           if (event.target == modal) {
           modal.style.display = "none";
@@ -90,7 +90,6 @@ $( function() {
       }
 
       else {
-        // promo = ""
         var target = {piece: {position_x : destX, position_y: destY, id: pieceId, promo: promo}};
 
         $.ajax({
@@ -103,11 +102,8 @@ $( function() {
           data: target
         })
 
+      location.reload();
       }
-         
-
-      // location.reload();
     }
   });
-  // console.log(move_player)
 });

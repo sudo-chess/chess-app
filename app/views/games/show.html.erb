@@ -56,58 +56,66 @@
 <% end %>
 
 
- <div id="myModal" class="modal" method="post">
+ <div id="myModal" class="modal" method="post" style="text-align: center;">
   <div class="modal-content">
-    <span class="close">CLOSE</span>
+    
+    
+    <!-- <span class="close">CLOSE</span> -->
     <form id="myForm">
-      <p>Veuillez choisir la meilleure méthode pour vous contacter :</p>
-      <div>
-        <input type="radio" id="promoChoice1"
-         name="contact" value="Queen">
-        <label for="promoChoice1">Queen </label>
-
-        <input type="radio" id="promoChoice2"
-         name="contact" value="Rook">
-        <label for="promoChoice2">Rook</label>
-
-        <input type="radio" id="promoChoice3"
-         name="contact" value="Bishop">
-        <label for="promoChoice3">Bishop</label>
-
-        <input type="radio" id="promoChoice4"
-         name="contact" value="Knight">
-        <label for="promoChoice4">Knight</label>
-
+      <h3>Choose your promotion:</h3>
+      <h5>If you don't make any choice your pawn will not promote and remain.. a pawn!</h5>
+      <h5>Click anywhere out of the box to make another move instead</h5>
+      <br/>
+      <div class="row center" style="text-align: center";>
+        
+        <div class="promo">
+          <% if @local_game.next_player_id == @local_game.white_player.id %>
+            <%= image_tag('chess_piece_queen_white.png', :class=>"img-responsive white-piece")%><br/>
+          <% else %>
+            <%= image_tag('chess_piece_queen_black.png', :class=>"img-responsive white-piece")%><br/>
+          <% end %>
+          <input type="radio" id="promoChoice1" name="contact" value="Queen">
+          <label for="promoChoice1">Queen </label> <br/> 
+        </div>
+       
+         <div class="promo">
+            <% if @local_game.next_player_id == @local_game.white_player.id %>
+            <%= image_tag('chess_piece_rook_white.png', :class=>"img-responsive white-piece")%><br/>
+          <% else %>
+            <%= image_tag('chess_piece_rook_black.png', :class=>"img-responsive white-piece")%><br/>
+          <% end %>
+          <input type="radio" id="promoChoice1" name="contact" value="Rook">
+          <label for="promoChoice1">Rook </label> <br/> 
+        </div class="center">
+      
+         <div class="promo">
+            <% if @local_game.next_player_id == @local_game.white_player.id %>
+            <%= image_tag('chess_piece_bishop_white.png', :class=>"img-responsive white-piece")%><br/>
+          <% else %>
+            <%= image_tag('chess_piece_bishop_black.png', :class=>"img-responsive white-piece")%><br/>
+          <% end %>
+          <input type="radio" id="promoChoice1" name="contact" value="Bishop">
+          <label for="promoChoice1">Bishop </label> <br/> 
+        </div>
+        
+        <div class="promo">
+          <% if @local_game.next_player_id == @local_game.white_player.id %>
+            <%= image_tag('chess_piece_knight_white.png', :class=>"img-responsive white-piece")%><br/>
+          <% else %>
+            <%= image_tag('chess_piece_knight_black.png', :class=>"img-responsive white-piece")%><br/>
+          <% end %>
+          <input type="radio" id="promoChoice1" name="contact" value="Knight">
+          <label for="promoChoice1">Knight </label> <br/> 
+        </div>
 
       </div>
       <div>
-        <button type="submit">Envoyer</button>
+        <button type="submit">PROMOTE!</button>
       </div>
     </form>
  </div>
 </div>
 
-
-
-
-<script>
-// var form = document.querySelector("form");
-// var log = document.querySelector("#log");
-// var modal = document.getElementById('myModal');
-
-// form.addEventListener("submit", function(event) {
-//   var data = new FormData(form);
-//   var output = "";
-//   for (const entry of data) {
-//     // output = entry[0] + "=" + entry[1] + "\r";
-//     promo = entry[1];
-//   };
-//   console.log(promo);
-//   // log.innerText = output;
-//   event.preventDefault();
-//   modal.style.display = "none";
-// }, false);
-</script>
 
 
 

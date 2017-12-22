@@ -14,7 +14,6 @@ class PiecesController < ApplicationController
 
   def update
       @current_piece = Piece.find_by_id(piece_params[:id])
-
       @local_game_id = @current_piece.game_id
       @local_game = Game.find(@local_game_id)
       @local_pieces = @local_game.pieces
