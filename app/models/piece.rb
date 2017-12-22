@@ -95,13 +95,24 @@ class Piece < ApplicationRecord
 
 
   def is_diagonally_obstructed?(pos1,pos2)
+      x1, y1 = @x1, @y1
+      x2, y2 = @x2, @y2
     if (@x1-@x2).abs == (@y1-@y2).abs
       @x1 , @x2 = @x2 , @x1 if @x1 > @x2
       @y1 , @y2 = @y2 , @y1 if @y1 > @y2
 
       x_ary = (@x1+1...@x2).to_a
       y_ary = (@y1+1...@y2).to_a
-      @squares_to_check = x_ary.zip(y_ary)
+
+      if x1 > x2 && y1 < y2
+        x_ary.reverse!
+        @squares_to_check = x_ary.zip(y_ary)
+      elsif x1 < x2 && y1 > y2
+        y_ary.reverse!
+        @squares_to_check = x_ary.zip(y_ary)
+      else 
+        @squares_to_check = x_ary.zip(y_ary)
+      end
 
     check_squares
     end
