@@ -85,46 +85,54 @@ class Game < ApplicationRecord
   end
   
 
+  # def populate_game!
+  #   color = ""
+
+  #   [2,7].each do |y|
+  #     (1..8).each do |x|
+  #       y == 2? color = "white" : color ="black"
+  #       Pawn.create(game_id: id, position_x: x, position_y: y, color: color, :image => Pawn.get_image(color))
+  #     end
+  #   end
+
+  #   [1,8].each do |y|
+  #     [1,8].each do |x|
+  #       y == 1? color = "white" : color ="black"
+  #       Rook.create(game_id: id, position_x: x, position_y: y, color: color, :image => Rook.get_image(color))
+  #     end
+  #   end
+
+  #    [1,8].each do |y|
+  #     [2,7].each do |x|
+  #       y == 1? color = "white" : color ="black"
+  #         Knight.create(game_id: id, position_x: x, position_y: y, color: color, :image => Knight.get_image(color))
+  #       end
+  #     end
+
+  #     [1,8].each do |y|
+  #     [3,6].each do |x|
+  #       y == 1? color = "white" : color ="black"
+  #       Bishop.create(game_id: id, position_x: x, position_y: y, color: color, :image => Bishop.get_image(color))
+  #     end
+  #   end
+
+  #     [1,8].each do |y|
+  #       y == 1? color = "white" : color ="black"
+  #       Queen.create(game_id: id, position_x: 4, position_y: y, color: color, :image => Queen.get_image(color))
+  #     end
+
+  #     [1,8].each do |y|
+  #       y == 1? color = "white" : color ="black"
+  #       King.create(game_id: id, position_x: 5, position_y: y, color: color, :image => King.get_image(color))
+  #     end
+  # end
+
+
   def populate_game!
-    color = ""
-
-    [2,7].each do |y|
-      (1..8).each do |x|
-        y == 2? color = "white" : color ="black"
-        Pawn.create(game_id: id, position_x: x, position_y: y, color: color, :image => Pawn.get_image(color))
-      end
-    end
-
-    [1,8].each do |y|
-      [1,8].each do |x|
-        y == 1? color = "white" : color ="black"
-        Rook.create(game_id: id, position_x: x, position_y: y, color: color, :image => Rook.get_image(color))
-      end
-    end
-
-     [1,8].each do |y|
-      [2,7].each do |x|
-        y == 1? color = "white" : color ="black"
-          Knight.create(game_id: id, position_x: x, position_y: y, color: color, :image => Knight.get_image(color))
-        end
-      end
-
-      [1,8].each do |y|
-      [3,6].each do |x|
-        y == 1? color = "white" : color ="black"
-        Bishop.create(game_id: id, position_x: x, position_y: y, color: color, :image => Bishop.get_image(color))
-      end
-    end
-
-      [1,8].each do |y|
-        y == 1? color = "white" : color ="black"
-        Queen.create(game_id: id, position_x: 4, position_y: y, color: color, :image => Queen.get_image(color))
-      end
-
-      [1,8].each do |y|
-        y == 1? color = "white" : color ="black"
-        King.create(game_id: id, position_x: 5, position_y: y, color: color, :image => King.get_image(color))
-      end
+    Pawn.create(game_id: id, position_x: 8, position_y: 7, color: "black", :image => Pawn.get_image("black"))
+    Bishop.create(game_id: id, position_x: 1, position_y: 2, color: "white", :image => Bishop.get_image("white"))
+    Bishop.create(game_id: id, position_x: 2, position_y: 2, color: "white", :image => Bishop.get_image("white"))
+    King.create(game_id: id, position_x: 8, position_y: 8, color: "black", :image => King.get_image("black"))
   end
 
 

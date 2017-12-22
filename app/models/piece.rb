@@ -146,7 +146,7 @@ class Piece < ApplicationRecord
  
     color = self.color
     king = self
-    x,y = king.position_x, king.position_y
+    x, y = king.position_x, y = king.position_y
     color == "black" ? attacking_color = "white" : attacking_color = "black"
 
     if !king.is_in_check?
@@ -202,55 +202,112 @@ class Piece < ApplicationRecord
 
 
   def escapable?
-    valid_moves = [
-      [self.position_x+1,self.position_y+1],
-      [self.position_x+1,self.position_y],
-      [self.position_x+1,self.position_y-1],
-      [self.position_x,self.position_y+1],
-      [self.position_x,self.position_y-1],
-      [self.position_x-1,self.position_y+1],
-      [self.position_x-1,self.position_y],
-      [self.position_x-1,self.position_y-1]
-    ]
-    king = self
-    can_escape = false
-    valid_moves.each do |escape|
-      if king.valid_move?(escape[0],escape[1]) && king.is_on_board?(escape[0],escape[1])
-        if king.is_in_check?(escape[0],escape[1]) == false
-          can_escape = true
-        end
+    @squares = []
+    numbers = [1,2,3,4,5,6,7,8]
+    numbers.each do |x|
+      numbers.each do |y|
+        @squares << [x,y]
       end
     end
-    return can_escape
+    or_x = self.position_x
+    or_y = self.position_y
+    @squares.delete([or_x, or_y])
+    @squares.each do |position|
+      if self.valid_move?(position[0], position[1])
+        if self.move_to!(position[0], position[1])
+          self.move_to!(position[0], position[1])
+          game.reload
+          if !self.is_in_check?
+            return true
+          end
+        end
+          self.move_to!(or_x, or_y)
+          game.reload
+      end
+    end
+    return false
   end
+
+
+
 end
 
 
-  # def escapable?
-  #   @squares = []
-  #   numbers = [1,2,3,4,5,6,7,8]
-  #   numbers.each do |x|
-  #     numbers.each do |y|
-  #       @squares << [x,y]
-  #     end
-  #   end
-  #   or_x = self.position_x
-  #   or_y = self.position_y
-  #   # @squares.delete([or_x, or_y])
-  #   @squares.each do |position|
-  #     if self.valid_move?(position[0], position[1])
-  #       if self.move_to!(position[0], position[1])
-  #         self.move_to!(position[0], position[1])
-  #         game.reload
-  #         if !self.is_in_check?
-  #           return true
-  #         end
-  #       end
-  #         self.move_to!(or_x, or_y)
-  #         game.reload
-  #     end
-  #   end
-  #   return false
-  # end
+
+#   def escapable?
+#     valid_moves = [
+#       [self.position_x+1,self.position_y+1],
+#       [self.position_x+1,self.position_y],
+#       [self.position_x+1,self.position_y-1],
+#       [self.position_x,self.position_y+1],
+#       [self.position_x,self.position_y-1],
+#       [self.position_x-1,self.position_y+1],
+#       [self.position_x-1,self.position_y],
+#       [self.position_x-1,self.position_y-1]
+#     ]
+#     king = self
+#     can_escape = false
+#     valid_moves.each do |escape|
+#       if king.valid_move?(escape[0],escape[1]) && king.is_on_board?(escape[0],escape[1])
+#         if king.is_in_check?(escape[0],escape[1]) == false && king.is_on_board?(escape[0],escape[1])
+#           can_escape = true
+#         end
+#       end
+#     end
+#     return can_escape
+#   end
+# end
+
+#   def escapable?
+#     @squares = []
+#     numbers = [1,2,3,4,5,6,7,8]
+#     numbers.each do |x|
+#       numbers.each do |y|
+#         @squares << [x,y]
+#       end
+#     end
+#     @squares.each do |position|
+#       if self.valid_move?(position[0], position[1]) && self.is_on_board?(position[0], position[1])
+#         if self.is_in_check?(position[0], position[1]) == false
+#           return true
+#         end
+#       end
+#     end
+#     return false
+#   end
+# end
+
+#   def escapable?
+#     @squares = []
+#     numbers = [1,2,3,4,5,6,7,8]
+#     numbers.each do |x|
+#       numbers.each do |y|
+#         @squares << [x,y]
+#       end
+#     end
+#     or_x = self.position_x
+#     or_y = self.position_y
+#     # @squares.delete([or_x, or_y])
+#     @squares.each do |position|
+
+#       if self.valid_move?(position[0], position[1]) && self.is_on_board?(position[0], position[1]) && !self.is_in_check?(position[0], position[1])
+#         fix = self.moved
+#         self.move_to!(position[0], position[1])        
+#         # if self.move_to!(position[0], position[1]) && !self.is_in_check?(position[0], position[1])
+#         #   # self.move_to!(position[0], position[1]) 
+#         # game.reload
+#         # self.update_attributes!(position_x: position[0], position_y: position[1])
+#         game.reload
+
+#         if !self.is_in_check?
+#           return true
+#         end
+#         # end
+#         self.update_attributes!(position_x: or_x, position_y: or_y, moved: fix)
+#         game.reload
+#       end
+#     end
+#     return false
+#   end
 
 # end
