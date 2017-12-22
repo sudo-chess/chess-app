@@ -9,7 +9,7 @@ class Piece < ApplicationRecord
     occupied_positions
   end
 
-   def move_to!(new_x, new_y, promo)
+   def move_to!(new_x, new_y, promo = nil)
     @current_game = self.game
     @target = @current_game.pieces.where(position_x: new_x, position_y: new_y)[0]
 

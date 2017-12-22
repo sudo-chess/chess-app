@@ -24,7 +24,7 @@ class Pawn < Piece
       Bishop.create(game_id: game.id, position_x: x, position_y: y, color: self.color, :image => Bishop.get_image(color))
     elsif promo == "Knight"
       Knight.create(game_id: game.id, position_x: x, position_y: y, color: self.color, :image => Knight.get_image(color))
-    elsif promo == ""
+    elsif promo == "" || promo == nil
       Pawn.create(game_id: game.id, position_x: x, position_y: y, color: self.color, :image => Pawn.get_image(color))
     end
 
