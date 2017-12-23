@@ -15,7 +15,6 @@ class Pawn < Piece
         return true
       end
     end
-    # require 'pry'; binding.pry
     if self.color == 'white'
       if self.game.pieces.where(position_x: x, position_y: y-1)[0] != nil
         if self.game.pieces.where(position_x: x, position_y: y-1)[0].en_passant == true 

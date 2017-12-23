@@ -67,7 +67,6 @@ class PiecesController < ApplicationController
       @local_pieces.update_all(en_passant: false)
 
       #setting status for Pawn "en passant"
-      # require 'pry'; binding.pry
       if @current_piece.type == 'Pawn' && (@target_y - @old_y).abs == 2
         @current_piece.update_attributes(en_passant: true)
       end
