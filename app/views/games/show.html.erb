@@ -58,9 +58,9 @@
 <div id="action_box" class="col-10 offset-4 row">
   <h4>King in Check: &nbsp; &nbsp;</h4>
   <% color = "white" %>
-  <% if @local_game.next_player_id == @local_game.black_player.id %>
+  <% if @game.next_player_id == @game.black_player.id %>
     <% color = "black" %>
-    <% if @local_game.player_in_check?(color) %>
+    <% if @game.player_in_check?(color) %>
       <h4>Yes</h4>
     <% else %>
       <h4>No</h4>
@@ -71,9 +71,9 @@
 <div id="action_box" class="col-10 offset-4 row">
   <h4>King in Checkmate: &nbsp; &nbsp;</h4>
   <% color = "white" %>
-  <% if @local_game.next_player_id == @local_game.black_player.id %>
+  <% if @game.next_player_id == @game.black_player.id %>
     <% color = "black" %>
-    <% if @local_game.player_checkmate?(color) %>
+    <% if @game.player_checkmate?(color) %>
       <h4>Yes</h4>
     <% else %>
       <h4>No</h4>
@@ -85,15 +85,7 @@
 
 
   <h4>King in Stalemate: &nbsp; &nbsp;</h4>
-  <% color = "white" %>
-  <% if @local_game.next_player_id == @local_game.black_player.id %>
-    <% color = "black" %>
-    <% if @local_game.is_stalemate?(color) %>
-      <h4>Yes</h4>
-    <% else %>
-      <h4>No</h4>
-    <% end %>
-  <% end %>
+
 </div>
 <br/>
 <br/>

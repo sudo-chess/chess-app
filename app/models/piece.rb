@@ -142,18 +142,6 @@ class Piece < ApplicationRecord
     return in_check
   end
 
-  def is_in_danger?(x = self.position_x, y = self.position_y)
-    game = self.game
-    in_danger = false
-    game.pieces.each do |enemy|
-      if enemy.color != self.color
-        if enemy.valid_move?(x,y)
-         in_danger = true
-        end
-      end
-    end
-    return in_danger
-  end
 
   def is_in_checkmate?
     king = self
@@ -174,7 +162,7 @@ class Piece < ApplicationRecord
       is_checkmate = false
     elsif @threatening_pieces.length == 1
       enemy = @threatening_pieces[0]
-      if enemy.is_in_check? == false || king.obstructable? == false #going to rename "is_in_check?" to "is_in_danger?" later 
+      if king.obstructable? == true 
         is_checkmate = false
       end
     end
@@ -197,8 +185,8 @@ class Piece < ApplicationRecord
       if king.valid_move?(escape[0],escape[1]) && king.is_on_board?(escape[0],escape[1])
         if king.is_in_check?(escape[0],escape[1]) == false
           unknown = self.game.pieces.where(position_x: escape[0], position_y: escape[1])[0]
-          if unknown != nil
-            if unknown.is_on_board?(self.position_x,self.position_y) && unknown.color != king.color
+          if unknown == nil || unknown.color != king.color
+            if unknown.is_on_board?(self.position_x,self.position_y)
               can_escape = true
             end
           end
