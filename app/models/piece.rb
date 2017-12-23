@@ -256,7 +256,7 @@ class Piece < ApplicationRecord
       if piece.type != "King" && king.color == piece.color
         @squares.each do |square|
           target = self.game.pieces.where(position_x: square[0], position_y: square[1])[0]
-          if piece.valid_move?(square[0],square[1]) && target.color != king.color || target == nil
+          if piece.valid_move?(square[0],square[1]) && (target.color != king.color || target == nil)
             orig_x = piece.position_x
             orig_y = piece.position_y
             piece.update_attributes!(position_x: square[0],position_y: square[1])
