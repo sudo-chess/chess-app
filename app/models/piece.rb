@@ -240,3 +240,4 @@ class Piece < ApplicationRecord
     return can_protect
   end
 end
+

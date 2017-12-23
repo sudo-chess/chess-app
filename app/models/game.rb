@@ -66,39 +66,9 @@ class Game < ApplicationRecord
 
   #rebuilt def obstructable? from is_in_checkmate?, should work but is untested so far
 
-  def not_stalemate?
-    can_move = false
-    king = self
-    @squares = []
-    numbers = [1,2,3,4,5,6,7,8]
-    numbers.each do |x|
-      numbers.each do |y|
-        @squares << [x,y]
-      end
-    end
-
-    game.pieces.each do |piece|
-      if piece.type != "King" && king.color == piece.color
-        @squares.each do |square|
-          target = self.game.pieces.where(position_x: square[0], position_y: square[1])[0]
-          if piece.valid_move?(square[0],square[1]) && target.color != king.color
-            orig_x = piece.position_x
-            orig_y = piece.position_y
-            piece.update_attributes!(position_x: square[0],position_y: square[1])
-            if king.is_in_check? == false
-              can_move = true
-            end
-            piece.update_attributes!(position_x: orig_x,position_y: orig_y)
-          end
-        end
-      end
-    end
-    return can_move
-  end
-
-
-  # def is_stalemate?(color)
-  #   game = self
+  # def not_stalemate?
+  #   can_move = false
+  #   king = self
   #   @squares = []
   #   numbers = [1,2,3,4,5,6,7,8]
   #   numbers.each do |x|
@@ -107,22 +77,52 @@ class Game < ApplicationRecord
   #     end
   #   end
 
-  #   king = game.pieces.where(type: "King", color: color)[0]
-  #   allpieces = game.pieces.where("type != 'King'")
-  #   pieces = allpieces.where(color: color)
-
-  #   return false if king.is_in_check?
-    
-  #   pieces.each do |piece|
-  #     @squares.each do |position|
-  #       return false if piece.valid_move?(position[0], position[1])
+  #   game.pieces.each do |piece|
+  #     if piece.type != "King" && king.color == piece.color
+  #       @squares.each do |square|
+  #         target = self.game.pieces.where(position_x: square[0], position_y: square[1])[0]
+  #         if piece.valid_move?(square[0],square[1]) && target.color != king.color
+  #           orig_x = piece.position_x
+  #           orig_y = piece.position_y
+  #           piece.update_attributes!(position_x: square[0],position_y: square[1])
+  #           if king.is_in_check? == false
+  #             can_move = true
+  #           end
+  #           piece.update_attributes!(position_x: orig_x,position_y: orig_y)
+  #         end
+  #       end
   #     end
   #   end
-
-  #   return false if king.escapable?
-
-  #   return true
+  #   return can_move
   # end
+
+
+  def is_stalemate?(color)
+    game = self
+    @squares = []
+    numbers = [1,2,3,4,5,6,7,8]
+    numbers.each do |x|
+      numbers.each do |y|
+        @squares << [x,y]
+      end
+    end
+
+    king = game.pieces.where(type: "King", color: color)[0]
+    allpieces = game.pieces.where("type != 'King'")
+    pieces = allpieces.where(color: color)
+
+    return false if king.is_in_check?
+    
+    pieces.each do |piece|
+      @squares.each do |position|
+        return false if piece.valid_move?(position[0], position[1])
+      end
+    end
+
+    return false if king.escapable?
+
+    return true
+  end
   
   def player_in_check?(color)
      game = self
