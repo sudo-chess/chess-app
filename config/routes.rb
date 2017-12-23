@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-
+  resource :dashboard, only: [:show]
   root 'games#index'
   resources :games do
     collection do
