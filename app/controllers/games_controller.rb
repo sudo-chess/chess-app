@@ -34,6 +34,11 @@ class GamesController < ApplicationController
     redirect_to game_path(@game)
   end
 
+  def update
+    @game = Game.find(params[:id])
+    @game.update_attributes(:black_player_id => current_user.id)
+    redirect_to game_path(@game)
+  end
 
   def forfeit
     @game = Game.find(params[:id])
