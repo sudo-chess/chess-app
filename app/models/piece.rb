@@ -239,5 +239,49 @@ class Piece < ApplicationRecord
     end
     return can_protect
   end
-end
 
+  def is_in_stalemate?
+    king = self
+    game = self.game
+    is_stalemate = true
+    color = king.color
+
+    if king.is_in_check? == true || king.escapable? == false
+      is_stalemate = false
+    elsif king.escapable? == false && king.not_stalemate? == true
+      is_stalemate = false
+    end
+    
+    return is_stalemate
+  end
+
+  def not_stalemate?
+    can_move = false
+    king = self
+    @squares = []
+    numbers = [1,2,3,4,5,6,7,8]
+    numbers.each do |x|
+      numbers.each do |y|
+        @squares << [x,y]
+      end
+    end
+
+    game.pieces.each do |piece|
+      if piece.type != "King" && king.color == piece.color
+        @squares.each do |square|
+          target = self.game.pieces.where(position_x: square[0], position_y: square[1])[0]
+          if piece.valid_move?(square[0],square[1]) && target.color != king.color || target == nil
+            orig_x = piece.position_x
+            orig_y = piece.position_y
+            piece.update_attributes!(position_x: square[0],position_y: square[1])
+            if king.is_in_check? == false
+              can_move = true
+            end
+            piece.update_attributes!(position_x: orig_x,position_y: orig_y)
+          end
+        end
+      end
+    end
+    return can_move
+  end
+end
