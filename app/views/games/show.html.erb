@@ -20,21 +20,21 @@
 
           <% if row_number.odd? %>
             <% if index.even? %>
-              <td class="black tile droppable draggable" data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %> data-type=<%= piece ? piece.type : nil %>>
+              <td class="black tile droppable draggable" data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %> data-type=<%= piece ? piece.type : nil %> data-en_passant=<%= piece ? piece.en_passant : nil %>>
                 <%= check_piece(index + 1, row_number) %>
               </td>
             <% else %>
-              <td class="white tile droppable draggable "  data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %> data-type=<%= piece ? piece.type : nil %>>
+              <td class="white tile droppable draggable "  data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %> data-type=<%= piece ? piece.type : nil %> data-en_passant=<%= piece ? piece.en_passant : nil %>>
                 <%= check_piece(index + 1, row_number) %>
               </td>
             <% end %>
           <% else %>
             <% if index.even? %>
-              <td class="white tile droppable draggable" data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %> data-type=<%= piece ? piece.type : nil %>>
+              <td class="white tile droppable draggable" data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %> data-type=<%= piece ? piece.type : nil %> data-en_passant=<%= piece ? piece.en_passant : nil %>>
                 <%= check_piece(index + 1, row_number) %>
               </td>
             <% else %>
-              <td class="black tile droppable draggable" data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %> data-type=<%= piece ? piece.type : nil %>>
+              <td class="black tile droppable draggable" data-position_x=<%= index+1 %> data-position_y=<%= row_number %> data-piece-id= <%= piece ? piece.id : nil %> data-type=<%= piece ? piece.type : nil %> data-en_passant=<%= piece ? piece.en_passant : nil %>>
                 <%= check_piece(index + 1, row_number) %>
               </td>
             <% end %>

@@ -37,6 +37,7 @@ $( function() {
 
       var pieceId = ui.draggable.parent().data('piece-id');
       var type = ui.draggable.parent().data('type');
+      var enPassant = ui.draggable.parent().data('en_passant');
       console.log(type);
 
       // var piece = {piece: {position_x: origX, position_y: origY, id: pieceId}};
@@ -69,7 +70,7 @@ $( function() {
             promo = entry[1];
           };
 
-        var target = {piece: {position_x : destX, position_y: destY, id: pieceId, promo: promo}};
+        var target = {piece: {position_x : destX, position_y: destY, id: pieceId, promo: promo, en_passant: enPassant}};
 
      
         $.ajax({

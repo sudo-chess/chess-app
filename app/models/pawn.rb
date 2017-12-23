@@ -8,8 +8,27 @@ class Pawn < Piece
   end
 
   def can_capture?(x,y, color)
+
     piece_on_target = self.game.pieces.where(position_x: x, position_y: y)[0]
-    piece_on_target != nil && color != piece_on_target.color
+    if piece_on_target != nil
+      if color != piece_on_target.color
+        return true
+      end
+    end
+    if color == 'white'
+      if self.game.pieces.where(position_x: x, position_y: y-1)[0] != nil
+        if self.game.pieces.where(position_x: x, position_y: y-1)[0].en_passant == true 
+          return true
+        end
+      end
+    elsif color == 'black'
+      if self.game.pieces.where(position_x: x, position_y: y+1)[0] != nil
+        if self.game.pieces.where(position_x: x, position_y: y+1)[0].en_passant == true
+          return true
+        end
+      end
+    end
+      return false
   end
 
 

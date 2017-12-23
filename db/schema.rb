@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171222123010) do
+ActiveRecord::Schema.define(version: 20171223163921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20171222123010) do
     t.string   "image"
     t.boolean  "moved",      default: false
     t.string   "promo"
+    t.boolean  "en_passant"
   end
 
   create_table "queens", force: :cascade do |t|
