@@ -28,10 +28,9 @@ class PiecesController < ApplicationController
 
       
       if @current_piece.valid_move?(@target_x, @target_y)
-        
         @current_piece.move_to!(@target_x, @target_y, @promo)
 
-      #cases for en_passant
+      #cases for en_passant: removing the piece that was "en passant"
       if @current_piece.color == 'white' && @current_piece.type == 'Pawn'
         if @local_game.pieces.where(position_x: @target_x, position_y: @target_y-1)[0] != nil
           if @local_game.pieces.where(position_x: @target_x, position_y: @target_y-1)[0].en_passant == true && @local_game.pieces.where(position_x: @target_x, position_y: @target_y-1)[0].type == 'Pawn'
