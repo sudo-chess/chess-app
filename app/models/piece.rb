@@ -246,12 +246,14 @@ class Piece < ApplicationRecord
     is_stalemate = true
     color = king.color
 
-    if king.is_in_check? == true || king.escapable? == false
+    if king.is_in_check? == true
       is_stalemate = false
-    elsif king.escapable? == false && king.not_stalemate? == true
+    elsif king.escapable? == true
       is_stalemate = false
+    elsif king.not_stalemate? == true
+      is_stalemate = false  
     end
-    
+
     return is_stalemate
   end
 
