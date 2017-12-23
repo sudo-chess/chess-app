@@ -44,25 +44,25 @@ class Game < ApplicationRecord
      
   end
 
-  def is_stalemate?(color)
-    game = self
-    @squares = []
-    numbers = [1,2,3,4,5,6,7,8]
-    numbers.each do |x|
-      numbers.each do |y|
-        @squares << [x,y]
-      end
-    end
-    king = game.pieces.where(type: "King", color: color)[0]
-    is_stalemate = false
-    if king.is_in_check? == false && king.escapable? == false
-      is_stalemate = true
-      if king.not_stalemate? == true
-        is_stalemate = false
-      end
-    end
-    is_stalemate
-  end
+  # def is_stalemate?(color)
+  #   game = self
+  #   @squares = []
+  #   numbers = [1,2,3,4,5,6,7,8]
+  #   numbers.each do |x|
+  #     numbers.each do |y|
+  #       @squares << [x,y]
+  #     end
+  #   end
+  #   king = game.pieces.where(type: "King", color: color)[0]
+  #   is_stalemate = false
+  #   if king.is_in_check? == false && king.escapable? == false
+  #     is_stalemate = true
+  #     if king.not_stalemate? == true
+  #       is_stalemate = false
+  #     end
+  #   end
+  #   is_stalemate
+  # end
 
   #rebuilt def obstructable? from is_in_checkmate?, should work but is untested so far
 
