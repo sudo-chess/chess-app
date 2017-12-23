@@ -287,3 +287,102 @@ class Piece < ApplicationRecord
     return can_move
   end
 end
+
+#old method worked with rspec tests, but gave errors. However new method works, but gives rspec errors
+
+#   def is_in_checkmate?
+#     game = self.game
+#     in_checkmate = true
+#     @squares = []
+#     numbers = [1,2,3,4,5,6,7,8]
+#     numbers.each do |x|
+#       numbers.each do |y|
+#         @squares << [x,y]
+#       end
+#     end
+ 
+#     color = self.color
+#     king = self
+#     x, y = king.position_x, y = king.position_y
+#     color == "black" ? attacking_color = "white" : attacking_color = "black"
+
+#     if !king.is_in_check?
+#       return false
+#     else
+#       @threatening_pieces = []
+#       game.pieces.where(color: attacking_color).each do |piece|
+#         @threatening_pieces << piece if piece.valid_move?(x,y)
+#       end
+
+#       return false if king.escapable?
+     
+#       #check if there the threatening piece can be captured or obstructed. if more than one threatening piece and the king can't escape, it means checkmate.
+#       if @threatening_pieces.length > 1 
+#         in_checkmate = true if !king.escapable?
+    
+#       elsif @threatening_pieces.length == 1
+#         in_checkmate = false if threat_capturable?
+#         in_checkmate = false if king.obstructable?
+#       end     
+#     end
+#     return in_checkmate
+#   end
+
+
+#   def threat_capturable?
+#     th_x, th_y = @threatening_pieces[0].position_x, @threatening_pieces[0].position_y
+#     game.pieces.where(color: color).each do |piece|
+#       return true if piece.valid_move?(th_x,th_y)
+#     end
+#     return false
+#   end
+
+#   def obstructable?
+#     game.pieces.where(color: self.color).each do |piece|
+#       if piece.type != "King"
+#         @squares.each do |square|
+#           if piece.valid_move?(square[0],square[1])
+#             orig_x = piece.position_x
+#             orig_y = piece.position_y
+#             piece.move_to!(square[0], square[1])
+#             if @threatening_pieces[0].is_obstructed?(self.position_x, self.position_y)
+#               piece.move_to!(orig_x, orig_y)
+#               return true
+#             end
+#             piece.move_to!(orig_x, orig_y)
+#           end
+#         end
+#       end
+#     end
+#     return false
+#   end
+
+
+#   def escapable?
+#     @squares = []
+#     numbers = [1,2,3,4,5,6,7,8]
+#     numbers.each do |x|
+#       numbers.each do |y|
+#         @squares << [x,y]
+#       end
+#     end
+#     or_x = self.position_x
+#     or_y = self.position_y
+#     @squares.delete([or_x, or_y])
+#     @squares.each do |position|
+#       if self.valid_move?(position[0], position[1])
+#         if self.move_to!(position[0], position[1])
+#           self.move_to!(position[0], position[1])
+#           game.reload
+#           if !self.is_in_check?
+#             return true
+#           end
+#         end
+#           self.move_to!(or_x, or_y)
+#           game.reload
+#       end
+#     end
+#     return false
+#   end
+
+# end
