@@ -103,6 +103,8 @@ $( function() {
         })
 
       location.reload();
+      location = location;
+      location.replace(location);
       }
     }
   });
