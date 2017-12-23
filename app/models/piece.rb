@@ -142,75 +142,61 @@ class Piece < ApplicationRecord
     return in_check
   end
 
+
   def is_in_checkmate?
-    game = self.game
-    in_checkmate = true
-    @squares = []
-    numbers = [1,2,3,4,5,6,7,8]
-    numbers.each do |x|
-      numbers.each do |y|
-        @squares << [x,y]
-      end
-    end
- 
-    color = self.color
     king = self
-    x, y = king.position_x, y = king.position_y
-    color == "black" ? attacking_color = "white" : attacking_color = "black"
-
-    if !king.is_in_check?
-      return false
-    else
-      @threatening_pieces = []
-      game.pieces.where(color: attacking_color).each do |piece|
-        @threatening_pieces << piece if piece.valid_move?(x,y)
-      end
-
-      return false if king.escapable?
-     
-      #check if there the threatening piece can be captured or obstructed. if more than one threatening piece and the king can't escape, it means checkmate.
-      if @threatening_pieces.length > 1 
-        in_checkmate = true if !king.escapable?
+    game = self.game
+    is_checkmate = true
+    color = king.color
+    @threatening_pieces = []
     
-      elsif @threatening_pieces.length == 1
-        in_checkmate = false if threat_capturable?
-        in_checkmate = false if king.obstructable?
-      end     
+    game.pieces.each do |enemy|
+      if enemy.color != self.color
+        if enemy.valid_move?(king.position_x,king.position_y) == true 
+         @threatening_pieces << enemy
+        end
+      end
     end
-    return in_checkmate
+    
+    if king.is_in_check? == false || king.escapable? == true
+      is_checkmate = false
+    elsif @threatening_pieces.length == 1
+      enemy = @threatening_pieces[0]
+      if king.obstructable? == true 
+        is_checkmate = false
+      end
+    end
+    is_checkmate
   end
 
-
-  def threat_capturable?
-    th_x, th_y = @threatening_pieces[0].position_x, @threatening_pieces[0].position_y
-    game.pieces.where(color: color).each do |piece|
-      return true if piece.valid_move?(th_x,th_y)
+  def escapable?
+    valid_moves = [
+      [self.position_x+1,self.position_y+1],
+      [self.position_x+1,self.position_y],
+      [self.position_x+1,self.position_y-1],
+      [self.position_x,self.position_y+1],
+      [self.position_x,self.position_y-1],
+      [self.position_x-1,self.position_y+1],
+      [self.position_x-1,self.position_y],
+      [self.position_x-1,self.position_y-1]]
+    king = self
+    can_escape = false
+    valid_moves.each do |escape|
+      if king.valid_move?(escape[0],escape[1]) && king.is_on_board?(escape[0],escape[1])
+        if king.is_in_check?(escape[0],escape[1]) == false
+          unknown = self.game.pieces.where(position_x: escape[0], position_y: escape[1])[0]
+          if unknown == nil || unknown.color != king.color
+            can_escape = true
+          end
+        end
+      end
     end
-    return false
+    return can_escape
   end
 
   def obstructable?
-    game.pieces.where(color: self.color).each do |piece|
-      if piece.type != "King"
-        @squares.each do |square|
-          if piece.valid_move?(square[0],square[1])
-            orig_x = piece.position_x
-            orig_y = piece.position_y
-            piece.move_to!(square[0], square[1])
-            if @threatening_pieces[0].is_obstructed?(self.position_x, self.position_y)
-              piece.move_to!(orig_x, orig_y)
-              return true
-            end
-            piece.move_to!(orig_x, orig_y)
-          end
-        end
-      end
-    end
-    return false
-  end
-
-
-  def escapable?
+    can_protect = false
+    king = self
     @squares = []
     numbers = [1,2,3,4,5,6,7,8]
     numbers.each do |x|
@@ -218,23 +204,70 @@ class Piece < ApplicationRecord
         @squares << [x,y]
       end
     end
-    or_x = self.position_x
-    or_y = self.position_y
-    @squares.delete([or_x, or_y])
-    @squares.each do |position|
-      if self.valid_move?(position[0], position[1])
-        if self.move_to!(position[0], position[1])
-          self.move_to!(position[0], position[1])
-          game.reload
-          if !self.is_in_check?
-            return true
+
+    game.pieces.each do |piece|
+      if piece.type != "King" && king.color == piece.color
+        @squares.each do |square|
+          target = self.game.pieces.where(position_x: square[0], position_y: square[1])[0]
+          if piece.valid_move?(square[0],square[1]) && target == nil
+            orig_x = piece.position_x
+            orig_y = piece.position_y
+            piece.update_attributes!(position_x: square[0],position_y: square[1])
+            if king.is_in_check? == false
+              can_protect = true
+            end
+            piece.update_attributes!(position_x: orig_x,position_y: orig_y)
           end
         end
-          self.move_to!(or_x, or_y)
-          game.reload
       end
     end
-    return false
+    return can_protect
   end
 
+  def is_in_stalemate?
+    king = self
+    game = self.game
+    is_stalemate = true
+    color = king.color
+
+    if king.is_in_check? == true
+      is_stalemate = false
+    elsif king.escapable? == true
+      is_stalemate = false
+    elsif king.not_stalemate? == true
+      is_stalemate = false  
+    end
+
+    return is_stalemate
+  end
+
+  def not_stalemate?
+    can_move = false
+    king = self
+    @squares = []
+    numbers = [1,2,3,4,5,6,7,8]
+    numbers.each do |x|
+      numbers.each do |y|
+        @squares << [x,y]
+      end
+    end
+
+    game.pieces.each do |piece|
+      if piece.type != "King" && king.color == piece.color
+        @squares.each do |square|
+          target = game.pieces.where(position_x: square[0], position_y: square[1], color: king.color)[0]
+          if piece.valid_move?(square[0],square[1]) && target == nil #(target.color != king.color || target == nil)
+            orig_x = piece.position_x
+            orig_y = piece.position_y
+            piece.update_attributes!(position_x: square[0],position_y: square[1])
+            if king.is_in_check? == false
+              can_move = true
+            end
+            piece.update_attributes!(position_x: orig_x,position_y: orig_y)
+          end
+        end
+      end
+    end
+    return can_move
+  end
 end
