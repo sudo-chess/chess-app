@@ -2,21 +2,21 @@
 <br/>
 <div id="action_box" class="col-10 offset-4 row">
 <h4> Next move: &nbsp; &nbsp;</h4>
-  <% if @local_game.next_player_id == @local_game.white_player.id %>
+  <% if @game.next_player_id == @game.white_player.id %>
    <h4> <%= "White Player" %> </h4>
   <% else %>
    <h4><%= "Black Player" %> </h4>
   <% end %>
 </div>
 <hr/>
-<div id="game_board" data-current_player=<%= current_user.id %> data-move_player=<%= @local_game.next_player_id %> data-white_player=<%= @local_game.white_player.id %> class="col-10 offset-4">
+<div id="game_board" data-current_player=<%= current_user.id %> data-move_player=<%= @game.next_player_id %> data-white_player=<%= @game.white_player.id %> class="col-10 offset-4">
 
   <table class="chessboard">
 
     <% (1..8).to_a.reverse.each do |row_number| %>
       <tr>
         <% ["A","B","C","D","E","F","G","H"].each_with_index do |rank , index| %>
-          <% piece = @local_pieces.find {|piece| piece.position_y == row_number && piece.position_x == index+1} %>
+          <% piece = @pieces.find {|piece| piece.position_y == row_number && piece.position_x == index+1} %>
 
           <% if row_number.odd? %>
             <% if index.even? %>
@@ -47,10 +47,10 @@
 </div>
 <br class="clear"/>
 <hr/>
-<% if @local_game.result == nil %>
+<% if @game.result == nil %>
       <h4 >Available actions: &nbsp; &nbsp; </h4>
   <div id="action_box" class="col-10 offset-4 row">
-      <%= link_to 'Forfeit', forfeit_game_path(@local_game), method: :post, style: "margin-left: 10px", class: 'btn btn-primary btn-danger',data: {confirm: 'Are you sure?'} %>
+      <%= link_to 'Forfeit', forfeit_game_path(@game), method: :post, style: "margin-left: 10px", class: 'btn btn-primary btn-danger',data: {confirm: 'Are you sure?'} %>
     </div>
   </div>
 <% end %>
@@ -69,7 +69,7 @@
       <div class="row center" style="text-align: center";>
         
         <div class="promo">
-          <% if @local_game.next_player_id == @local_game.white_player.id %>
+          <% if @game.next_player_id == @game.white_player.id %>
             <%= image_tag('chess_piece_queen_white.png', :class=>"img-responsive white-piece")%><br/>
           <% else %>
             <%= image_tag('chess_piece_queen_black.png', :class=>"img-responsive white-piece")%><br/>
@@ -79,7 +79,7 @@
         </div>
        
          <div class="promo">
-            <% if @local_game.next_player_id == @local_game.white_player.id %>
+            <% if @game.next_player_id == @game.white_player.id %>
             <%= image_tag('chess_piece_rook_white.png', :class=>"img-responsive white-piece")%><br/>
           <% else %>
             <%= image_tag('chess_piece_rook_black.png', :class=>"img-responsive white-piece")%><br/>
@@ -89,7 +89,7 @@
         </div class="center">
       
          <div class="promo">
-            <% if @local_game.next_player_id == @local_game.white_player.id %>
+            <% if @game.next_player_id == @game.white_player.id %>
             <%= image_tag('chess_piece_bishop_white.png', :class=>"img-responsive white-piece")%><br/>
           <% else %>
             <%= image_tag('chess_piece_bishop_black.png', :class=>"img-responsive white-piece")%><br/>
@@ -99,7 +99,7 @@
         </div>
         
         <div class="promo">
-          <% if @local_game.next_player_id == @local_game.white_player.id %>
+          <% if @game.next_player_id == @game.white_player.id %>
             <%= image_tag('chess_piece_knight_white.png', :class=>"img-responsive white-piece")%><br/>
           <% else %>
             <%= image_tag('chess_piece_knight_black.png', :class=>"img-responsive white-piece")%><br/>
