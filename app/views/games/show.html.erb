@@ -85,7 +85,15 @@
 
 
   <h4>King in Stalemate: &nbsp; &nbsp;</h4>
-
+  <% color = "white" %>
+  <% if @game.next_player_id == @game.black_player.id %>
+    <% color = "black" %>
+    <% if @game.is_stalemate?(color) %>
+      <h4>Yes</h4>
+    <% else %>
+      <h4>No</h4>
+    <% end %>
+  <% end %>
 </div>
 <br/>
 <br/>
