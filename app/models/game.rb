@@ -33,7 +33,6 @@ class Game < ApplicationRecord
   end
 
   def next_player(player)
-
     if player == self.white_player_id
       self.update_attributes(next_player_id: self.black_player_id)
       self.reload
@@ -41,7 +40,24 @@ class Game < ApplicationRecord
       self.update_attributes(next_player_id: self.white_player_id)
        self.reload
     end
-     
+  end
+
+  def opponent_players(player)
+    players = []
+    if player == self.white_player_id
+      players << self.black_player_id
+    else
+      players << self.white_player_id
+    end
+    return players.uniq
+  end
+
+  def opponent_name(player)
+    if player == self.white_player_id
+        User.find(self.white_player_id).email
+    else
+        User.find(self.black_player_id).email
+    end    
   end
 
   # def is_stalemate?(color)

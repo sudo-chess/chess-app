@@ -10,34 +10,32 @@ class Piece < ApplicationRecord
   end
 
    def move_to!(new_x, new_y, promo = nil)
-    @current_game = self.game
-    @target = @current_game.pieces.where(position_x: new_x, position_y: new_y)[0]
-
+    target = self.game.pieces.where(position_x: new_x, position_y: new_y)[0]
 
     #cases for castling
-    if @target == nil && self.type == "King" && self.moved == false && new_x == 7
+    if target == nil && self.type == "King" && self.moved == false && new_x == 7
       self.castle!("kingside_castle", self.color)
-    elsif @target == nil && self.type == "King" && self.moved == false && new_x == 3
+    elsif target == nil && self.type == "King" && self.moved == false && new_x == 3
       self.castle!("queenside_castle", self.color)
     end
 
     #cases for pawn promotion
-    if @target == nil && self.color == "white" && new_y == 8 && self.type == "Pawn"
+    if target == nil && self.color == "white" && new_y == 8 && self.type == "Pawn"
       self.promotion(new_x, new_y, promo)
-    elsif @target == nil && self.color == "black"  && new_y == 1 && self.type == "Pawn"
+    elsif target == nil && self.color == "black"  && new_y == 1 && self.type == "Pawn"
       self.promotion(new_x, new_y, promo)
     elsif self.color == "white"  && new_y == 8 && self.type == "Pawn"
-      @target.update_attributes!(position_x: nil, position_y: nil)
+      target.update_attributes!(position_x: nil, position_y: nil)
       self.promotion(new_x, new_y, promo)
     elsif self.color == "black" && new_y == 1 && self.type == "Pawn"
-      @target.update_attributes!(position_x: nil, position_y: nil)
+      target.update_attributes!(position_x: nil, position_y: nil)
       self.promotion(new_x, new_y, promo)
     #in case on piece on destination
-    elsif @target == nil
+    elsif target == nil
       self.update_attributes!(position_x: new_x, position_y: new_y, moved: true)
     #in case piece on destination
-    elsif @target.color != self.color
-      @target.update_attributes!(position_x: nil, position_y: nil)
+    elsif target.color != self.color
+      target.update_attributes!(position_x: nil, position_y: nil)
       self.update_attributes!(position_x: new_x, position_y: new_y, moved: true)
     else
       return false

@@ -14,8 +14,6 @@ class PiecesController < ApplicationController
 
   def update
 
-      puts "......................................................................"
-      puts params
       @current_piece = Piece.find_by_id(piece_params[:id])
       @local_game_id = @current_piece.game_id
       @local_game = Game.find(@local_game_id)
@@ -47,7 +45,7 @@ class PiecesController < ApplicationController
         flash[:notice] = "That was not a valid move"  
       end
       @local_game.reload
-      # sleep(6)
+      sleep(7)
       redirect_to game_path(@local_game_id) 
   end
 

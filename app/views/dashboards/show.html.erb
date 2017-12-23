@@ -1,0 +1,43 @@
+<br />
+
+<div class="game-box col-10 offset-1" >
+  <h1>Hi <%= current_user.name %>, welcome to your dashboard!</h1>
+
+</div>
+
+<div class="game-box col-10 offset-1">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="available-game-tab" data-toggle="tab" href="#available-game" role="tab" aria-controls="available-game" aria-selected="true">Available Games</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="completed-game-tab" data-toggle="tab" href="#completed-game" role="tab" aria-controls="completed-game" aria-selected="false">Completed Games</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active col-10" id="available-game" role="tabpanel" aria-labelledby="available-game-tab">
+      <% @games.each do |game| %>
+        <% if current_user && current_user.id == game.white_player_id || current_user && current_user.id == game.black_player_id %>
+          <div class="game-box col-10 offset-1">
+            <h1>Your player:  <%= link_to game.name(current_user.id), game_path(game) %></h1><br />
+            <h2>Game status:  in progress!</h2>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="tab-pane fade" id="completed-game" role="tabpanel" aria-labelledby="completed-game-tab">
+        <% @games.each do |game| %>
+          <% if current_user && current_user.id == game.white_player_id && game.result != nil || current_user && current_user.id == game.black_player_id && game.result != nil %>
+            <div class="game-box col-10 offset-1">
+              <h1>Your player:  <%= link_to game.name(current_user.id), game_path(game) %></h1><br />
+              <h2>Game status:  <%= game.result %></h2>
+            </div>
+          <% end %>
+        <% end %>
+    </div>
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Bye</div>
+  </div>
+</div>
