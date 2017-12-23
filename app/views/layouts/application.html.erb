@@ -12,56 +12,89 @@
   </head>
 
   <body>
+    <div id='flex-content-container'>
+      <!-- jquery and jquery ui install -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-    <!-- jquery and jquery ui install -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+      <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <%= link_to 'Sudo Chess', root_path, class: 'navbar-brand' %>
+          <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+            <% if user_signed_in? %>
+              <li class="nav-item">
+                <%= link_to 'New game', new_game_path, class: 'btn btn-primary' %>
+              </li>
+              &nbsp; &nbsp;
+              <li class="nav-item">
+                <%= link_to 'Dashboard', dashboard_path, class: 'btn btn-primary' %>
+              </li>
+            <% end %>
+          </ul>
+          <ul class="navbar-nav">
+            <% if user_signed_in? %>
+              <li class="nav-item">
+                <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'nav-link' %>
+              </li>
+            <% else %>
+              <li class="nav-item">
+                <%= link_to 'Sign in', new_user_session_path, class: 'nav-link' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Sign up', new_user_registration_path, class: 'nav-link' %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Devise code for alerts on main page -->
+      <% if notice.present? %>
+        <p class="alert alert-info"><%= notice %></p>
+      <% end %>
+      <% if alert.present? %>
+        <p class="alert alert-danger"><%= alert %></p>
+      <% end %>      
+    
 
 
-    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <%= link_to 'Sudo Chess', root_path, class: 'navbar-brand' %>
-        <ul class="navbar-nav mr-auto mt-2 mt-md-0">
-          <% if user_signed_in? %>
-            <li class="nav-item">
-              <%= link_to 'New game', new_game_path, class: 'btn btn-primary' %>
-            </li>
-            &nbsp; &nbsp;
-            <li class="nav-item">
-              <%= link_to 'Dashboard', dashboard_path, class: 'btn btn-primary' %>
-            </li>
+      <%= yield %>
+    </div>
+    <div id="footer">
+      <div class="container">
+      <div class="row">
+        <div class="col-12 col-sm-4">
+          <b>About</b>
+          <br />
+          <%= link_to 'Team', team_path %>
+          <br />
+          <%= link_to 'Privacy Policy', '#'%>
+        </div>
+        <div class="col-12 col-sm-4">
+          <b>Contact</b>
+          <br />
+          thefirehoseproject.com
+        </div>
+        <div class="col-12 col-sm-4 social">
+          <b>Social</b> 
+          <br />      
+          <br />
+          <%= link_to 'https://github.com/sudo-chess/chess-app' do %>      
+            <span class="fa fa-github-square fa-2x social-button"></span>
           <% end %>
-        </ul>
-        <ul class="navbar-nav">
-          <% if user_signed_in? %>
-            <li class="nav-item">
-              <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'nav-link' %>
-            </li>
-          <% else %>
-            <li class="nav-item">
-              <%= link_to 'Sign in', new_user_session_path, class: 'nav-link' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'Sign up', new_user_registration_path, class: 'nav-link' %>
-            </li>
-          <% end %>
-        </ul>
+          <span class="fa fa-facebook-square fa-2x social-button"></span>
+          <span class="fa fa-twitter-square fa-2x social-button"></span>
+        </div>
+
       </div>
-    </nav>
 
-<!-- Devise code for alerts on main page -->
-<% if notice.present? %>
-  <p class="alert alert-info"><%= notice %></p>
-<% end %>
-<% if alert.present? %>
-  <p class="alert alert-danger"><%= alert %></p>
-<% end %>
-
-    <%= yield %>
+      </div>
+    </div>    
   </body>
 </html>
