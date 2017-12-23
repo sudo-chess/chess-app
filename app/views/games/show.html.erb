@@ -55,6 +55,40 @@
   </div>
 <% end %>
 
+#delete when done
+<br/>
+<p> Currently hard coded for Black. </p>
+<div id="action_box" class="col-10 offset-4 row">
+   <h4>King in Check: &nbsp; &nbsp;</h4>
+   <% if @local_game.player_in_check?("black") %>
+     <h4>Yes</h4>
+   <% else %>
+     <h4>No</h4>
+   <% end %>
+ </div>
+ <br/>
+ <div id="action_box" class="col-10 offset-4 row">
+   <h4>King in Checkmate: &nbsp; &nbsp;</h4>
+   <% if @local_game.player_checkmate?("black") %>
+     <h4>Yes</h4>
+   <% else %>
+     <h4>No</h4>
+   <% end %>
+</div>
+<br/>
+<div id="action_box" class="col-10 offset-4 row">
+   <h4>King in Stalemate: &nbsp; &nbsp;</h4>
+   <% if @local_game.is_stalemate?("black") %>
+     <h4>Yes</h4>
+   <% else %>
+     <h4>No</h4>
+   <% end %>
+</div>
+<br/>
+<br/>
+<br/>
+
+<br class="clear"/>
 
  <div id="myModal" class="modal" method="post" style="text-align: center;">
   <div class="modal-content">

@@ -71,7 +71,18 @@ class Game < ApplicationRecord
 
     return true
   end
+  
+  def player_in_check?(color)
+     game = self
+     king = game.pieces.find_by(type: "King", color: color)
+     return king.is_in_check?
+  end
 
+  def player_checkmate?(color)
+    game = self
+    king = game.pieces.find_by(type: "King", color: color)
+    return king.is_in_checkmate?
+  end
 
   def populate_game!
     color = ""
@@ -115,5 +126,13 @@ class Game < ApplicationRecord
       end
   end
 
+  # def populate_game!
+  #   Pawn.create(game_id: id, position_x: 1, position_y: 7, color: "black", :image => Pawn.get_image("black"))
+  #   Queen.create(game_id: id, position_x: 3, position_y: 8, color: "white", :image => Queen.get_image("white"))
+  #   Queen.create(game_id: id, position_x: 3, position_y: 7, color: "white", :image => Queen.get_image("white"))
 
+  #   King.create(game_id: id, position_x: 1, position_y: 8, color: "black", :image => King.get_image("black"))
+  #   # Rook.create(game_id: id, position_x: 8, position_y: 8, color: "black", :image => Rook.get_image("black"))
+
+  # end
 end
