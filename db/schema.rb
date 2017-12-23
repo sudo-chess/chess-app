@@ -27,10 +27,9 @@ ActiveRecord::Schema.define(version: 20171223163921) do
     t.integer  "result"
     t.integer  "winner_id"
     t.integer  "loser_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.boolean  "in_progress"
-    t.integer  "next_player_to_move_id"
     t.integer  "next_player_id"
   end
 

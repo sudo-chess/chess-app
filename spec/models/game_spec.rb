@@ -49,7 +49,7 @@ RSpec.describe Game, type: :model do
     end
   end
 
-  #is_in_stalemate tests
+  # is_in_stalemate tests
 
   describe "is_stalemate?(color)" do
     it "should return true if the color player is in stalemate" do

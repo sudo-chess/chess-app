@@ -7,21 +7,21 @@ class Pawn < Piece
     end
   end
 
-  def can_capture?(x,y)
+  def can_capture?(x,y, color)
 
     piece_on_target = self.game.pieces.where(position_x: x, position_y: y)[0]
     if piece_on_target != nil
-      if self.color != piece_on_target.color
+      if color != piece_on_target.color
         return true
       end
     end
-    if self.color == 'white'
+    if color == 'white'
       if self.game.pieces.where(position_x: x, position_y: y-1)[0] != nil
         if self.game.pieces.where(position_x: x, position_y: y-1)[0].en_passant == true 
           return true
         end
       end
-    elsif self.color == 'black'
+    elsif color == 'black'
       if self.game.pieces.where(position_x: x, position_y: y+1)[0] != nil
         if self.game.pieces.where(position_x: x, position_y: y+1)[0].en_passant == true
           return true
@@ -63,9 +63,9 @@ class Pawn < Piece
           valid_moves << [self.position_x,self.position_y-1]
         elsif self.moved == false && !piece_on_target && !is_obstructed?(self.game,[x,y])
           valid_moves << [self.position_x,self.position_y-2]
-        elsif self.position_x == x-1 && self.position_y == y+1 && can_capture?(x,y)
+        elsif self.position_x == x-1 && self.position_y == y+1 && can_capture?(x,y,"black")
           valid_moves << [self.position_x+1,self.position_y-1]
-        elsif self.position_x == x+1 && self.position_y == y+1 && can_capture?(x,y)
+        elsif self.position_x == x+1 && self.position_y == y+1 && can_capture?(x,y,"black")
           valid_moves << [self.position_x-1,self.position_y-1]
         end
       else
@@ -73,9 +73,9 @@ class Pawn < Piece
           valid_moves << [self.position_x,self.position_y+1]
         elsif self.moved == false && !piece_on_target && !is_obstructed?(self.game,[x,y])
           valid_moves << [self.position_x,self.position_y+2]
-        elsif self.position_x == x-1 && self.position_y == y-1 && can_capture?(x,y)
+        elsif self.position_x == x-1 && self.position_y == y-1 && can_capture?(x,y,"white")
           valid_moves << [self.position_x+1,self.position_y+1]
-        elsif self.position_x == x+1 && self.position_y == y-1 && can_capture?(x,y)
+        elsif self.position_x == x+1 && self.position_y == y-1 && can_capture?(x,y,"white")
           valid_moves << [self.position_x-1,self.position_y+1]
         end
       end
