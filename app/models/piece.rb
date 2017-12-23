@@ -186,9 +186,7 @@ class Piece < ApplicationRecord
         if king.is_in_check?(escape[0],escape[1]) == false
           unknown = self.game.pieces.where(position_x: escape[0], position_y: escape[1])[0]
           if unknown == nil || unknown.color != king.color
-            if unknown.is_on_board?(self.position_x,self.position_y)
-              can_escape = true
-            end
+            can_escape = true
           end
         end
       end
