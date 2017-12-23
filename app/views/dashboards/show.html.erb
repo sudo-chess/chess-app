@@ -2,6 +2,7 @@
 
 <div class="game-box col-10 offset-1" >
 <script>
+ 
   var today = new Date();
   var hourNow = today.getHours();
   var greeting;
@@ -17,9 +18,9 @@
   else {
     greeting = 'Hello';
   }
-  document.write('<h1>'+ greeting + '&nbsp;' + '<%= current_user.name %> !, welcome to your dashboard!' + '</h1>' );
-</script>
+  document.write('<h1>'+ greeting + '&nbsp;' + '<%= current_user.name %>, welcome to your dashboard!' + '</h1>' );
 
+</script>
 
 </div>
 
