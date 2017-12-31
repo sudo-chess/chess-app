@@ -8,13 +8,21 @@ class King < Piece
   end
 
  def valid_move?(x,y)
-    if !self.moved
+    
+    if !self.moved && self.game.pieces.where(position_x: 6, position_y: self.position_y)[0] == nil && self.game.pieces.where(position_x: 4, position_y: self.position_y)[0] == nil
       castle_right = [self.position_x+2,self.position_y]
+      castle_left = [self.position_x-2,self.position_y]
+    elsif !self.moved && self.game.pieces.where(position_x: 6, position_y: self.position_y)[0] == nil
+      castle_right = [self.position_x+2,self.position_y]
+      castle_left = [self.position_x+1,self.position_y+1]
+    elsif !self.moved && self.game.pieces.where(position_x: 4, position_y: self.position_y)[0] == nil && self.game.pieces.where(position_x: 2, position_y: self.position_y)[0] == nil
+      castle_right = [self.position_x+1,self.position_y+1]
       castle_left = [self.position_x-2,self.position_y]
     else
       castle_right = [self.position_x+1,self.position_y+1]
       castle_left = [self.position_x+1,self.position_y+1]
     end
+
 
     valid_moves = [castle_right, castle_left,
       [self.position_x+1,self.position_y+1],
@@ -26,6 +34,7 @@ class King < Piece
       [self.position_x-1,self.position_y],
       [self.position_x-1,self.position_y-1]
     ]
+
     return valid_moves.include?([x,y]) && is_on_board?(x,y) 
   end
 

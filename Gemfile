@@ -71,6 +71,8 @@ end
 
 gem 'devise'
 
+gem 'pry'
+
 group :test do
   gem 'database_cleaner'
 end
