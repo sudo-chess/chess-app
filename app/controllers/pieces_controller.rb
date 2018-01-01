@@ -7,10 +7,10 @@ class PiecesController < ApplicationController
      
       @current_piece = Piece.find_by_id(params[:id])
   end
-
+ 
   def promote
 
-  end
+  end 
 
   def update
 
@@ -26,7 +26,7 @@ class PiecesController < ApplicationController
       @old_x = @current_piece.position_x
       @old_y = @current_piece.position_y
 
-      
+ 
       if @current_piece.valid_move?(@target_x, @target_y)
         @current_piece.move_to!(@target_x, @target_y, @promo)
 

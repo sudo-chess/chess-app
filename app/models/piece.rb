@@ -1,6 +1,6 @@
 class Piece < ApplicationRecord
   belongs_to :game
-
+ 
   def occupied_positions
     occupied_positions = []
     game.pieces.each do |piece|
@@ -13,9 +13,9 @@ class Piece < ApplicationRecord
     target = self.game.pieces.where(position_x: new_x, position_y: new_y)[0]
 
     #cases for castling
-    if target == nil && self.type == "King" && self.moved == false && new_x == 7
+    if target == nil && self.type == "King" && self.moved == false && new_x == 7 && self.game.pieces.where(position_x: 6, position_y: self.position_y)[0] == nil
       self.castle!("kingside_castle", self.color)
-    elsif target == nil && self.type == "King" && self.moved == false && new_x == 3
+    elsif target == nil && self.type == "King" && self.moved == false && new_x == 3 && self.game.pieces.where(position_x: 4, position_y: self.position_y)[0] == nil && self.game.pieces.where(position_x: 2, position_y: self.position_y)[0] == nil
       self.castle!("queenside_castle", self.color)
     end
 
