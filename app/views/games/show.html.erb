@@ -1,6 +1,6 @@
 
 <br/>
-<div id="action_box" class="col-10 offset-4 row">
+<div id="action_box" class="col-10 offset-4 row" >
 <h4> Next move: &nbsp; &nbsp;</h4>
   <% if @game.next_player_id == @game.white_player.id %>
    <h4> <%= "White Player" %> </h4>
@@ -48,14 +48,14 @@
 <br class="clear"/>
 <hr/>
 <% if @game.result == nil %>
-      <h4 >Available actions: &nbsp; &nbsp; </h4>
+      <h4>Available actions: &nbsp; &nbsp; </h4>
   <div id="action_box_transp" class="col-10 offset-4 row">
       <%= link_to 'Forfeit', forfeit_game_path(@game), method: :post, style: "margin-left: 10px", class: 'btn btn-block btn-danger',data: {confirm: 'Are you sure?'} %>
     </div>
   </div>
 <% end %>
 <br/>
-<div id="action_box" class="col-10 offset-4 row">
+<div style="text-align: center" id="action_box" class="col-10 offset-4 row">
   <h4>King in Check: &nbsp; &nbsp;</h4>
   <% color = "white" %>
   <% if @game.next_player_id == @game.black_player.id %>
